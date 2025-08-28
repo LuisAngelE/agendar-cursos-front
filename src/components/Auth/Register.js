@@ -60,7 +60,7 @@ const Register = () => {
   const reset = () => {
     setValue("name", "", { shouldDirty: true });
     setValue("last_name", "", { shouldDirty: true });
-    setValue("phone_number", "", { shouldDirty: true });
+    setValue("phone", "", { shouldDirty: true });
     setValue("email", "", { shouldDirty: true });
     setValue("password", "", { shouldDirty: true });
     setValue("password_confirmation", "", { shouldDirty: true });
@@ -224,11 +224,11 @@ const Register = () => {
                   <TextField
                     type="number"
                     fullWidth
-                    name="phone_number"
+                    name="phone"
                     label="Teléfono:"
-                    error={errors.phone_number ? true : false}
-                    helperText={errors?.phone_number?.message}
-                    {...register("phone_number", {
+                    error={errors.phone ? true : false}
+                    helperText={errors?.phone?.message}
+                    {...register("phone", {
                       required: {
                         value: true,
                         message: "El teléfono es requerido",

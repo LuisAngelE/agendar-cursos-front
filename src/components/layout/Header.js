@@ -27,7 +27,9 @@ import PersonIcon from "@mui/icons-material/Person";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import ClassIcon from "@mui/icons-material/Class";
 import GroupIcon from "@mui/icons-material/Group";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/Auth/AuthContext";
 
 const drawerWidth = 240;
 
@@ -102,6 +104,9 @@ export default function Header({ children }) {
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
 
+  const { cerrarSesion } = React.useContext(AuthContext);
+  let type_user = localStorage.getItem("type_user");
+
   const Admin = [
     {
       name: "Inicio",
@@ -111,22 +116,22 @@ export default function Header({ children }) {
     {
       name: "Usuarios",
       value: "/Usuarios",
-      icon: <SupervisorAccountIcon />, 
+      icon: <SupervisorAccountIcon />,
     },
     {
       name: "Instructores",
       value: "/Instructores",
-      icon: <SchoolIcon />, 
+      icon: <SchoolIcon />,
     },
     {
       name: "Cursos",
       value: "/Cursos",
-      icon: <ClassIcon />, 
+      icon: <ClassIcon />,
     },
     {
       name: "Agenda",
       value: "/Agenda",
-      icon: <EventIcon />, 
+      icon: <EventIcon />,
     },
     {
       name: "Perfil",
@@ -143,7 +148,7 @@ export default function Header({ children }) {
     },
     {
       name: "Mis Cursos",
-      value: "/MIS Cursos",
+      value: "/Cursos",
       icon: <ClassIcon />,
     },
     {
@@ -153,8 +158,8 @@ export default function Header({ children }) {
     },
     {
       name: "Alumnos",
-      value: "/Alumnos",
-      icon: <GroupIcon />, 
+      value: "/Usuarios",
+      icon: <GroupIcon />,
     },
     {
       name: "Perfil",
@@ -176,7 +181,7 @@ export default function Header({ children }) {
     },
     {
       name: "Mis Agendas",
-      value: "/Mis Agendas",
+      value: "Agenda",
       icon: <EventIcon />,
     },
     {
@@ -185,6 +190,11 @@ export default function Header({ children }) {
       icon: <PersonIcon />,
     },
   ];
+
+  let menuItems = [];
+  if (type_user === "1") menuItems = Admin;
+  if (type_user === "2") menuItems = Instructor;
+  if (type_user === "3") menuItems = Alumnos;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -198,7 +208,7 @@ export default function Header({ children }) {
             "radial-gradient(circle,rgba(255, 255, 255, 1) 0%, rgba(63, 94, 251, 1) 100%);",
         }}
       >
-        <Toolbar sx={{ position: "relative", justifyContent: "space-between" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -213,28 +223,24 @@ export default function Header({ children }) {
             <MenuIcon />
           </IconButton>
 
-          <Box
-            sx={{
-              position: "absolute",
-              left: 0,
-              right: 0,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              pointerEvents: "none",
-            }}
+          <Typography
+            variant="h4"
+            fontFamily="monospace"
+            fontWeight="bold"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, textAlign: "center", color: "black" }}
           >
-            <Typography
-              variant="h4"
-              fontFamily="monospace"
-              fontWeight="bold"
-              noWrap
-              component="div"
-              sx={{ color: "black" }}
-            >
-              Agenda tu Curso
-            </Typography>
-          </Box>
+            Agenda tu Curso
+          </Typography>
+
+          <Tooltip title="Cerrar Sesión">
+            <IconButton onClick={() => cerrarSesion()}>
+              <ExitToAppIcon
+                sx={{ color: "white", fontSize: 25 }}
+              ></ExitToAppIcon>
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
 
@@ -250,7 +256,7 @@ export default function Header({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {Admin.map((item, index) => (
+          {menuItems.map((item, index) => (
             <ListItem key={index} disablePadding sx={{ display: "block" }}>
               <Tooltip title={item.name} placement="right">
                 <ListItemButton

@@ -1,19 +1,20 @@
 import React, { useReducer } from "react";
 import AuthContext from "./AuthContext";
 import AuthReducer from "./AuthReducer";
-import MethodGet, { MethodPost, MethodPut } from "../../config/service";
-import headerConfig from "../../config/imageHeaders";
-import { useTranslation } from "react-i18next";
-
+import MethodGet, { MethodPost } from "../../config/service";
 import tokenAuth from "../../config/TokenAuth";
-
-import { SHOW_ERRORS_API, types } from "../../types";
-
 import Swal from "sweetalert2";
 
-const AuthState = (props) => {
-  const { t } = useTranslation();
+import {
+  OBTENER_USUARIO,
+  LOGIN_EXITOSO,
+  LOGIN_ERROR,
+  REGISTRO_EXITOSO,
+  SHOW_ERRORS_API,
+  CERRAR_SESION,
+} from "../../types";
 
+const AuthState = (props) => {
   const initialState = {
     token: localStorage.getItem("token"),
     autenticado: false,
@@ -24,6 +25,7 @@ const AuthState = (props) => {
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
+
   const usuarioAutenticado = async (datos) => {
     const token = localStorage.getItem("token");
 
@@ -34,15 +36,14 @@ const AuthState = (props) => {
     MethodGet("/user")
       .then(({ data }) => {
         localStorage.setItem("type_user", data.type_user);
-        localStorage.setItem("user_id", data.id);
         dispatch({
-          type: types.OBTENER_USUARIO,
+          type: OBTENER_USUARIO,
           payload: data,
         });
       })
       .catch((error) => {
         dispatch({
-          type: types.LOGIN_ERROR,
+          type: LOGIN_ERROR,
         });
       });
   };
@@ -52,17 +53,39 @@ const AuthState = (props) => {
     MethodPost(url, datos)
       .then((res) => {
         dispatch({
-          type: types.LOGIN_EXITOSO,
+          type: LOGIN_EXITOSO,
           payload: res.data,
         });
         usuarioAutenticado();
       })
       .catch((error) => {
-        Swal.fire({
-          title: "Error",
-          icon: "error",
-          text: error.response.data.message,
-        });
+        let mensaje = "Ocurrió un error inesperado";
+
+        if (error.response && error.response.data) {
+          const data = error.response.data;
+
+          if (data.errors) {
+            mensaje = Object.values(data.errors).flat().join("\n");
+            Swal.fire({
+              title: "Completa tus datos",
+              icon: "warning",
+              text: mensaje,
+            });
+          } else if (data.error) {
+            mensaje = data.error + (data.message ? `: ${data.message}` : "");
+            Swal.fire({
+              title: "Credenciales incorrectas.",
+              icon: "warning",
+              text: mensaje,
+            });
+          }
+        } else {
+          Swal.fire({
+            title: "Error",
+            icon: "error",
+            text: mensaje,
+          });
+        }
         dispatch({
           type: SHOW_ERRORS_API,
         });
@@ -73,34 +96,84 @@ const AuthState = (props) => {
     let url = "/register";
     MethodPost(url, datos)
       .then((res) => {
+        const token = res.data.token;
         dispatch({
-          type: types.REGISTRO_EXITOSO,
-          payload: res.data.data,
+          type: REGISTRO_EXITOSO,
+          payload: res.data,
         });
         Swal.fire({
-          title: "Registro Exitoso",
-          text: "Se creo su cuenta correctamente",
+          title: "¡Registro exitoso!",
+          text: "Su cuenta ha sido creada correctamente.",
           icon: "success",
         });
+        localStorage.setItem("token", token);
+        usuarioAutenticado();
       })
       .catch((error) => {
-        let errorMessage = "Error al procesar la solicitud";
         if (
           error.response &&
           error.response.data &&
-          error.response.data.message
+          error.response.data.errors
         ) {
-          errorMessage = error.response.data.message;
+          const errores = error.response.data.errors;
+          const mensajes = Object.values(errores).flat().join("\n");
+
+          Swal.fire({
+            title: "Completa tus Datos",
+            icon: "warning",
+            text: mensajes,
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            icon: "error",
+            text: "Ocurrió un error inesperado",
+          });
         }
-        Swal.fire({
-          title: "Error",
-          icon: "error",
-          text: errorMessage,
-        });
-        dispatch({
-          type: SHOW_ERRORS_API,
-        });
       });
+  };
+
+  const cerrarSesionn = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("type_user");
+
+    dispatch({
+      type: CERRAR_SESION,
+    });
+
+    window.location.reload();
+  };
+
+  const cerrarSesion = () => {
+    Swal.fire({
+      title: "¿Cerrar sesión?",
+      text: "Se cerrará tu sesión actual",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, cerrar sesión",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("type_user");
+
+        dispatch({
+          type: CERRAR_SESION,
+        });
+
+        Swal.fire({
+          title: "Sesión cerrada",
+          text: "Has cerrado sesión correctamente",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    });
   };
 
   return (
@@ -115,6 +188,7 @@ const AuthState = (props) => {
         Register,
         iniciarSesion,
         usuarioAutenticado,
+        cerrarSesion,
       }}
     >
       {props.children}

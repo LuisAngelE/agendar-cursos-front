@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const LoadingComponent = () => {
   return (
-    <div>
-      
+    <div className="center">
+      <div className="sppiner" />
     </div>
-  )
-}
+  );
+};
 
-export default LoadingComponent
+export default LoadingComponent;

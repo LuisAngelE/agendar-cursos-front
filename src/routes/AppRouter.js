@@ -1,4 +1,3 @@
-// Importamos las dependencias necesarias de React, React Router, y Material-UI
 import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { PublicRouter } from "./PublicRouter";
@@ -33,18 +32,18 @@ const AppRouter = () => {
             exact
             path="/iniciar-sesion"
             component={Login}
-            // isAuthenticated={autenticado}
+            isAuthenticated={autenticado}
           />
           <PublicRouter
             exact
             path="/registrarme"
             component={Register}
-            // isAuthenticated={autenticado}
+            isAuthenticated={autenticado}
           />
           <PrivateRouter
             path="/"
             component={AdminRoutes}
-            // isAuthenticated={autenticado}
+            isAuthenticated={autenticado}
           />
         </Switch>
       </Router>
