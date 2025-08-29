@@ -205,7 +205,7 @@ export default function Header({ children }) {
         open={open}
         sx={{
           background:
-            "radial-gradient(circle,rgba(255, 255, 255, 1) 0%, rgba(63, 94, 251, 1) 100%);",
+            "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%);",
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -217,7 +217,7 @@ export default function Header({ children }) {
             sx={{
               marginRight: 5,
               ...(open && { display: "none" }),
-              color: "black",
+              color: "white",
             }}
           >
             <MenuIcon />
@@ -245,12 +245,12 @@ export default function Header({ children }) {
       </AppBar>
 
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader sx={{ backgroundColor: "#3F5EFB" }}>
+        <DrawerHeader sx={{ backgroundColor: "#1C277D" }}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
-              <ChevronRightIcon sx={{ color: "black" }} />
+              <ChevronRightIcon sx={{ color: "white" }} />
             ) : (
-              <ChevronLeftIcon sx={{ color: "black" }} />
+              <ChevronLeftIcon sx={{ color: "white" }} />
             )}
           </IconButton>
         </DrawerHeader>

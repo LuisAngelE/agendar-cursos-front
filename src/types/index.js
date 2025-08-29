@@ -7,4 +7,10 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGIN_EXITOSO = "LOGIN_EXITOSO";
 export const CERRAR_SESION = "CERRAR_SESION";
 
+export const GET_ALL_USERS = "GET_ALL_USERS"
+export const ADD_USERS = "GET_ALL_USERS"
+export const UPDATE_USERS = "GET_ALL_USERS"
+export const DELETE_USERS = "GET_ALL_USERS"
+
+
 

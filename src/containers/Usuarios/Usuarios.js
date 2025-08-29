@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import Layout from "../../components/layout/Layout";
+import AddUsuarios from "../../containers/Usuarios/AddUsuarios";
+import UsuariosContext from "../../context/Usuarios/UsuariosContext";
+import TableUsers from "../../components/Tables/TableUsers";
 
 const Usuarios = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const { users, GetUsers } = useContext(UsuariosContext);
+
+  useEffect(() => {
+    GetUsers();
+  }, []);
+
+  const handleClickOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
   return (
     <Layout>
       <Grid container spacing={2} sx={{ padding: 2 }}>
@@ -20,19 +38,24 @@ const Usuarios = () => {
           <Button
             variant="contained"
             fullWidth
+            onClick={handleClickOpen}
             sx={{
               color: "white",
-              backgroundColor: "#3F5EFB",
+              backgroundColor: "#F05E29",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#3F5EFB",
+                backgroundColor: "#F05E29",
               },
             }}
           >
             Agregar
           </Button>
         </Grid>
+        <Grid item xs={12}>
+          <TableUsers users={users} />
+        </Grid>
       </Grid>
+      <AddUsuarios modal={openModal} handleClose={handleClose} users={users} />
     </Layout>
   );
 };

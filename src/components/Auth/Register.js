@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     // backgroundImage: "url(https://source.unsplash.com/random/2560x1440)",
     background: "rgb(255,255,255)",
     background:
-      "radial-gradient(circle,rgba(238, 174, 202, 1) 0%, rgba(4, 25, 84, 1) 0%)",
+      "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%);",
     backgroundRepeat: "no-repeat",
     opacity: 1,
     overflowY: "none",
@@ -355,18 +355,18 @@ const Register = () => {
                   fullWidth
                   variant="contained"
                   sx={{
-                    backgroundColor: "#041954",
+                    backgroundColor: "#F05E29",
                     color: "white",
                     fontWeight: "bold",
                     mt: 0,
                     mb: 6,
                     "&:hover": {
-                      backgroundColor: "#041954",
+                      backgroundColor: "#F05E29",
                       color: "white",
                     },
                   }}
                 >
-                  regresar
+                  Iniciar Sesion
                 </Button>
               </Link>
             </Box>

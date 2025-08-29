@@ -133,17 +133,6 @@ const AuthState = (props) => {
       });
   };
 
-  const cerrarSesionn = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("type_user");
-
-    dispatch({
-      type: CERRAR_SESION,
-    });
-
-    window.location.reload();
-  };
-
   const cerrarSesion = () => {
     Swal.fire({
       title: "¿Cerrar sesión?",
