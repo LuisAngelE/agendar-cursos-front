@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Grid,
+  MenuItem,
   IconButton,
   InputAdornment,
   Radio,
@@ -23,19 +24,29 @@ const useStyles = makeStyles({
     fontStyle: "oblique",
     letterSpacing: "1px",
   },
+  // backgroundLogin: {
+  //   height: "100%",
+  //   minHeight: "100vh",
+  //   width: "100%",
+  //   background:
+  //     "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%);",
+  //   backgroundRepeat: "no-repeat",
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
   backgroundLogin: {
-    height: "100%",
     minHeight: "100vh",
-    boxSizing: "content-box",
     width: "100%",
-    // backgroundImage: "url(https://source.unsplash.com/random/2560x1440)",
-    background: "rgb(255,255,255)",
     background:
-      "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%);",
+      "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%)",
     backgroundRepeat: "no-repeat",
-    opacity: 1,
-    overflowY: "none",
-    overflowX: "none",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "40px 20px",
+    boxSizing: "border-box",
+    overflowY: "auto",
   },
   caja: {
     background: "rgba(255, 255, 255, 0.46)",
@@ -54,17 +65,7 @@ const Register = () => {
     register,
     formState: { errors },
     handleSubmit,
-    setValue,
   } = useForm();
-
-  const reset = () => {
-    setValue("name", "", { shouldDirty: true });
-    setValue("last_name", "", { shouldDirty: true });
-    setValue("phone", "", { shouldDirty: true });
-    setValue("email", "", { shouldDirty: true });
-    setValue("password", "", { shouldDirty: true });
-    setValue("password_confirmation", "", { shouldDirty: true });
-  };
 
   const [passwordValues, setPasswordValues] = useState({
     password: "",
@@ -94,6 +95,8 @@ const Register = () => {
     event.preventDefault();
   };
 
+  const [typePerson, setTypePerson] = useState("");
+
   const onSubmit = (data, e) => {
     Register(data);
   };
@@ -119,11 +122,13 @@ const Register = () => {
             <Box
               sx={{
                 boxShadow: 3,
-                m: 5,
-                padding: 4,
-                position: "relative",
-                marginTop: 5,
-                width: { xs: "60%", md: "30%" },
+                p: 4,
+                width: "100%",
+                maxWidth: "500px",
+                margin: "auto",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
               className={classes.caja}
             >
@@ -132,14 +137,14 @@ const Register = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  mb: 2,
                 }}
               >
                 <div
                   style={{
                     textAlign: "center",
                     color: "black",
-                    marginBottom: "10px",
-                    fontSize: "40px",
+                    fontSize: "32px",
                     fontFamily: "monospace",
                     fontWeight: "bold",
                   }}
@@ -155,92 +160,194 @@ const Register = () => {
                   fontFamily: "monospace",
                   fontWeight: "bold",
                 }}
-              >
-                Regístrate Gratis
-              </div>
-
+              ></div>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                <Grid item xs={12}>
                   <TextField
-                    type="text"
+                    select
                     fullWidth
-                    name="name"
-                    label="Nombre:"
-                    error={errors.name ? true : false}
-                    helperText={errors?.name?.message}
-                    {...register("name", {
-                      required: {
-                        value: true,
-                        message: "El nombre es requerido",
-                      },
-                      maxLength: {
-                        value: 100,
-                        message: "Maximo 100 caracteres",
+                    label="Selecciona el Tipo de Persona"
+                    defaultValue=""
+                    {...register("type_person", {
+                      required: "Selecciona el Tipo de Persona",
+                    })}
+                    error={!!errors.type_person}
+                    helperText={errors.type_person?.message}
+                    onChange={(e) => setTypePerson(e.target.value)}
+                  >
+                    <MenuItem value="">
+                      <em>-- Selecciona el Tipo de Persona --</em>
+                    </MenuItem>
+                    <MenuItem value={"4"}>Física</MenuItem>
+                    <MenuItem value={"5"}>Moral</MenuItem>
+                  </TextField>
+                </Grid>
+                {typePerson === "4" && (
+                  <>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Nombre"
+                        {...register("name", {
+                          required: "El nombre es obligatorio",
+                          maxLength: {
+                            value: 255,
+                            message: "Máximo 255 caracteres",
+                          },
+                        })}
+                        error={!!errors.name}
+                        helperText={errors.name?.message}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label="Apellido"
+                        {...register("last_name", {
+                          required: "El apellido es obligatorio",
+                          maxLength: {
+                            value: 255,
+                            message: "Máximo 255 caracteres",
+                          },
+                        })}
+                        error={!!errors.last_name}
+                        helperText={errors.last_name?.message}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        type="date"
+                        fullWidth
+                        label="Fecha de Nacimiento"
+                        InputLabelProps={{ shrink: true }}
+                        {...register("birth_date", {
+                          required: "La fecha de nacimiento es obligatoria",
+                          maxLength: {
+                            value: 255,
+                            message: "Máximo 255 caracteres",
+                          },
+                        })}
+                        error={!!errors.birth_date}
+                        helperText={errors.birth_date?.message}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="CURP"
+                        {...register("curp", {
+                          required: "La CURP es obligatoria",
+                          pattern: {
+                            value: /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/,
+                            message: "CURP inválida",
+                          },
+                        })}
+                        error={!!errors.curp}
+                        helperText={errors.curp?.message}
+                      />
+                    </Grid>
+                  </>
+                )}
+                {typePerson === "5" && (
+                  <>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Razon Social"
+                        {...register("razon_social", {
+                          required: "La Razon Social es obligatoria",
+                          maxLength: {
+                            value: 50,
+                            message: "Máximo 50 caracteres",
+                          },
+                        })}
+                        error={!!errors.razon_social}
+                        helperText={errors.razon_social?.message}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Representante Legal"
+                        {...register("representante_legal", {
+                          required: "El Representante Legal es obligatorio",
+                          maxLength: {
+                            value: 100,
+                            message: "Máximo 100 caracteres",
+                          },
+                        })}
+                        error={!!errors.representante_legal}
+                        helperText={errors.representante_legal?.message}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Domicilio Fiscal"
+                        {...register("domicilio_fiscal", {
+                          required: "El Domicilio Fiscal es obligatorio",
+                          maxLength: {
+                            value: 200,
+                            message: "Máximo 200 caracteres",
+                          },
+                        })}
+                        error={!!errors.domicilio_fiscal}
+                        helperText={errors.domicilio_fiscal?.message}
+                      />
+                    </Grid>
+                  </>
+                )}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="RFC"
+                    {...register("rfc", {
+                      required: "El RFC es obligatorio",
+                      pattern: {
+                        value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
+                        message: "RFC inválido",
                       },
                     })}
+                    error={!!errors.rfc}
+                    helperText={errors.rfc?.message}
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <TextField
-                    type="text"
-                    fullWidth
-                    name="last_name"
-                    label="Apellido:"
-                    error={errors.last_name ? true : false}
-                    helperText={errors?.last_name?.message}
-                    {...register("last_name", {
-                      required: {
-                        value: true,
-                        message: "El apellido es requerido",
-                      },
-                      maxLength: {
-                        value: 100,
-                        message: "Maximo 100 caracteres",
-                      },
-                    })}
-                  />
-                </Grid>
-                <Grid item xs={12} md={12} lg={12} xl={12}>
+                <Grid item xs={12}>
                   <TextField
                     type="email"
                     fullWidth
-                    name="email"
-                    label="Correo Electronico:"
-                    error={errors.email ? true : false}
-                    helperText={errors?.email?.message}
+                    label="Correo electrónico"
                     {...register("email", {
-                      required: {
-                        value: true,
-                        message: "El email es requerido",
-                      },
-                      maxLength: {
-                        value: 100,
-                        message: "Maximo 100 caracteres",
+                      required: "El correo es obligatorio",
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: "Correo inválido",
                       },
                     })}
+                    error={!!errors.email}
+                    helperText={errors.email?.message}
                   />
                 </Grid>
-                <Grid item xs={12} md={12} lg={12} xl={12}>
+                <Grid item xs={12}>
                   <TextField
                     type="number"
                     fullWidth
-                    name="phone"
-                    label="Teléfono:"
-                    error={errors.phone ? true : false}
-                    helperText={errors?.phone?.message}
+                    label="Teléfono"
                     {...register("phone", {
-                      required: {
-                        value: true,
-                        message: "El teléfono es requerido",
+                      required: "El teléfono es obligatorio",
+                      minLength: {
+                        value: 10,
+                        message: "Mínimo 10 caracteres",
                       },
                       maxLength: {
                         value: 15,
-                        message: "Maximo 15 caracteres",
-                      }
+                        message: "Máximo 15 caracteres",
+                      },
                     })}
+                    error={!!errors.phone}
+                    helperText={errors.phone?.message}
                   />
                 </Grid>
-                
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <TextField
                     type={passwordValues.showPassword ? "text" : "password"}
@@ -278,7 +385,7 @@ const Register = () => {
                         message: "Minimo 8 caracteres",
                       },
                       maxLength: {
-                        value: 255,
+                        value: 16,
                         message: "Maximo 50 caracteres",
                       },
                     })}
@@ -311,7 +418,7 @@ const Register = () => {
                         </InputAdornment>
                       ),
                     }}
-                    label="Confirmar Contraseña:"
+                    label="Confirma la Contraseña:"
                     error={errors.password_confirmation ? true : false}
                     helperText={errors?.password_confirmation?.message}
                     {...register("password_confirmation", {
@@ -349,17 +456,15 @@ const Register = () => {
               >
                 Registrarme
               </Button>
-              <Link to="iniciar-sesion">
+              <Link to="iniciar-sesion" style={{ width: "100%" }}>
                 <Button
-                  type="submit"
                   fullWidth
                   variant="contained"
                   sx={{
                     backgroundColor: "#F05E29",
                     color: "white",
                     fontWeight: "bold",
-                    mt: 0,
-                    mb: 6,
+                    mb: 2,
                     "&:hover": {
                       backgroundColor: "#F05E29",
                       color: "white",

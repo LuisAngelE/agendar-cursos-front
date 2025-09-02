@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import Layout from "../../components/layout/Layout";
-import AddUsuarios from "../../containers/Usuarios/AddUsuarios";
+import AddPersonasFisicas from "../../containers/PersonasFisicas/AddPersonasFisicas";
 import UsuariosContext from "../../context/Usuarios/UsuariosContext";
-import TableUsers from "../../components/Tables/TableUsers";
+import TablePersonasFisicas from "../../components/Tables/TablePersonasFisicas";
 
-const Usuarios = () => {
+const PersonasFisicas = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { users, GetUsers } = useContext(UsuariosContext);
+  const { users, GetUsersFisicos } = useContext(UsuariosContext);
 
   useEffect(() => {
-    GetUsers();
+    GetUsersFisicos();
   }, []);
 
   const handleClickOpen = () => {
@@ -31,7 +31,7 @@ const Usuarios = () => {
             variant="h5"
             sx={{ color: "black" }}
           >
-            Usuarios
+            Personas Físicas
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
@@ -52,12 +52,16 @@ const Usuarios = () => {
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <TableUsers users={users} />
+          <TablePersonasFisicas users={users} />
         </Grid>
       </Grid>
-      <AddUsuarios modal={openModal} handleClose={handleClose} users={users} />
+      <AddPersonasFisicas
+        modal={openModal}
+        handleClose={handleClose}
+        users={users}
+      />
     </Layout>
   );
 };
 
-export default Usuarios;
+export default PersonasFisicas;

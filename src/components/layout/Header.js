@@ -20,11 +20,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import HomeIcon from "@mui/icons-material/Home";
-import PeopleIcon from "@mui/icons-material/People";
 import SchoolIcon from "@mui/icons-material/School";
 import EventIcon from "@mui/icons-material/Event";
 import PersonIcon from "@mui/icons-material/Person";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import BusinessIcon from "@mui/icons-material/Business";
 import ClassIcon from "@mui/icons-material/Class";
 import GroupIcon from "@mui/icons-material/Group";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -114,14 +113,14 @@ export default function Header({ children }) {
       icon: <HomeIcon />,
     },
     {
-      name: "Usuarios",
-      value: "/Usuarios",
-      icon: <SupervisorAccountIcon />,
+      name: "Personas Físicas",
+      value: "/PersonasFisicas",
+      icon: <PersonIcon />,
     },
     {
-      name: "Instructores",
-      value: "/Instructores",
-      icon: <SchoolIcon />,
+      name: "Personas Morales",
+      value: "/PersonasMorales",
+      icon: <BusinessIcon />,
     },
     {
       name: "Cursos",
@@ -134,7 +133,7 @@ export default function Header({ children }) {
       icon: <EventIcon />,
     },
     {
-      name: "Perfil",
+      name: "Mi Perfil",
       value: "/Perfil",
       icon: <PersonIcon />,
     },
@@ -142,27 +141,22 @@ export default function Header({ children }) {
 
   const Instructor = [
     {
-      name: "Inicio",
-      value: "/",
-      icon: <HomeIcon />,
-    },
-    {
       name: "Mis Cursos",
       value: "/Cursos",
       icon: <ClassIcon />,
     },
     {
-      name: "Agenda",
+      name: "Mi Agenda",
       value: "/Agenda",
       icon: <EventIcon />,
     },
     {
-      name: "Alumnos",
+      name: "Mis Alumnos",
       value: "/Usuarios",
       icon: <GroupIcon />,
     },
     {
-      name: "Perfil",
+      name: "Mi Perfil",
       value: "/Perfil",
       icon: <PersonIcon />,
     },
@@ -170,17 +164,12 @@ export default function Header({ children }) {
 
   const Alumnos = [
     {
-      name: "Inicio",
-      value: "/",
-      icon: <HomeIcon />,
-    },
-    {
-      name: "Cursos",
+      name: "Todos los Cursos",
       value: "/Cursos",
       icon: <ClassIcon />,
     },
     {
-      name: "Mis Agendas",
+      name: "Mis Cusos Solicitados",
       value: "Agenda",
       icon: <EventIcon />,
     },

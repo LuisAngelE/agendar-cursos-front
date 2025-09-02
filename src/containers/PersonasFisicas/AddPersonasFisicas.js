@@ -52,20 +52,18 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddUsuarios({ modal, handleClose }) {
-  const { AddUser } = React.useContext(UsuariosContext);
+export default function AddPersonasFisicas({ modal, handleClose }) {
+  const { AddPersonaFisicas } = React.useContext(UsuariosContext);
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm();
 
   const onSubmit = (data) => {
-    AddUser(data);
+    AddPersonaFisicas(data);
     handleClose();
-    reset();
   };
 
   const [passwordValues, setPasswordValues] = React.useState({
@@ -103,7 +101,7 @@ export default function AddUsuarios({ modal, handleClose }) {
       open={modal}
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Agregar Usuario
+        Agregar Persona Física
       </BootstrapDialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -121,7 +119,8 @@ export default function AddUsuarios({ modal, handleClose }) {
                 label="Nombre"
                 {...register("name", {
                   required: "El nombre es obligatorio",
-                  maxLength: { value: 255, message: "Máximo 255 caracteres" },
+                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
+                  maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
                 error={!!errors.name}
                 helperText={errors.name?.message}
@@ -133,10 +132,55 @@ export default function AddUsuarios({ modal, handleClose }) {
                 label="Apellido"
                 {...register("last_name", {
                   required: "El apellido es obligatorio",
-                  maxLength: { value: 255, message: "Máximo 255 caracteres" },
+                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
+                  maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
                 error={!!errors.last_name}
                 helperText={errors.last_name?.message}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                type="date"
+                fullWidth
+                label="Fecha de Nacimiento"
+                InputLabelProps={{ shrink: true }}
+                {...register("birth_date", {
+                  required: "La fecha de nacimiento es obligatoria",
+                  maxLength: { value: 255, message: "Máximo 255 caracteres" },
+                })}
+                error={!!errors.birth_date}
+                helperText={errors.birth_date?.message}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="CURP"
+                {...register("curp", {
+                  required: "La CURP es obligatoria",
+                  pattern: {
+                    value: /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/,
+                    message: "CURP inválida",
+                  },
+                })}
+                error={!!errors.curp}
+                helperText={errors.curp?.message}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="RFC"
+                {...register("rfc", {
+                  required: "El RFC es obligatorio",
+                  pattern: {
+                    value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
+                    message: "RFC inválido",
+                  },
+                })}
+                error={!!errors.rfc}
+                helperText={errors.rfc?.message}
               />
             </Grid>
             <Grid item xs={12}>
@@ -166,6 +210,7 @@ export default function AddUsuarios({ modal, handleClose }) {
                 helperText={errors.phone?.message}
               />
             </Grid>
+
             <Grid item xs={12}>
               <TextField
                 select

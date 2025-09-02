@@ -4,6 +4,7 @@ import {
   LOGIN_EXITOSO,
   LOGIN_ERROR,
   CERRAR_SESION,
+  GET_USER_ME,
 } from "../../types";
 
 export default (state, action) => {
@@ -37,6 +38,13 @@ export default (state, action) => {
         usuario: null,
         autenticado: false,
         cargando: false,
+      };
+    case GET_USER_ME:
+      return {
+        ...state,
+        user_me: action.payload.user,
+        success: false,
+        ErrorsApi: [],
       };
     default:
       return state;

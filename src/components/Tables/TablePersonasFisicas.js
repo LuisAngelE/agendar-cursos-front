@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useContext, useEffect, useState } from "react";
 import UsuariosContext from "../../context/Usuarios/UsuariosContext";
-import EditUsuarios from "../../containers/Usuarios/EditUsuarios";
+import EditPersonasFisicas from "../../containers/PersonasFisicas/EditPersonasFisicas";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -58,8 +58,8 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-export default function TableUsers({ users }) {
-  const { DeleteUsers } = useContext(UsuariosContext);
+export default function TablePersonasFisicas({ users }) {
+  const { DeleteUsersFisicos } = useContext(UsuariosContext);
   const [modalUpdate, OpenModalUpdate] = useState(false);
   const [id_service, saveIdService] = useState(null);
   const handleClickOpen = (id) => {
@@ -77,8 +77,12 @@ export default function TableUsers({ users }) {
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
+              <StyledTableCell>Tipo de Persona</StyledTableCell>
               <StyledTableCell>Nombre</StyledTableCell>
               <StyledTableCell>Apellido</StyledTableCell>
+              <StyledTableCell>Fecha de Nacimiento</StyledTableCell>
+              <StyledTableCell>Curp</StyledTableCell>
+              <StyledTableCell>Rfc</StyledTableCell>
               <StyledTableCell>Correo Electronico</StyledTableCell>
               <StyledTableCell>Telefono</StyledTableCell>
               <StyledTableCell>Tipo de Usuario</StyledTableCell>
@@ -90,12 +94,30 @@ export default function TableUsers({ users }) {
               users.map((user) => (
                 <StyledTableRow key={user.id}>
                   <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
+                  <StyledTableCell data-label="Tipo de Usuario">
+                    {{
+                      4: "Física",
+                      5: "Moral",
+                    }[user.type_person] || "Desconocido"}
+                  </StyledTableCell>
+
                   <StyledTableCell data-label="Nombre">
                     {user.name}
                   </StyledTableCell>
+
                   <StyledTableCell data-label="Apellido">
                     {user.last_name}
                   </StyledTableCell>
+
+                  <StyledTableCell data-label="Fecha de Nacimiento">
+                    {new Date(user.birth_date).toISOString().split("T")[0]}
+                  </StyledTableCell>
+
+                  <StyledTableCell data-label="Curp">
+                    {user.curp}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="Rfc">{user.rfc}</StyledTableCell>
+
                   <StyledTableCell data-label="Correo Electrónico">
                     {user.email}
                   </StyledTableCell>
@@ -121,7 +143,7 @@ export default function TableUsers({ users }) {
 
                     <IconButton
                       size="small"
-                      onClick={() => DeleteUsers(user.id)}
+                      onClick={() => DeleteUsersFisicos(user.id)}
                     >
                       <Tooltip title="Eliminar Usuario" placement="top">
                         <DeleteIcon sx={{ color: "#FF0000" }} />
@@ -132,7 +154,7 @@ export default function TableUsers({ users }) {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={7} align="center">
+                <TableCell colSpan={11} align="center">
                   No hay usuarios disponibles
                 </TableCell>
               </TableRow>
@@ -141,7 +163,7 @@ export default function TableUsers({ users }) {
         </Table>
       </TableContainerResponsive>
       {id_service !== null && (
-        <EditUsuarios
+        <EditPersonasFisicas
           open={modalUpdate}
           handleClose={handleClickClose}
           id={id_service}

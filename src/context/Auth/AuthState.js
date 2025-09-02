@@ -12,6 +12,7 @@ import {
   REGISTRO_EXITOSO,
   SHOW_ERRORS_API,
   CERRAR_SESION,
+  GET_USER_ME,
 } from "../../types";
 
 const AuthState = (props) => {
@@ -20,6 +21,7 @@ const AuthState = (props) => {
     autenticado: false,
     usuario: {},
     User: {},
+    user_me: null,
     cargando: true,
     success: false,
   };
@@ -67,7 +69,7 @@ const AuthState = (props) => {
           if (data.errors) {
             mensaje = Object.values(data.errors).flat().join("\n");
             Swal.fire({
-              title: "Completa tus datos",
+              title: "Error",
               icon: "warning",
               text: mensaje,
             });
@@ -119,7 +121,7 @@ const AuthState = (props) => {
           const mensajes = Object.values(errores).flat().join("\n");
 
           Swal.fire({
-            title: "Completa tus Datos",
+            title: "Error",
             icon: "warning",
             text: mensajes,
           });
@@ -165,19 +167,35 @@ const AuthState = (props) => {
     });
   };
 
+  const UserMe = () => {
+    let url = "/me";
+    MethodGet(url)
+      .then((res) => {
+        dispatch({
+          type: GET_USER_ME,
+          payload: res.data,
+        });
+        console.log(res.data, "la data de user");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
         token: state.token,
         autenticado: state.autenticado,
         usuario: state.usuario,
+        user_me: state.user_me,
         success: state.success,
         cargando: state.cargando,
-
         Register,
         iniciarSesion,
         usuarioAutenticado,
         cerrarSesion,
+        UserMe,
       }}
     >
       {props.children}
