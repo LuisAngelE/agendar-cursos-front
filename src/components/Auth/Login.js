@@ -17,6 +17,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useForm } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthContext from "../../context/Auth/AuthContext";
+import Logo from "../layout/img/logo.png";
 import { useFormik } from "formik";
 const useStyles = makeStyles({
   textlogin: {
@@ -109,30 +110,15 @@ const Login = () => {
                 alignItems: "center",
               }}
             >
-              <div
+              <img
+                src={Logo}
+                alt="logo"
                 style={{
-                  textAlign: "center",
-                  color: "black",
-                  marginBottom: "10px",
-                  fontSize: "40px",
-                  fontFamily: "monospace",
-                  fontWeight: "bold",
+                  width: 150,
+                  height: "auto",
                 }}
-              >
-                Agenda Tu Curso
-              </div>
+              />
             </Box>
-            <div
-              style={{
-                textAlign: "center",
-                color: "black",
-                marginBottom: "25px",
-                fontFamily: "monospace",
-                fontWeight: "bold",
-              }}
-            >
-              Iniciar Sesion
-            </div>
             <Box
               component="form"
               onSubmit={formik.handleSubmit}

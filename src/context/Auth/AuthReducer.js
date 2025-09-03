@@ -5,6 +5,8 @@ import {
   LOGIN_ERROR,
   CERRAR_SESION,
   GET_USER_ME,
+  USER_CHANGEPASSWORD,
+  UPDATE_INFO,
 } from "../../types";
 
 export default (state, action) => {
@@ -45,6 +47,21 @@ export default (state, action) => {
         user_me: action.payload.user,
         success: false,
         ErrorsApi: [],
+      };
+    case USER_CHANGEPASSWORD:
+      return {
+        ...state,
+        autenticado: true,
+        cargando: false,
+      };
+    case UPDATE_INFO:
+      return {
+        ...state,
+        ErrorsAPI: [],
+        user_me: {
+          ...state.user_me,
+          ...action.payload.user,
+        },
       };
     default:
       return state;

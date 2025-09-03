@@ -16,6 +16,8 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useForm } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthContext from "../../context/Auth/AuthContext";
+import Logo from "../layout/img/logo.png";
+
 const useStyles = makeStyles({
   textlogin: {
     fontSize: "15px",
@@ -140,27 +142,15 @@ const Register = () => {
                   mb: 2,
                 }}
               >
-                <div
+                <img
+                  src={Logo}
+                  alt="logo"
                   style={{
-                    textAlign: "center",
-                    color: "black",
-                    fontSize: "32px",
-                    fontFamily: "monospace",
-                    fontWeight: "bold",
+                    width: 150,
+                    height: "auto",
                   }}
-                >
-                  Agenda Tu Curso
-                </div>
+                />
               </Box>
-              <div
-                style={{
-                  textAlign: "center",
-                  color: "black",
-                  marginBottom: "25px",
-                  fontFamily: "monospace",
-                  fontWeight: "bold",
-                }}
-              ></div>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField

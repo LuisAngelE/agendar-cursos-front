@@ -1,7 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Typography,
+  Card,
+  CardContent,
+  Divider,
+} from "@mui/material";
 import Layout from "../../components/layout/Layout";
 import AuthContext from "../../context/Auth/AuthContext";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import FlipCameraIosIcon from "@mui/icons-material/FlipCameraIos";
+import LockResetIcon from "@mui/icons-material/LockReset";
+import ResetPassword from "./ResetPassword";
+import EditInfo from "./EditInfo";
+import AttachFileMultimedia from "./AttachFileMultimedia";
 
 const Perfil = () => {
   const { user_me, UserMe } = useContext(AuthContext);
@@ -14,36 +28,205 @@ const Perfil = () => {
 
   const [saludo, setSaludo] = useState("");
   useEffect(() => {
-    const obtenerSaludo = () => {
-      const horaActual = new Date().getHours();
-
-      if (horaActual >= 6 && horaActual < 12) {
-        setSaludo("Buenos Dias");
-      } else if (horaActual >= 12 && horaActual < 18) {
-        setSaludo("Buenas Tardes");
-      } else {
-        setSaludo("Buenas Noches");
-      }
-    };
-    obtenerSaludo();
+    const hora = new Date().getHours();
+    if (hora >= 6 && hora < 12) setSaludo("Buenos Días");
+    else if (hora >= 12 && hora < 18) setSaludo("Buenas Tardes");
+    else setSaludo("Buenas Noches");
   }, []);
+
+  const [id_user, saveUser] = useState(null);
+  const [modalMultimedia, openModalMultimedia] = useState(false);
+  const handleOpenMultimedia = (id) => {
+    openModalMultimedia(true);
+    saveUser(id);
+  };
+  const handleCloseMultimedia = () => {
+    openModalMultimedia(false);
+    saveUser(null);
+  };
+
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpenModal(true);
+  };
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
+  const [openModalInfo, setOpenModalInfo] = React.useState(false);
+  const handleClickOpenInfo = () => {
+    setOpenModalInfo(true);
+  };
+  const handleCloseInfo = () => {
+    setOpenModalInfo(false);
+  };
+
   return (
     <Layout>
-      <Grid container spacing={2} sx={{ padding: 2 }}>
-        {user_me ? (
-          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
-            <Typography
-              fontWeight="bold"
-              fontFamily="monospace"
-              variant="h5"
-              sx={{ color: "black" }}
-            >
-              Hola {saludo}, {user_me.name} {user_me.last_name}{" "}
-              {user_me.razon_social}
-            </Typography>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        sx={{ minHeight: "90vh", p: 2 }}
+      >
+        {user_me && (
+          <Grid item xs={12} sm={10} md={8} lg={6}>
+            <Card sx={{ borderRadius: 4, boxShadow: 4, p: 2 }}>
+              <CardContent>
+                <Typography
+                  variant="h4"
+                  align="center"
+                  fontWeight="bold"
+                  gutterBottom
+                >
+                  Hola {saludo}, {user_me.name} {user_me.last_name}{" "}
+                  {user_me.razon_social}
+                </Typography>
+
+                <Box display="flex" justifyContent="center" mb={2}>
+                  <img
+                    src={
+                      user_me.image_profile?.url || user_me.imageProfile?.url
+                    }
+                    alt="Foto de perfil"
+                    style={{
+                      width: 225,
+                      height: 200,
+                      borderRadius: "10%",
+                      objectFit: "cover",
+                      boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                    }}
+                  />
+                </Box>
+                <Button
+                  onClick={() => handleOpenMultimedia(user_me.id)}
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    mb: 2,
+                    bgcolor: "#F05E29",
+                    "&:hover": { bgcolor: "#d94e1e" },
+                  }}
+                >
+                  <FlipCameraIosIcon sx={{ mr: 1 }} />
+                  Cambiar Foto de Perfil
+                </Button>
+
+                <Divider sx={{ my: 2 }} />
+
+                <Typography
+                  variant="h6"
+                  align="center"
+                  fontWeight="bold"
+                  gutterBottom
+                >
+                  Información Personal
+                </Typography>
+
+                <Box sx={{ textAlign: "center", mb: 2 }}>
+                  <Typography variant="body1" gutterBottom>
+                    Soy:{" "}
+                    {{
+                      1: "Administrador",
+                      2: "Instructor",
+                      3: "Alumno",
+                    }[user_me.type_user] || "Desconocido"}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    Persona:{" "}
+                    {{
+                      4: "Física",
+                      5: "Moral",
+                    }[user_me.type_person] || "Desconocido"}
+                  </Typography>
+
+                  {user_me.type_person === 4 && (
+                    <>
+                      <Typography variant="body1" gutterBottom>
+                        Fecha de Nacimiento:{" "}
+                        {
+                          new Date(user_me.birth_date)
+                            .toISOString()
+                            .split("T")[0]
+                        }
+                      </Typography>
+                      <Typography variant="body1" gutterBottom>
+                        CURP: {user_me.curp}
+                      </Typography>
+                    </>
+                  )}
+
+                  {user_me.type_person === 5 && (
+                    <>
+                      <Typography variant="body1" gutterBottom>
+                        Representante Legal: {user_me.representante_legal}
+                      </Typography>
+                      <Typography variant="body1" gutterBottom>
+                        Domicilio Fiscal: {user_me.domicilio_fiscal}
+                      </Typography>
+                    </>
+                  )}
+
+                  <Typography variant="body1" gutterBottom>
+                    RFC: {user_me.rfc}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    Correo: {user_me.email}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    Teléfono: {user_me.phone}
+                  </Typography>
+                </Box>
+
+                <Divider sx={{ my: 2 }} />
+
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Button
+                      onClick={handleClickOpenInfo}
+                      fullWidth
+                      variant="contained"
+                      sx={{
+                        bgcolor: "#1C277D",
+                        "&:hover": { bgcolor: "#151d5d" },
+                      }}
+                    >
+                      <EditNoteIcon sx={{ mr: 1 }} />
+                      Editar mi Información
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      onClick={handleClickOpen}
+                      fullWidth
+                      variant="contained"
+                      sx={{
+                        bgcolor: "#F05E29",
+                        "&:hover": { bgcolor: "#d94e1e" },
+                      }}
+                    >
+                      <LockResetIcon sx={{ mr: 1 }} />
+                      Cambiar mi Contraseña
+                    </Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+            {id_user !== null && (
+              <AttachFileMultimedia
+                open={modalMultimedia}
+                handleClose={handleCloseMultimedia}
+                id={id_user}
+                id_User={user_me.id}
+              />
+            )}
+            <ResetPassword modal={openModal} handleClose={handleClose} />
+            <EditInfo
+              User={user_me}
+              modal={openModalInfo}
+              handleClose={handleCloseInfo}
+            />
           </Grid>
-        ) : (
-          ""
         )}
       </Grid>
     </Layout>
