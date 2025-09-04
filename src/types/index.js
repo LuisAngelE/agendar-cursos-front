@@ -15,6 +15,4 @@ export const GET_USER_ME = "GET_USER_ME";
 export const USER_CHANGEPASSWORD = "USER_CHANGEPASSWORD";
 export const UPDATE_INFO = "UPDATE_INFO";
 
-
-
-
+export const GET_ALL_CURSOS = "GET_ALL_CURSOS";

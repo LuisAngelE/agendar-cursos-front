@@ -28,6 +28,7 @@ import ClassIcon from "@mui/icons-material/Class";
 import GroupIcon from "@mui/icons-material/Group";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
+import Logo from "../layout/img/logo.png";
 import AuthContext from "../../context/Auth/AuthContext";
 
 const drawerWidth = 240;
@@ -151,11 +152,6 @@ export default function Header({ children }) {
       icon: <EventIcon />,
     },
     {
-      name: "Mis Alumnos",
-      value: "/Usuarios",
-      icon: <GroupIcon />,
-    },
-    {
       name: "Mi Perfil",
       value: "/Perfil",
       icon: <PersonIcon />,
@@ -197,14 +193,15 @@ export default function Header({ children }) {
             "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%);",
         }}
       >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Toolbar sx={{ position: "relative" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginRight: 5,
+              position: "absolute",
+              left: 10,
               ...(open && { display: "none" }),
               color: "white",
             }}
@@ -212,24 +209,30 @@ export default function Header({ children }) {
             <MenuIcon />
           </IconButton>
 
-          <Typography
-            variant="h4"
-            fontFamily="monospace"
-            fontWeight="bold"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, textAlign: "center", color: "black" }}
+          <Box
+            sx={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
           >
-            Agenda tu Curso
-          </Typography>
+            <img
+              src={Logo}
+              alt="logo"
+              style={{
+                width: 75,
+                height: 50,
+              }}
+            />
+          </Box>
 
-          <Tooltip title="Cerrar Sesión">
-            <IconButton onClick={() => cerrarSesion()}>
-              <ExitToAppIcon
-                sx={{ color: "white", fontSize: 25 }}
-              ></ExitToAppIcon>
-            </IconButton>
-          </Tooltip>
+          <Box sx={{ marginLeft: "auto" }}>
+            <Tooltip title="Cerrar Sesión">
+              <IconButton onClick={() => cerrarSesion()}>
+                <ExitToAppIcon sx={{ color: "white", fontSize: 25 }} />
+              </IconButton>
+            </Tooltip>
+          </Box>
         </Toolbar>
       </AppBar>
 

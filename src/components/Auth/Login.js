@@ -133,7 +133,7 @@ const Login = () => {
                   <TextField
                     fullWidth
                     id="email"
-                    label="Correo Electronico:"
+                    label="Correo Electrónico:"
                     name="email"
                     autoComplete="off"
                     onChange={formik.handleChange}
@@ -200,7 +200,7 @@ const Login = () => {
                   fontWeight="bold"
                   variant="subtitle1"
                 >
-                  Iniciar Sesion
+                  Iniciar Sesión
                 </Typography>
               </Button>
               <Link to="/registrarme">
@@ -225,7 +225,7 @@ const Login = () => {
                     fontWeight="bold"
                     variant="subtitle1"
                   >
-                    Registrarme
+                    Registrarse
                   </Typography>
                 </Button>
               </Link>

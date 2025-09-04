@@ -243,9 +243,9 @@ const Register = () => {
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
-                        label="Razon Social"
+                        label="Razón Social"
                         {...register("razon_social", {
-                          required: "La Razon Social es obligatoria",
+                          required: "La Razón Social es obligatoria",
                           maxLength: {
                             value: 50,
                             message: "Máximo 50 caracteres",
@@ -362,7 +362,7 @@ const Register = () => {
                         </InputAdornment>
                       ),
                     }}
-                    label="Contraseña:"
+                    label="Contraseña"
                     error={errors.password ? true : false}
                     helperText={errors?.password?.message}
                     {...register("password", {
@@ -372,11 +372,11 @@ const Register = () => {
                       },
                       minLength: {
                         value: 8,
-                        message: "Minimo 8 caracteres",
+                        message: "Mínimo 8 caracteres",
                       },
                       maxLength: {
                         value: 16,
-                        message: "Maximo 50 caracteres",
+                        message: "Máximo 50 caracteres",
                       },
                     })}
                   />
@@ -408,7 +408,7 @@ const Register = () => {
                         </InputAdornment>
                       ),
                     }}
-                    label="Confirma la Contraseña:"
+                    label="Confirma la Contraseña"
                     error={errors.password_confirmation ? true : false}
                     helperText={errors?.password_confirmation?.message}
                     {...register("password_confirmation", {
@@ -418,11 +418,11 @@ const Register = () => {
                       },
                       minLength: {
                         value: 8,
-                        message: "Minimo 8 caracteres",
+                        message: "Mínimo 8 caracteres",
                       },
                       maxLength: {
                         value: 50,
-                        message: "Maximo 50 caracteres",
+                        message: "Máximo 50 caracteres",
                       },
                     })}
                   />
@@ -444,7 +444,7 @@ const Register = () => {
                   },
                 }}
               >
-                Registrarme
+                Registrarse
               </Button>
               <Link to="iniciar-sesion" style={{ width: "100%" }}>
                 <Button
@@ -461,7 +461,7 @@ const Register = () => {
                     },
                   }}
                 >
-                  Iniciar Sesion
+                  Iniciar Sesión
                 </Button>
               </Link>
             </Box>
