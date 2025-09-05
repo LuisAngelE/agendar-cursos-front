@@ -17,7 +17,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import MessageIcon from "@mui/icons-material/Message";
 import { IconButton, Tooltip } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Default from "../layout/img/default.png";
+import { useState } from "react";
+import EditCursos from "../../containers/Cursos/EditCursos";
+import UsuariosContext from "../../context/Usuarios/UsuariosContext";
+import CursosContext from "../../context/Cursos/CursosContext";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -44,10 +49,28 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard({ curso }) {
+  const { users, GetInstructores } = React.useContext(UsuariosContext);
+  const { DeleteCursos } = React.useContext(CursosContext);
   const [expanded, setExpanded] = React.useState(false);
+  const type_user = localStorage.getItem("type_user");
+
+  React.useEffect(() => {
+    GetInstructores();
+  }, []);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const [modalUpdate, OpenModalUpdate] = useState(false);
+  const [id_service, saveIdService] = useState(null);
+  const handleClickOpen = (id) => {
+    OpenModalUpdate(true);
+    saveIdService(id);
+  };
+  const handleClickClose = () => {
+    OpenModalUpdate(false);
+    saveIdService(null);
   };
 
   return (
@@ -90,12 +113,25 @@ export default function RecipeReviewCard({ curso }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton size="small">
-          <Tooltip title="Agregar Multimedia" placement="top">
-            <AddPhotoAlternateIcon sx={{ color: "green" }} />
-          </Tooltip>
-        </IconButton>
-
+        {type_user !== "3" && (
+          <>
+            <IconButton size="small">
+              <Tooltip title="Agregar Multimedia" placement="top">
+                <AddPhotoAlternateIcon sx={{ color: "green" }} />
+              </Tooltip>
+            </IconButton>
+            <IconButton size="small" onClick={() => handleClickOpen(curso.id)}>
+              <Tooltip title="Editar Curso" placement="top">
+                <EditIcon sx={{ color: "#e7a62f" }} />
+              </Tooltip>
+            </IconButton>
+            <IconButton size="small" onClick={() => DeleteCursos(curso.id)}>
+              <Tooltip title="Eliminar Curso" placement="top">
+                <DeleteIcon sx={{ color: "#FF0000" }} />
+              </Tooltip>
+            </IconButton>
+          </>
+        )}
         <IconButton size="small">
           <Tooltip title="Detalle del Curso" placement="top">
             <VisibilityIcon sx={{ color: "blue" }} />
@@ -103,20 +139,8 @@ export default function RecipeReviewCard({ curso }) {
         </IconButton>
 
         <IconButton size="small">
-          <Tooltip title="Editar Curso" placement="top">
-            <EditIcon sx={{ color: "#e7a62f" }} />
-          </Tooltip>
-        </IconButton>
-
-        <IconButton size="small">
-          <Tooltip title="Eliminar Curso" placement="top">
-            <DeleteIcon sx={{ color: "#FF0000" }} />
-          </Tooltip>
-        </IconButton>
-
-        <IconButton size="small">
           <Tooltip title="Agendar Curso" placement="top">
-            <MessageIcon sx={{ color: "blue" }} />
+            <MessageIcon sx={{ color: "#F05E29" }} />
           </Tooltip>
         </IconButton>
 
@@ -134,6 +158,14 @@ export default function RecipeReviewCard({ curso }) {
           <Typography sx={{ marginBottom: 2 }}>{curso.description}</Typography>
         </CardContent>
       </Collapse>
+      {id_service !== null && (
+        <EditCursos
+          open={modalUpdate}
+          handleClose={handleClickClose}
+          id={id_service}
+          users={users}
+        />
+      )}
     </Card>
   );
 }

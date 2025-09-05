@@ -7,7 +7,12 @@ import MethodGet, {
   MethodDelete,
 } from "../../config/service";
 import Swal from "sweetalert2";
-import { GET_ALL_CURSOS, SHOW_ERRORS_API } from "../../types";
+import {
+  GET_ALL_CURSOS,
+  ADD_CURSOS,
+  UPDATE_CURSOS,
+  DELETE_CURSOS,
+} from "../../types";
 const CursosState = ({ children }) => {
   const initialState = {
     cursos: [],
@@ -29,6 +34,117 @@ const CursosState = ({ children }) => {
         console.error(error);
       });
   };
+  
+  const AddCursos = (data) => {
+    MethodPost("/course", data)
+      .then((res) => {
+        dispatch({
+          type: ADD_CURSOS,
+          payload: res.data,
+        });
+        Swal.fire({
+          title: "Listo",
+          text: "Curso agregado con éxito",
+          icon: "success",
+        });
+        GetCursos();
+      })
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
+          const errores = error.response.data.errors;
+          const mensajes = Object.values(errores).flat().join("\n");
+
+          Swal.fire({
+            title: "Error",
+            icon: "warning",
+            text: mensajes,
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            icon: "error",
+            text: "Ocurrió un error inesperado",
+          });
+        }
+      });
+  };
+
+  const UpdateCursos = (data) => {
+    MethodPut(`/course/${data.id}`, data)
+      .then((res) => {
+        dispatch({
+          type: UPDATE_CURSOS,
+          payload: res.data,
+        });
+        Swal.fire({
+          title: "Listo",
+          text: "Curso actualizado con éxito",
+          icon: "success",
+        });
+        GetCursos();
+      })
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
+          const errores = error.response.data.errors;
+          const mensajes = Object.values(errores).flat().join("\n");
+          Swal.fire({
+            title: "Error",
+            icon: "warning",
+            text: mensajes,
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            icon: "error",
+            text: "Ocurrió un error inesperado",
+          });
+        }
+      });
+  };
+
+  const DeleteCursos = (id) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "El curso seleccionado será eliminado",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "No, cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MethodDelete(`/course/${id}`)
+          .then((res) => {
+            Swal.fire({
+              title: "Eliminado",
+              text: res.data.mensaje,
+              icon: "success",
+            });
+            GetCursos();
+            dispatch({
+              type: DELETE_CURSOS,
+              payload: id,
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Error",
+              text: error.response?.data?.mensaje || "Ocurrió un error",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
 
   return (
     <CursosContext.Provider
@@ -38,6 +154,9 @@ const CursosState = ({ children }) => {
         ErrorsApi: state.ErrorsApi,
         success: state.success,
         GetCursos,
+        AddCursos,
+        UpdateCursos,
+        DeleteCursos,
       }}
     >
       {children}

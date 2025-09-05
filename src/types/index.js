@@ -16,3 +16,6 @@ export const USER_CHANGEPASSWORD = "USER_CHANGEPASSWORD";
 export const UPDATE_INFO = "UPDATE_INFO";
 
 export const GET_ALL_CURSOS = "GET_ALL_CURSOS";
+export const ADD_CURSOS = "ADD_CURSOS";
+export const UPDATE_CURSOS = "UPDATE_CURSOS";
+export const DELETE_CURSOS = "DELETE_CURSOS";

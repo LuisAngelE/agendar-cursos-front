@@ -49,6 +49,19 @@ const UsuariosState = ({ children }) => {
       });
   };
 
+  const GetInstructores = () => {
+    MethodGet("/instructores")
+      .then((res) => {
+        dispatch({
+          type: GET_ALL_USERS,
+          payload: res.data.data,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const AddPersonaFisicas = (data) => {
     MethodPost("/store/fisicas", data)
       .then((res) => {
@@ -288,6 +301,7 @@ const UsuariosState = ({ children }) => {
         success: state.success,
         GetUsersFisicos,
         GetUsersMorales,
+        GetInstructores,
         DeleteUsersFisicos,
         DeleteUsersMorales,
         AddPersonaFisicas,
