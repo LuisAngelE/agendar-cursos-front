@@ -8,21 +8,19 @@ import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import MessageIcon from "@mui/icons-material/Message";
-import { IconButton, Tooltip } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Default from "../layout/img/default.png";
 import { useState } from "react";
 import EditCursos from "../../containers/Cursos/EditCursos";
-import UsuariosContext from "../../context/Usuarios/UsuariosContext";
 import CursosContext from "../../context/Cursos/CursosContext";
+import CategoriasContext from "../../context/Categorias/CategoriasContext";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -49,13 +47,13 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard({ curso }) {
-  const { users, GetInstructores } = React.useContext(UsuariosContext);
+  const { categorias, GetCategories } = React.useContext(CategoriasContext);
   const { DeleteCursos } = React.useContext(CursosContext);
   const [expanded, setExpanded] = React.useState(false);
   const type_user = localStorage.getItem("type_user");
 
   React.useEffect(() => {
-    GetInstructores();
+    GetCategories();
   }, []);
 
   const handleExpandClick = () => {
@@ -81,9 +79,7 @@ export default function RecipeReviewCard({ curso }) {
             sx={{ bgcolor: "#F05E29", color: "#FFFFFF" }}
             aria-label="recipe"
           >
-            {curso.instructor?.razon_social
-              ? curso.instructor.razon_social.charAt(0).toUpperCase()
-              : curso.instructor?.name?.charAt(0).toUpperCase() ?? "?"}
+            {curso.title?.charAt(0).toUpperCase() ?? "C"}
           </Avatar>
         }
         action={
@@ -93,13 +89,7 @@ export default function RecipeReviewCard({ curso }) {
             </Tooltip>
           </IconButton>
         }
-        title={`${curso.instructor?.name ?? ""} 
-                ${curso.instructor?.last_name ?? ""} 
-                ${
-                  curso.instructor?.razon_social
-                    ? curso.instructor.razon_social
-                    : ""
-                }`.trim()}
+        title={curso.title}
       />
       <CardMedia
         component="img"
@@ -109,10 +99,15 @@ export default function RecipeReviewCard({ curso }) {
       />
       <CardContent>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {curso.title} {curso.modality}
+          Modalidad: {curso.modality} <br /> Duración: {curso.duration}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+        <IconButton size="small">
+          <Tooltip title="Detalle del Curso" placement="top">
+            <VisibilityIcon sx={{ color: "blue" }} />
+          </Tooltip>
+        </IconButton>
         {type_user !== "3" && (
           <>
             <IconButton size="small">
@@ -132,17 +127,6 @@ export default function RecipeReviewCard({ curso }) {
             </IconButton>
           </>
         )}
-        <IconButton size="small">
-          <Tooltip title="Detalle del Curso" placement="top">
-            <VisibilityIcon sx={{ color: "blue" }} />
-          </Tooltip>
-        </IconButton>
-
-        <IconButton size="small">
-          <Tooltip title="Agendar Curso" placement="top">
-            <MessageIcon sx={{ color: "#F05E29" }} />
-          </Tooltip>
-        </IconButton>
 
         <ExpandMore
           expand={expanded}
@@ -155,7 +139,20 @@ export default function RecipeReviewCard({ curso }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography sx={{ marginBottom: 2 }}>{curso.description}</Typography>
+          <Typography sx={{ marginBottom: 2 }}>
+            Descripción: {curso.description}
+          </Typography>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{
+              bgcolor: "#5D65A2",
+              "&:hover": { bgcolor: "#5D65A2" },
+            }}
+          >
+            <MessageIcon sx={{ mr: 1 }} />
+            Me Interesa Este Curso
+          </Button>
         </CardContent>
       </Collapse>
       {id_service !== null && (
@@ -163,7 +160,7 @@ export default function RecipeReviewCard({ curso }) {
           open={modalUpdate}
           handleClose={handleClickClose}
           id={id_service}
-          users={users}
+          categorias={categorias}
         />
       )}
     </Card>

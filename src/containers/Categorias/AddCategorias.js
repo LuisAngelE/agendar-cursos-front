@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { Grid, MenuItem, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import CursosContext from "../../context/Cursos/CursosContext";
+import CategoriasContext from "../../context/Categorias/CategoriasContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -50,8 +50,8 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddCursos({ modal, handleClose, categorias }) {
-  const { AddCursos } = React.useContext(CursosContext);
+export default function AddCategorias({ modal, handleClose }) {
+  const { AddCategorias } = React.useContext(CategoriasContext);
 
   const {
     register,
@@ -60,7 +60,7 @@ export default function AddCursos({ modal, handleClose, categorias }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    AddCursos(data);
+    AddCategorias(data);
     handleClose();
   };
 
@@ -71,7 +71,7 @@ export default function AddCursos({ modal, handleClose, categorias }) {
       open={modal}
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Agregar Curso
+        Agregar Categoría
       </BootstrapDialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -86,78 +86,28 @@ export default function AddCursos({ modal, handleClose, categorias }) {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Título del curso"
-                {...register("title", {
-                  required: "El título es obligatorio",
+                label="Nombre de la categoría"
+                {...register("name", {
+                  required: "El nombre es obligatorio",
                   minLength: { value: 1, message: "Mínimo 1 caracteres" },
                   maxLength: { value: 200, message: "Máximo 200 caracteres" },
                 })}
-                error={!!errors.title}
-                helperText={errors.title?.message}
+                error={!!errors.name}
+                helperText={errors.name?.message}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Descripción del curso"
+                label="Descripción de la categoría"
                 multiline
                 rows={4}
                 {...register("description", {
-                  required: "La descripción es obligatoria",
                   minLength: { value: 1, message: "Mínimo 1 caracteres" },
                   maxLength: { value: 500, message: "Máximo 500 caracteres" },
                 })}
                 error={!!errors.description}
                 helperText={errors.description?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                select
-                fullWidth
-                label="Selecciona una categoría"
-                defaultValue=""
-                {...register("category_id", {
-                  required: "Debes seleccionar una categoría",
-                })}
-                error={!!errors.category_id}
-                helperText={errors.category_id?.message}
-              >
-                <MenuItem value="">
-                  <em>-- Selecciona una categoría --</em>
-                </MenuItem>
-                {categorias.map((categoria) => (
-                  <MenuItem key={categoria.id} value={categoria.id}>
-                    {categoria.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Modalidad del curso"
-                defaultValue="Presencial"
-                {...register("modality", {
-                  required: "La Modalidad es obligatoria",
-                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                  maxLength: { value: 50, message: "Máximo 50 caracteres" },
-                })}
-                error={!!errors.modality}
-                helperText={errors.modality?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Duración del curso"
-                {...register("duration", {
-                  required: "La Duración es obligatoria",
-                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                  maxLength: { value: 50, message: "Máximo 50 caracteres" },
-                })}
-                error={!!errors.duration}
-                helperText={errors.duration?.message}
               />
             </Grid>
           </Grid>
@@ -177,7 +127,7 @@ export default function AddCursos({ modal, handleClose, categorias }) {
               },
             }}
           >
-            Agregar Curso
+            Agregar Categoría
           </Button>
         </DialogActions>
       </form>

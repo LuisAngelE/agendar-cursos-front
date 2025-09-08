@@ -4,16 +4,16 @@ import Layout from "../../components/layout/Layout";
 import RecipeReviewCard from "../../components/Cards/RecipeReviewCard";
 import CursosContext from "../../context/Cursos/CursosContext";
 import AddCursos from "./AddCursos";
-import UsuariosContext from "../../context/Usuarios/UsuariosContext";
+import CategoriasContext from "../../context/Categorias/CategoriasContext";
 
 const Cursos = () => {
   const { cursos, GetCursos } = useContext(CursosContext);
-  const { users, GetInstructores } = useContext(UsuariosContext);
+  const { categorias, GetCategories } = useContext(CategoriasContext);
   const type_user = localStorage.getItem("type_user");
 
   useEffect(() => {
     GetCursos();
-    GetInstructores();
+    GetCategories();
   }, []);
 
   const [openModal, setOpenModal] = useState(false);
@@ -64,7 +64,7 @@ const Cursos = () => {
             ))
           : null}
       </Grid>
-      <AddCursos modal={openModal} handleClose={handleClose} users={users} />
+      <AddCursos modal={openModal} handleClose={handleClose} categorias={categorias} />
     </Layout>
   );
 };

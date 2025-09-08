@@ -11,7 +11,7 @@ import MethodGet from "../../config/service";
 import { Grid, MenuItem } from "@mui/material";
 import CursosContext from "../../context/Cursos/CursosContext";
 
-export default function EditCursos({ open, handleClose, id, users }) {
+export default function EditCursos({ open, handleClose, id, categorias }) {
   const { UpdateCursos } = useContext(CursosContext);
   const [course, saveCourse] = useState(null);
 
@@ -40,7 +40,7 @@ export default function EditCursos({ open, handleClose, id, users }) {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Editar Usuario Fisico</DialogTitle>
+      <DialogTitle>Editar Curso</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -53,28 +53,6 @@ export default function EditCursos({ open, handleClose, id, users }) {
         <DialogContent>
           {course && (
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  select
-                  fullWidth
-                  label="Selecciona el instructor"
-                  defaultValue={course.instructor_id}
-                  {...register("instructor_id", {
-                    required: "Debes seleccionar un instructor",
-                  })}
-                  error={!!errors.instructor_id}
-                  helperText={errors.instructor_id?.message}
-                >
-                  <MenuItem value="">
-                    <em>-- Selecciona un instructor --</em>
-                  </MenuItem>
-                  {users.map((user) => (
-                    <MenuItem key={user.id} value={user.id}>
-                      {user.name} {user.last_name} {user.razon_social}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -107,6 +85,28 @@ export default function EditCursos({ open, handleClose, id, users }) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  select
+                  fullWidth
+                  label="Selecciona la categoría"
+                  defaultValue={course.category_id}
+                  {...register("category_id", {
+                    required: "Debes seleccionar una categoría",
+                  })}
+                  error={!!errors.category_id}
+                  helperText={errors.category_id?.message}
+                >
+                  <MenuItem value="">
+                    <em>-- Selecciona una categoría --</em>
+                  </MenuItem>
+                  {categorias.map((categoria) => (
+                    <MenuItem key={categoria.id} value={categoria.id}>
+                      {categoria.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   fullWidth
                   label="Modalidad del curso"
                   defaultValue={course.modality}
@@ -117,6 +117,20 @@ export default function EditCursos({ open, handleClose, id, users }) {
                   })}
                   error={!!errors.modality}
                   helperText={errors.modality?.message}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Duración del curso"
+                  defaultValue={course.duration}
+                  {...register("duration", {
+                    required: "La Duración es obligatoria",
+                    minLength: { value: 1, message: "Mínimo 1 caracteres" },
+                    maxLength: { value: 50, message: "Máximo 50 caracteres" },
+                  })}
+                  error={!!errors.duration}
+                  helperText={errors.duration?.message}
                 />
               </Grid>
             </Grid>

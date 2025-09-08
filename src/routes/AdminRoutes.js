@@ -6,6 +6,7 @@ import PersonasFisicas from "../containers/PersonasFisicas/PersonasFisicas";
 import PersonasMorales from "../containers/PersonasMorales/PersonasMorales";
 import Perfil from "../containers/Perfil/Perfil";
 import Agenda from "../containers/Agenda/Agenda";
+import Categorias from "../containers/Categorias/Categorias";
 
 const AdminRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AdminRoutes = () => {
       <Route exact path="/Cursos" component={Cursos} />
       <Route exact path="/Agenda" component={Agenda} />
       <Route exact path="/Perfil" component={Perfil} />
+      <Route exact path="/Categorias" component={Categorias} />
     </Switch>
   );
 };

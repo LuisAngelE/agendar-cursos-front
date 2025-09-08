@@ -7,7 +7,6 @@ import {
   Toolbar,
   List,
   CssBaseline,
-  Typography,
   Divider,
   IconButton,
   Tooltip,
@@ -20,15 +19,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import HomeIcon from "@mui/icons-material/Home";
-import SchoolIcon from "@mui/icons-material/School";
 import EventIcon from "@mui/icons-material/Event";
 import PersonIcon from "@mui/icons-material/Person";
 import BusinessIcon from "@mui/icons-material/Business";
 import ClassIcon from "@mui/icons-material/Class";
-import GroupIcon from "@mui/icons-material/Group";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Link } from "react-router-dom";
 import Logo from "../layout/img/logo.png";
+import CategoryIcon from '@mui/icons-material/Category';
 import AuthContext from "../../context/Auth/AuthContext";
 
 const drawerWidth = 240;
@@ -114,14 +113,9 @@ export default function Header({ children }) {
       icon: <HomeIcon />,
     },
     {
-      name: "Personas Físicas",
-      value: "/PersonasFisicas",
-      icon: <PersonIcon />,
-    },
-    {
-      name: "Personas Morales",
-      value: "/PersonasMorales",
-      icon: <BusinessIcon />,
+      name: "Categorías",
+      value: "/Categorias",
+      icon: <CategoryIcon  />,
     },
     {
       name: "Cursos",
@@ -132,6 +126,16 @@ export default function Header({ children }) {
       name: "Agenda",
       value: "/Agenda",
       icon: <EventIcon />,
+    },
+    {
+      name: "Personas Físicas",
+      value: "/PersonasFisicas",
+      icon: <PersonIcon />,
+    },
+    {
+      name: "Personas Morales",
+      value: "/PersonasMorales",
+      icon: <BusinessIcon />,
     },
     {
       name: "Mi Perfil",
@@ -220,8 +224,8 @@ export default function Header({ children }) {
               src={Logo}
               alt="logo"
               style={{
-                width: 75,
-                height: 50,
+                width: 80,
+                height: 60,
               }}
             />
           </Box>
