@@ -1,4 +1,5 @@
 import "./App.css";
+import AgendaState from "./context/Agenda/AgendaState";
 import AuthState from "./context/Auth/AuthState";
 import CategoriasState from "./context/Categorias/CategoriasState";
 import CursosState from "./context/Cursos/CursosState";
@@ -11,7 +12,9 @@ function AdminApp() {
       <UsuarioState>
         <CursosState>
           <CategoriasState>
-            <AppRouter />
+            <AgendaState>
+              <AppRouter />
+            </AgendaState>
           </CategoriasState>
         </CursosState>
       </UsuarioState>

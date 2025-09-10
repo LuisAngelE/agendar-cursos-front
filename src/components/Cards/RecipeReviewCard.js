@@ -21,6 +21,8 @@ import { useState } from "react";
 import EditCursos from "../../containers/Cursos/EditCursos";
 import CursosContext from "../../context/Cursos/CursosContext";
 import CategoriasContext from "../../context/Categorias/CategoriasContext";
+import ModalMultimedia from "../../containers/Cursos/ModalMultimedia";
+import AgendaModal from "../../containers/Agenda/AgendaModal";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -49,15 +51,26 @@ const ExpandMore = styled((props) => {
 export default function RecipeReviewCard({ curso }) {
   const { categorias, GetCategories } = React.useContext(CategoriasContext);
   const { DeleteCursos } = React.useContext(CursosContext);
-  const [expanded, setExpanded] = React.useState(false);
   const type_user = localStorage.getItem("type_user");
 
   React.useEffect(() => {
     GetCategories();
   }, []);
 
+  const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const [id_user, saveUser] = useState(null);
+  const [modalMultimedia, openModalMultimedia] = useState(false);
+  const handleOpenMultimedia = (id) => {
+    openModalMultimedia(true);
+    saveUser(id);
+  };
+  const handleCloseMultimedia = () => {
+    openModalMultimedia(false);
+    saveUser(null);
   };
 
   const [modalUpdate, OpenModalUpdate] = useState(false);
@@ -69,6 +82,17 @@ export default function RecipeReviewCard({ curso }) {
   const handleClickClose = () => {
     OpenModalUpdate(false);
     saveIdService(null);
+  };
+
+  const [id_agenda, saveIdAgenda] = useState(null);
+  const [modalAgenda, openModalAgenda] = useState(false);
+  const handleOpenAgenda = (id) => {
+    openModalAgenda(true);
+    saveIdAgenda(id);
+  };
+  const handleCloseAgenda = () => {
+    openModalAgenda(false);
+    saveIdAgenda(null);
   };
 
   return (
@@ -94,7 +118,7 @@ export default function RecipeReviewCard({ curso }) {
       <CardMedia
         component="img"
         height="194"
-        image={Default}
+        image={curso.image?.url || Default}
         alt="Paella dish"
       />
       <CardContent>
@@ -103,14 +127,17 @@ export default function RecipeReviewCard({ curso }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton size="small">
+        {/* <IconButton size="small">
           <Tooltip title="Detalle del Curso" placement="top">
             <VisibilityIcon sx={{ color: "blue" }} />
           </Tooltip>
-        </IconButton>
+        </IconButton> */}
         {type_user !== "3" && (
           <>
-            <IconButton size="small">
+            <IconButton
+              size="small"
+              onClick={() => handleOpenMultimedia(curso.id)}
+            >
               <Tooltip title="Agregar Multimedia" placement="top">
                 <AddPhotoAlternateIcon sx={{ color: "green" }} />
               </Tooltip>
@@ -143,6 +170,7 @@ export default function RecipeReviewCard({ curso }) {
             Descripción: {curso.description}
           </Typography>
           <Button
+            onClick={() => handleOpenAgenda(curso.id)}
             fullWidth
             variant="contained"
             sx={{
@@ -155,12 +183,26 @@ export default function RecipeReviewCard({ curso }) {
           </Button>
         </CardContent>
       </Collapse>
+      {id_user !== null && (
+        <ModalMultimedia
+          open={modalMultimedia}
+          handleClose={handleCloseMultimedia}
+          id={id_user}
+        />
+      )}
       {id_service !== null && (
         <EditCursos
           open={modalUpdate}
           handleClose={handleClickClose}
           id={id_service}
           categorias={categorias}
+        />
+      )}
+      {id_agenda !== null && (
+        <AgendaModal
+          open={modalAgenda}
+          handleClose={handleCloseAgenda}
+          id={id_agenda}
         />
       )}
     </Card>

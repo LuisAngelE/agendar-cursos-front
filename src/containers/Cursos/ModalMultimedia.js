@@ -8,6 +8,8 @@ import { Box, Grid, IconButton, InputLabel, Tooltip } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AuthContext from "../../context/Auth/AuthContext";
+import Default from "../../components/layout/img/default.png";
+import CursosContext from "../../context/Cursos/CursosContext";
 
 const useStyles = makeStyles({
   input: {
@@ -20,10 +22,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function AttachFileMultimedia({ open, handleClose, id }) {
+export default function ModalMultimedia({ open, handleClose, id }) {
   const classes = useStyles();
   const [image, saveImage] = useState({
-    urlPhoto: "http://127.0.0.1:8000/images/default.png",
+    urlPhoto: Default,
     image: "",
   });
   const [debouncedFile] = useDebounce(image.image, 500);
@@ -35,7 +37,7 @@ export default function AttachFileMultimedia({ open, handleClose, id }) {
     });
   };
 
-  const { ChangePhoto } = useContext(AuthContext);
+  const { ChangePhotoCourse } = useContext(CursosContext);
 
   useEffect(() => {
     ExistImage();
@@ -46,7 +48,7 @@ export default function AttachFileMultimedia({ open, handleClose, id }) {
       var data = {};
       data.id = id;
       data.image = image.image;
-      ChangePhoto(data);
+      ChangePhotoCourse(data);
     }
   };
 

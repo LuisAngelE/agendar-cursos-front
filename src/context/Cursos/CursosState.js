@@ -1,6 +1,7 @@
 import React, { useReducer } from "react";
 import CursosContext from "./CursosContext";
 import CursosReducer from "./CursosReducer";
+import headerConfig from "../../config/imageHeaders";
 import MethodGet, {
   MethodPost,
   MethodPut,
@@ -34,7 +35,7 @@ const CursosState = ({ children }) => {
         console.error(error);
       });
   };
-  
+
   const AddCursos = (data) => {
     MethodPost("/course", data)
       .then((res) => {
@@ -146,6 +147,41 @@ const CursosState = ({ children }) => {
     });
   };
 
+  const ChangePhotoCourse = (data) => {
+    Swal.fire({
+      title: "¿Estás seguro de que quieres agregar esta imagen?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.value) {
+        const formData = new FormData();
+        formData.append("image", data.image);
+        let url = `/courses/${data.id}/images`;
+        MethodPost(url, formData, { headerConfig })
+          .then((res) => {
+            Swal.fire({
+              title: "Foto",
+              text: "Modificada Correctamente",
+              icon: "success",
+            }).then(() => {
+              window.location.reload();
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Error",
+              icon: "error",
+              text: "Esta imagen no es compatible. Por favor, selecciona otra imagen.",
+            });
+          });
+      }
+    });
+  };
+
   return (
     <CursosContext.Provider
       value={{
@@ -157,6 +193,7 @@ const CursosState = ({ children }) => {
         AddCursos,
         UpdateCursos,
         DeleteCursos,
+        ChangePhotoCourse,
       }}
     >
       {children}

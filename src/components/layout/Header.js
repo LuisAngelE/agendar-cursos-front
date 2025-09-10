@@ -27,7 +27,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Link } from "react-router-dom";
 import Logo from "../layout/img/logo.png";
-import CategoryIcon from '@mui/icons-material/Category';
+import CategoryIcon from "@mui/icons-material/Category";
 import AuthContext from "../../context/Auth/AuthContext";
 
 const drawerWidth = 240;
@@ -107,15 +107,15 @@ export default function Header({ children }) {
   let type_user = localStorage.getItem("type_user");
 
   const Admin = [
-    {
-      name: "Inicio",
-      value: "/",
-      icon: <HomeIcon />,
-    },
+    // {
+    //   name: "Inicio",
+    //   value: "/",
+    //   icon: <HomeIcon />,
+    // },
     {
       name: "Categorías",
       value: "/Categorias",
-      icon: <CategoryIcon  />,
+      icon: <CategoryIcon />,
     },
     {
       name: "Cursos",

@@ -27,17 +27,46 @@ const Cursos = () => {
   return (
     <Layout>
       <Grid container spacing={2} sx={{ padding: 2 }}>
-        <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
-          <Typography
-            fontWeight="bold"
-            fontFamily="monospace"
-            variant="h5"
-            sx={{ color: "black" }}
-          >
-            Cursos
-          </Typography>
-        </Grid>
-        {type_user !== "3" && (
+        {type_user === "3" && (
+          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
+            <Typography
+              fontWeight="bold"
+              fontFamily="monospace"
+              variant="h5"
+              sx={{ color: "black" }}
+            >
+              Todos los Cursos
+            </Typography>
+          </Grid>
+        )}
+
+        {type_user === "2" && (
+          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
+            <Typography
+              fontWeight="bold"
+              fontFamily="monospace"
+              variant="h5"
+              sx={{ color: "black" }}
+            >
+              Mis Cursos Instructor
+            </Typography>
+          </Grid>
+        )}
+
+        {type_user === "1" && (
+          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
+            <Typography
+              fontWeight="bold"
+              fontFamily="monospace"
+              variant="h5"
+              sx={{ color: "black" }}
+            >
+              Cursos
+            </Typography>
+          </Grid>
+        )}
+
+        {(type_user === "1" || type_user === "2") && (
           <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
             <Button
               onClick={handleClickOpen}
@@ -56,6 +85,7 @@ const Cursos = () => {
             </Button>
           </Grid>
         )}
+
         {cursos.length > 0
           ? cursos.map((curso) => (
               <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
@@ -64,7 +94,11 @@ const Cursos = () => {
             ))
           : null}
       </Grid>
-      <AddCursos modal={openModal} handleClose={handleClose} categorias={categorias} />
+      <AddCursos
+        modal={openModal}
+        handleClose={handleClose}
+        categorias={categorias}
+      />
     </Layout>
   );
 };
