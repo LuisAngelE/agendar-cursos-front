@@ -23,8 +23,17 @@ const CursosState = ({ children }) => {
   };
   const [state, dispatch] = useReducer(CursosReducer, initialState);
 
-  const GetCursos = () => {
-    MethodGet("/course")
+  const GetCursos = (nombre = "", category_id = "") => {
+    let url = "/course";
+    const params = new URLSearchParams();
+
+    if (nombre.trim() !== "") params.append("nombre", nombre);
+    if (category_id !== "") params.append("category_id", category_id);
+
+    const queryString = params.toString();
+    if (queryString) url += `?${queryString}`;
+
+    MethodGet(url)
       .then((res) => {
         dispatch({
           type: GET_ALL_CURSOS,

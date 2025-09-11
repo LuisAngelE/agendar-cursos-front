@@ -17,7 +17,7 @@ import { useContext } from "react";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 import "dayjs/locale/es";
 
-export default function AgendaModal({ open, handleClose, id }) {
+export default function AgendaModal({ open, handleClose, id, curso }) {
   const { AddAgendas } = useContext(AgendaContext);
 
   const {
@@ -75,9 +75,15 @@ export default function AgendaModal({ open, handleClose, id }) {
                     shouldDisableDate={(date) => {
                       const day = date.day();
                       const today = dayjs();
-                      return (
-                        day === 0 || day === 6 || date.isBefore(today, "day")
-                      );
+                      const isWeekend = day === 0 || day === 6;
+                      const isPastDate = date.isBefore(today, "day");
+
+                      const isScheduled = curso.schedules.some((schedule) => {
+                        const scheduledDate = dayjs(schedule.start_date);
+                        return date.isSame(scheduledDate, "day");
+                      });
+
+                      return isWeekend || isPastDate || isScheduled;
                     }}
                   />
                   <Typography variant="subtitle1">

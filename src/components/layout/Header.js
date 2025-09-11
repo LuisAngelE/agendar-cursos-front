@@ -18,17 +18,18 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import HomeIcon from "@mui/icons-material/Home";
 import EventIcon from "@mui/icons-material/Event";
 import PersonIcon from "@mui/icons-material/Person";
 import BusinessIcon from "@mui/icons-material/Business";
-import ClassIcon from "@mui/icons-material/Class";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Link } from "react-router-dom";
 import Logo from "../layout/img/logo.png";
 import CategoryIcon from "@mui/icons-material/Category";
 import AuthContext from "../../context/Auth/AuthContext";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import HomeIcon from "@mui/icons-material/Home";
+import Badge from "@mui/material/Badge";
+import AgendaContext from "../../context/Agenda/AgendaContext";
 
 const drawerWidth = 240;
 
@@ -103,15 +104,20 @@ export default function Header({ children }) {
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
 
+  const { agendas, GetAgendas } = React.useContext(AgendaContext);
   const { cerrarSesion } = React.useContext(AuthContext);
   let type_user = localStorage.getItem("type_user");
 
+  React.useEffect(() => {
+    GetAgendas();
+  }, []);
+
   const Admin = [
-    // {
-    //   name: "Inicio",
-    //   value: "/",
-    //   icon: <HomeIcon />,
-    // },
+    {
+      name: "Inicio",
+      value: "/",
+      icon: <HomeIcon />,
+    },
     {
       name: "Categorías",
       value: "/Categorias",
@@ -120,12 +126,16 @@ export default function Header({ children }) {
     {
       name: "Cursos",
       value: "/Cursos",
-      icon: <ClassIcon />,
+      icon: <MenuBookIcon />,
     },
     {
-      name: "Agenda",
+      name: "Cursos Agendados",
       value: "/Agenda",
-      icon: <EventIcon />,
+      icon: (
+        <Badge badgeContent={agendas.length} color="error">
+          <EventIcon />
+        </Badge>
+      ),
     },
     {
       name: "Personas Físicas",
@@ -148,12 +158,16 @@ export default function Header({ children }) {
     {
       name: "Mis Cursos",
       value: "/Cursos",
-      icon: <ClassIcon />,
+      icon: <MenuBookIcon />,
     },
     {
-      name: "Mi Agenda",
+      name: "Mis Cursos Agendados",
       value: "/Agenda",
-      icon: <EventIcon />,
+      icon: (
+        <Badge badgeContent={agendas.length} color="error">
+          <EventIcon />
+        </Badge>
+      ),
     },
     {
       name: "Mi Perfil",
@@ -166,12 +180,16 @@ export default function Header({ children }) {
     {
       name: "Todos los Cursos",
       value: "/Cursos",
-      icon: <ClassIcon />,
+      icon: <MenuBookIcon />,
     },
     {
-      name: "Mis Cusos Solicitados",
+      name: "Mis Cusos Agendados",
       value: "Agenda",
-      icon: <EventIcon />,
+      icon: (
+        <Badge badgeContent={agendas.length} color="error">
+          <EventIcon />
+        </Badge>
+      ),
     },
     {
       name: "Perfil",

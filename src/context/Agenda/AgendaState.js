@@ -18,16 +18,33 @@ const AgendaState = ({ children }) => {
   const [state, dispatch] = useReducer(AgendaReducer, initialState);
 
   const GetAgendas = () => {
-    MethodGet("/courseSchedule")
-      .then((res) => {
-        dispatch({
-          type: GET_ALL_AGENDAS,
-          payload: res.data,
+    let type_user = localStorage.getItem("type_user");
+    let user_id = localStorage.getItem("user_id");
+    if (type_user === "1") {
+      let url = `/courseSchedule`;
+      MethodGet(url)
+        .then((res) => {
+          dispatch({
+            type: GET_ALL_AGENDAS,
+            payload: res.data,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    } else if (type_user === "2" || type_user === "3") {
+      let url = `/courseSchedule/${user_id}`;
+      MethodGet(url)
+        .then((res) => {
+          dispatch({
+            type: GET_ALL_AGENDAS,
+            payload: res.data,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const AddAgendas = (data) => {
@@ -38,18 +55,13 @@ const AgendaState = ({ children }) => {
           payload: res.data,
         });
         Swal.fire({
-          title: "Listo",
-          text: "Agenda agregada con éxito",
+          title: "Tu solicitud ha sido registrada.",
+          text: "Pronto será revisada y nos pondremos en contacto para informarte si el curso fue aprobado.",
           icon: "success",
         });
-        GetAgendas();
       })
       .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
+        if (error.response?.data?.errors) {
           const errores = error.response.data.errors;
           const mensajes = Object.values(errores).flat().join("\n");
 
@@ -57,6 +69,12 @@ const AgendaState = ({ children }) => {
             title: "Error",
             icon: "warning",
             text: mensajes,
+          });
+        } else if (error.response?.data?.error) {
+          Swal.fire({
+            title: "Error",
+            icon: "warning",
+            text: error.response.data.error,
           });
         } else {
           Swal.fire({

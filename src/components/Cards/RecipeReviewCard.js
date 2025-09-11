@@ -203,6 +203,7 @@ export default function RecipeReviewCard({ curso }) {
           open={modalAgenda}
           handleClose={handleCloseAgenda}
           id={id_agenda}
+          curso={curso}
         />
       )}
     </Card>

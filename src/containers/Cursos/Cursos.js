@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import Layout from "../../components/layout/Layout";
 import RecipeReviewCard from "../../components/Cards/RecipeReviewCard";
 import CursosContext from "../../context/Cursos/CursosContext";
@@ -7,12 +7,19 @@ import AddCursos from "./AddCursos";
 import CategoriasContext from "../../context/Categorias/CategoriasContext";
 
 const Cursos = () => {
-  const { cursos, GetCursos } = useContext(CursosContext);
+  const [searchNombre, setSearchNombre] = React.useState("");
+  const [searchTipoCategoria, setSearchTipoCategoria] = React.useState("");
+
   const { categorias, GetCategories } = useContext(CategoriasContext);
+  const { cursos, GetCursos } = useContext(CursosContext);
   const type_user = localStorage.getItem("type_user");
 
   useEffect(() => {
-    GetCursos();
+    GetCursos(searchNombre, searchTipoCategoria);
+    GetCategories();
+  }, [searchNombre, searchTipoCategoria]);
+
+  useEffect(() => {
     GetCategories();
   }, []);
 
@@ -24,6 +31,7 @@ const Cursos = () => {
   const handleClose = () => {
     setOpenModal(false);
   };
+
   return (
     <Layout>
       <Grid container spacing={2} sx={{ padding: 2 }}>
@@ -85,6 +93,33 @@ const Cursos = () => {
             </Button>
           </Grid>
         )}
+        <Grid item xs={6}>
+          <TextField
+            label="Buscar por nombre del curso"
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={searchNombre}
+            onChange={(e) => setSearchNombre(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            select
+            label="Filtrar por tipo de categoria"
+            value={searchTipoCategoria}
+            onChange={(e) => setSearchTipoCategoria(e.target.value)}
+            fullWidth
+            size="small"
+          >
+            <MenuItem value="">Todos</MenuItem>
+            {categorias.map((categoria) => (
+              <MenuItem key={categoria.id} value={categoria.id}>
+                {categoria.name}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
 
         {cursos.length > 0
           ? cursos.map((curso) => (
