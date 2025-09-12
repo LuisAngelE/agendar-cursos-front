@@ -7,7 +7,13 @@ import MethodGet, {
   MethodDelete,
 } from "../../config/service";
 import Swal from "sweetalert2";
-import { GET_ALL_AGENDAS, ADD_AGENDAS } from "../../types";
+import {
+  GET_ALL_AGENDAS,
+  ADD_AGENDAS,
+  ADD_INSTRUCTOR,
+  ACCEPT_AGENDATION,
+  CANCELED_AGENDATION,
+} from "../../types";
 const AgendaState = ({ children }) => {
   const initialState = {
     agendas: [],
@@ -86,6 +92,116 @@ const AgendaState = ({ children }) => {
       });
   };
 
+  const AddInstructor = (data) => {
+    MethodPost(`/courses/${data.course_id}/assign-instructor`, data)
+      .then((res) => {
+        dispatch({
+          type: ADD_INSTRUCTOR,
+          payload: res.data,
+        });
+        Swal.fire({
+          title: "Listo",
+          text: "Instructor asignado correctamente al curso.",
+          icon: "success",
+        });
+        GetAgendas();
+      })
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
+          const errores = error.response.data.errors;
+          const mensajes = Object.values(errores).flat().join("\n");
+
+          Swal.fire({
+            title: "Error",
+            icon: "warning",
+            text: mensajes,
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            icon: "error",
+            text: "Ocurrió un error inesperado",
+          });
+        }
+      });
+  };
+
+  const AcceptAgendation = (id) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿El curso agendado será aceptado?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, agendar",
+      cancelButtonText: "No, agendar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MethodPost(`/reservations/${id}/confirm`)
+          .then((res) => {
+            Swal.fire({
+              title: "Agendado",
+              text: res.data.mensaje,
+              icon: "success",
+            });
+            GetAgendas();
+            dispatch({
+              type: ACCEPT_AGENDATION,
+              payload: id,
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Error",
+              text: error.response?.data?.mensaje || "Ocurrió un error",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
+
+    const CanceledAgendation = (id) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿El curso agendado será cancelado?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, cancelar",
+      cancelButtonText: "No, cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MethodPost(`/reservations/${id}/cancel`)
+          .then((res) => {
+            Swal.fire({
+              title: "Cancelado",
+              text: res.data.mensaje,
+              icon: "success",
+            });
+            GetAgendas();
+            dispatch({
+              type: CANCELED_AGENDATION,
+              payload: id,
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Error",
+              text: error.response?.data?.mensaje || "Ocurrió un error",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
+
   return (
     <AgendaContext.Provider
       value={{
@@ -95,6 +211,9 @@ const AgendaState = ({ children }) => {
         success: state.success,
         GetAgendas,
         AddAgendas,
+        AddInstructor,
+        AcceptAgendation,
+        CanceledAgendation,
       }}
     >
       {children}

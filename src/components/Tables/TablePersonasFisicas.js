@@ -82,7 +82,7 @@ export default function TablePersonasFisicas({ users }) {
               <StyledTableCell>Apellido</StyledTableCell>
               <StyledTableCell>Fecha de Nacimiento</StyledTableCell>
               <StyledTableCell>Curp</StyledTableCell>
-              <StyledTableCell>Rfc</StyledTableCell>
+              <StyledTableCell>RFC</StyledTableCell>
               <StyledTableCell>Correo Electronico</StyledTableCell>
               <StyledTableCell>Telefono</StyledTableCell>
               <StyledTableCell>Tipo de Usuario</StyledTableCell>
@@ -116,7 +116,7 @@ export default function TablePersonasFisicas({ users }) {
                   <StyledTableCell data-label="Curp">
                     {user.curp}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Rfc">{user.rfc}</StyledTableCell>
+                  <StyledTableCell data-label="RFC">{user.rfc}</StyledTableCell>
 
                   <StyledTableCell data-label="Correo Electrónico">
                     {user.email}

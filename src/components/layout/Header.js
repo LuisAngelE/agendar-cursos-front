@@ -20,6 +20,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import EventIcon from "@mui/icons-material/Event";
 import PersonIcon from "@mui/icons-material/Person";
+import GroupIcon from "@mui/icons-material/Group";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
@@ -29,6 +30,7 @@ import AuthContext from "../../context/Auth/AuthContext";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import HomeIcon from "@mui/icons-material/Home";
 import Badge from "@mui/material/Badge";
+import EventNoteIcon from "@mui/icons-material/EventNote";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 
 const drawerWidth = 240;
@@ -133,14 +135,14 @@ export default function Header({ children }) {
       value: "/Agenda",
       icon: (
         <Badge badgeContent={agendas.length} color="error">
-          <EventIcon />
+          <EventNoteIcon />
         </Badge>
       ),
     },
     {
       name: "Personas Físicas",
       value: "/PersonasFisicas",
-      icon: <PersonIcon />,
+      icon: <GroupIcon />,
     },
     {
       name: "Personas Morales",
@@ -165,7 +167,7 @@ export default function Header({ children }) {
       value: "/Agenda",
       icon: (
         <Badge badgeContent={agendas.length} color="error">
-          <EventIcon />
+          <EventNoteIcon />
         </Badge>
       ),
     },

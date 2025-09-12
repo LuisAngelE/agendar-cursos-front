@@ -79,7 +79,7 @@ export default function TablePersonasMorales({ users }) {
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Tipo de Persona</StyledTableCell>
               <StyledTableCell>Razon Social</StyledTableCell>
-              <StyledTableCell>Rfc</StyledTableCell>
+              <StyledTableCell>RFC</StyledTableCell>
               <StyledTableCell>Representante Legal</StyledTableCell>
               <StyledTableCell>Domicilio Fiscal</StyledTableCell>
               <StyledTableCell>Correo Electronico</StyledTableCell>
@@ -102,7 +102,7 @@ export default function TablePersonasMorales({ users }) {
                   <StyledTableCell data-label="Razon Social">
                     {user.razon_social}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Rfc">{user.rfc}</StyledTableCell>
+                  <StyledTableCell data-label="RFC">{user.rfc}</StyledTableCell>
                   <StyledTableCell data-label="Representante Legal">
                     {user.representante_legal}
                   </StyledTableCell>
