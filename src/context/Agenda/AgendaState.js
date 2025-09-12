@@ -13,6 +13,7 @@ import {
   ADD_INSTRUCTOR,
   ACCEPT_AGENDATION,
   CANCELED_AGENDATION,
+  UPDATE_AGENDAS,
 } from "../../types";
 const AgendaState = ({ children }) => {
   const initialState = {
@@ -39,7 +40,7 @@ const AgendaState = ({ children }) => {
           console.log(error);
         });
     } else if (type_user === "2" || type_user === "3") {
-      let url = `/courseSchedule/${user_id}`;
+      let url = `/indexTypeUserAgenda/${user_id}`;
       MethodGet(url)
         .then((res) => {
           dispatch({
@@ -92,8 +93,48 @@ const AgendaState = ({ children }) => {
       });
   };
 
+  const UpdateAgendas = (data) => {
+    MethodPost(`/courseSchedule/${data.id}/edit`, data)
+      .then((res) => {
+        dispatch({
+          type: UPDATE_AGENDAS,
+          payload: res.data,
+        });
+        Swal.fire({
+          title: "Tu solicitud ha sido actualizada.",
+          text: "Pronto será revisada y nos pondremos en contacto para informarte si el curso fue aprobado.",
+          icon: "success",
+        });
+        GetAgendas();
+      })
+      .catch((error) => {
+        if (error.response?.data?.errors) {
+          const errores = error.response.data.errors;
+          const mensajes = Object.values(errores).flat().join("\n");
+
+          Swal.fire({
+            title: "Error",
+            icon: "warning",
+            text: mensajes,
+          });
+        } else if (error.response?.data?.error) {
+          Swal.fire({
+            title: "Error",
+            icon: "warning",
+            text: error.response.data.error,
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            icon: "error",
+            text: "Ocurrió un error inesperado",
+          });
+        }
+      });
+  };
+
   const AddInstructor = (data) => {
-    MethodPost(`/courses/${data.course_id}/assign-instructor`, data)
+    MethodPost(`/courses/${data.agenda_id}/assign-instructor`, data)
       .then((res) => {
         dispatch({
           type: ADD_INSTRUCTOR,
@@ -166,7 +207,7 @@ const AgendaState = ({ children }) => {
     });
   };
 
-    const CanceledAgendation = (id) => {
+  const CanceledAgendation = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: "¿El curso agendado será cancelado?",
@@ -202,6 +243,42 @@ const AgendaState = ({ children }) => {
     });
   };
 
+  const DeleteAgendation = (id) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿El curso agendado será eliminado?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "No, eliminar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MethodDelete(`/courseSchedule/${id}`)
+          .then((res) => {
+            Swal.fire({
+              title: "Cancelado",
+              text: res.data.mensaje,
+              icon: "success",
+            });
+            GetAgendas();
+            dispatch({
+              type: CANCELED_AGENDATION,
+              payload: id,
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Error",
+              text: error.response?.data?.mensaje || "Ocurrió un error",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
+
   return (
     <AgendaContext.Provider
       value={{
@@ -214,6 +291,8 @@ const AgendaState = ({ children }) => {
         AddInstructor,
         AcceptAgendation,
         CanceledAgendation,
+        UpdateAgendas,
+        DeleteAgendation,
       }}
     >
       {children}

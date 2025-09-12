@@ -15,6 +15,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useContext, useState } from "react";
 import AddInstructor from "../../containers/Agenda/AddInstructor";
 import AgendaContext from "../../context/Agenda/AgendaContext";
+import EditAgenda from "../../containers/Agenda/EditAgenda";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -78,10 +79,10 @@ const getStatusColor = (status) => {
 };
 
 export default function TableAgenda({ agendas }) {
-  const { AcceptAgendation, CanceledAgendation } = useContext(AgendaContext);
+  const { AcceptAgendation, CanceledAgendation, DeleteAgendation } = useContext(AgendaContext);
   let type_user = localStorage.getItem("type_user");
 
-  const [course_id, saveIdInstructor] = useState(null);
+  const [agenda_id, saveIdInstructor] = useState(null);
   const [modalInstrcutor, openModalInstructor] = useState(false);
   const handleOpenInstructor = (id) => {
     openModalInstructor(true);
@@ -90,6 +91,17 @@ export default function TableAgenda({ agendas }) {
   const handleCloseInstructor = () => {
     openModalInstructor(false);
     saveIdInstructor(null);
+  };
+
+  const [modalUpdate, OpenModalUpdate] = useState(false);
+  const [id_service, saveIdService] = useState(null);
+  const handleClickOpen = (id) => {
+    OpenModalUpdate(true);
+    saveIdService(id);
+  };
+  const handleClickClose = () => {
+    OpenModalUpdate(false);
+    saveIdService(null);
   };
 
   return (
@@ -162,10 +174,10 @@ export default function TableAgenda({ agendas }) {
                     }}
                   >
                     {{
-                      1: "Pendiente",
-                      2: "Confirmada",
-                      3: "Cancelada",
-                      4: "Asistida",
+                      1: "Pendiente de Confirmación",
+                      2: "Agendación Confirmada",
+                      3: "Agendación Cancelada",
+                      4: "Clase Realizada",
                     }[agenda.reservations?.[0]?.status] || "Desconocido"}
                   </StyledTableCell>
                   <StyledTableCell data-label="Acciones">
@@ -174,7 +186,7 @@ export default function TableAgenda({ agendas }) {
                       !agenda.instructor_id && (
                         <IconButton
                           size="small"
-                          onClick={() => handleOpenInstructor(agenda.course_id)}
+                          onClick={() => handleOpenInstructor(agenda.id)}
                         >
                           <Tooltip title="Agregar Instructor" placement="top">
                             <AccountCircleIcon sx={{ color: "blue" }} />
@@ -183,8 +195,8 @@ export default function TableAgenda({ agendas }) {
                       )}
 
                     {agenda.reservations?.[0]?.status === 1 &&
-                      type_user === "1" &&
-                      agenda.instructor_id && ( // solo mostrar si ya tiene instructor
+                      agenda.instructor_id &&
+                      (type_user === "1" || type_user === "2") && (
                         <IconButton
                           size="small"
                           onClick={() =>
@@ -197,33 +209,44 @@ export default function TableAgenda({ agendas }) {
                         </IconButton>
                       )}
 
-                    {type_user === "3" && (
-                      <>
-                        <IconButton size="small">
-                          <Tooltip title="Editar Agendación" placement="top">
-                            <EditIcon sx={{ color: "#e7a62f" }} />
+                    {agenda.reservations?.[0]?.status === 1 &&
+                      type_user === "3" && (
+                        <>
+                          <IconButton
+                            size="small"
+                            onClick={() => handleClickOpen(agenda.id)}
+                          >
+                            <Tooltip title="Editar Agendación" placement="top">
+                              <EditIcon sx={{ color: "#e7a62f" }} />
+                            </Tooltip>
+                          </IconButton>
+                          <IconButton
+                            size="small"
+                            onClick={() => DeleteAgendation(agenda.id)}
+                          >
+                            <Tooltip
+                              title="Eliminar Agendación"
+                              placement="top"
+                            >
+                              <DeleteIcon sx={{ color: "#FF0000" }} />
+                            </Tooltip>
+                          </IconButton>
+                        </>
+                      )}
+
+                    {agenda.reservations?.[0]?.status === 2 &&
+                      (type_user === "1" || type_user === "2") && (
+                        <IconButton
+                          size="small"
+                          onClick={() =>
+                            CanceledAgendation(agenda.reservations?.[0]?.id)
+                          }
+                        >
+                          <Tooltip title="Cancelar Agendación" placement="top">
+                            <HighlightOffIcon sx={{ color: "red" }} />
                           </Tooltip>
                         </IconButton>
-                        <IconButton size="small">
-                          <Tooltip title="Eliminar Agendación" placement="top">
-                            <DeleteIcon sx={{ color: "#FF0000" }} />
-                          </Tooltip>
-                        </IconButton>
-                      </>
-                    )}
-                    {/* 
-                    <IconButton
-                      size="small"
-                      onClick={() =>
-                        CanceledAgendation(agenda.reservations?.[0]?.id)
-                      }
-                    >
-                      <Tooltip title="Cancelar Agendación" placement="top">
-                        <HighlightOffIcon sx={{ color: "red" }} />
-                      </Tooltip>
-                    </IconButton>
-                
-                    */}
+                      )}
                   </StyledTableCell>
                 </StyledTableRow>
               ))
@@ -236,11 +259,19 @@ export default function TableAgenda({ agendas }) {
             )}
           </TableBody>
         </Table>
-        {course_id !== null && (
+        {agenda_id !== null && (
           <AddInstructor
             modal={modalInstrcutor}
             handleClose={handleCloseInstructor}
-            id={course_id}
+            id={agenda_id}
+          />
+        )}
+        {id_service !== null && (
+          <EditAgenda
+            open={modalUpdate}
+            handleClose={handleClickClose}
+            id={id_service}
+            cursos={agendas}
           />
         )}
       </TableContainerResponsive>

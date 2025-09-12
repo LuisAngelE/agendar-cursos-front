@@ -26,7 +26,7 @@ export default function AddInstructor({ modal, handleClose, id }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    data.course_id = id;
+    data.agenda_id = id;
     AddInstructor(data);
     handleClose();
   };

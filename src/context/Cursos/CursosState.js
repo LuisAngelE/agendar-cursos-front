@@ -24,25 +24,43 @@ const CursosState = ({ children }) => {
   const [state, dispatch] = useReducer(CursosReducer, initialState);
 
   const GetCursos = (nombre = "", category_id = "") => {
-    let url = "/course";
-    const params = new URLSearchParams();
-
-    if (nombre.trim() !== "") params.append("nombre", nombre);
-    if (category_id !== "") params.append("category_id", category_id);
-
-    const queryString = params.toString();
-    if (queryString) url += `?${queryString}`;
-
-    MethodGet(url)
-      .then((res) => {
-        dispatch({
-          type: GET_ALL_CURSOS,
-          payload: res.data,
+    let type_user = localStorage.getItem("type_user");
+    let user_id = localStorage.getItem("user_id");
+    if (type_user === "1" || type_user === "3") {
+      let url = "/course";
+      const params = new URLSearchParams();
+      if (nombre.trim() !== "") params.append("nombre", nombre);
+      if (category_id !== "") params.append("category_id", category_id);
+      const queryString = params.toString();
+      if (queryString) url += `?${queryString}`;
+      MethodGet(url)
+        .then((res) => {
+          dispatch({
+            type: GET_ALL_CURSOS,
+            payload: res.data,
+          });
+        })
+        .catch((error) => {
+          console.error(error);
         });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    } else if (type_user === "2") {
+      let url = `/indexTypeUserCourse/${user_id}`;
+      const params = new URLSearchParams();
+      if (nombre.trim() !== "") params.append("nombre", nombre);
+      if (category_id !== "") params.append("category_id", category_id);
+      const queryString = params.toString();
+      if (queryString) url += `?${queryString}`;
+      MethodGet(url)
+        .then((res) => {
+          dispatch({
+            type: GET_ALL_CURSOS,
+            payload: res.data,
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   const AddCursos = (data) => {
