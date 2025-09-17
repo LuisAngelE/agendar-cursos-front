@@ -30,7 +30,7 @@ import AuthContext from "../../context/Auth/AuthContext";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import HomeIcon from "@mui/icons-material/Home";
 import Badge from "@mui/material/Badge";
-import EventNoteIcon from "@mui/icons-material/EventNote";
+import SchoolIcon from "@mui/icons-material/School"; 
 import AgendaContext from "../../context/Agenda/AgendaContext";
 
 const drawerWidth = 240;
@@ -135,7 +135,7 @@ export default function Header({ children }) {
       value: "/Agenda",
       icon: (
         <Badge badgeContent={agendas.length} color="error">
-          <EventNoteIcon />
+          <SchoolIcon />
         </Badge>
       ),
     },
@@ -167,7 +167,7 @@ export default function Header({ children }) {
       value: "/Agenda",
       icon: (
         <Badge badgeContent={agendas.length} color="error">
-          <EventNoteIcon />
+          <SchoolIcon />
         </Badge>
       ),
     },

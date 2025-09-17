@@ -143,7 +143,7 @@ const AuthState = (props) => {
     Swal.fire({
       title: "¿Cerrar sesión?",
       text: "Se cerrará tu sesión actual",
-      icon: "warning",
+      icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",

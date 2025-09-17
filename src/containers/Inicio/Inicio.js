@@ -1,5 +1,11 @@
-import {Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Layout from "../../components/layout/Layout";
+import CardCategories from "../../components/Cards/CardCategories";
+import CardCourses from "../../components/Cards/CardCourses";
+import CardCoursesAgent from "../../components/Cards/CardCoursesAgent";
+import CardUsersFisicas from "../../components/Cards/CardUsersFisicas";
+import CardUsersMorales from "../../components/Cards/CardUsersMorales";
+import CardInicio from "../../components/Cards/CardInicio";
 
 const Inicio = () => {
   return (
@@ -14,6 +20,24 @@ const Inicio = () => {
           >
             Inicio
           </Typography>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+          <CardInicio />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+          <CardCategories />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+          <CardCourses />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+          <CardCoursesAgent />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+          <CardUsersFisicas />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+          <CardUsersMorales />
         </Grid>
       </Grid>
     </Layout>

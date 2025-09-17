@@ -118,7 +118,7 @@ export default function AgendaModal({ open, handleClose, id, curso }) {
                 rows={4}
                 {...register("location", {
                   required: "La localidad es obligatoria",
-                  minLength: { value: 10, message: "Mínimo 10 caracteres" },
+                  minLength: { value: 3, message: "Mínimo 3 caracteres" },
                   maxLength: { value: 500, message: "Máximo 500 caracteres" },
                 })}
                 error={!!errors.location}

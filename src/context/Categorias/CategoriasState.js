@@ -114,7 +114,7 @@ const CategoriasState = ({ children }) => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: "La categoría seleccionada será eliminada",
-      icon: "warning",
+      icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",

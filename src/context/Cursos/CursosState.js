@@ -142,7 +142,7 @@ const CursosState = ({ children }) => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: "El curso seleccionado será eliminado",
-      icon: "warning",
+      icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",

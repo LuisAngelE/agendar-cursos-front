@@ -224,7 +224,7 @@ const UsuariosState = ({ children }) => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: "El usuario seleccionado será eliminado",
-      icon: "warning",
+      icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -260,7 +260,7 @@ const UsuariosState = ({ children }) => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: "El usuario seleccionado será eliminado",
-      icon: "warning",
+      icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",

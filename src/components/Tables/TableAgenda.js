@@ -8,11 +8,13 @@ import TableRow from "@mui/material/TableRow";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
+import CheckIcon from "@mui/icons-material/Check";
 import { IconButton, Tooltip } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useContext, useState } from "react";
+import CachedIcon from "@mui/icons-material/Cached";
 import AddInstructor from "../../containers/Agenda/AddInstructor";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 import EditAgenda from "../../containers/Agenda/EditAgenda";
@@ -79,7 +81,13 @@ const getStatusColor = (status) => {
 };
 
 export default function TableAgenda({ agendas }) {
-  const { AcceptAgendation, CanceledAgendation, DeleteAgendation } = useContext(AgendaContext);
+  const {
+    AcceptAgendation,
+    CanceledAgendation,
+    ClassDone,
+    Reschedule,
+    DeleteAgendation,
+  } = useContext(AgendaContext);
   let type_user = localStorage.getItem("type_user");
 
   const [agenda_id, saveIdInstructor] = useState(null);
@@ -160,10 +168,11 @@ export default function TableAgenda({ agendas }) {
                     )}
                   </StyledTableCell>
                   <StyledTableCell data-label="Instructor">
-                    {agenda.instructor?.name ||
-                      agenda.instructor?.last_name ||
-                      agenda.instructor?.razon_social ||
-                      "Sin Instructor"}
+                    {agenda.instructor
+                      ? `${agenda.instructor.name || ""} ${
+                          agenda.instructor.last_name || ""
+                        }`.trim()
+                      : agenda.instructor?.razon_social || "Sin Instructor"}
                   </StyledTableCell>
                   <StyledTableCell
                     data-label="Status"
@@ -233,19 +242,63 @@ export default function TableAgenda({ agendas }) {
                           </IconButton>
                         </>
                       )}
+                    {agenda.reservations?.[0]?.status === 3 &&
+                      (type_user === "1" || type_user === "2") && (
+                        <>
+                          <IconButton
+                            size="small"
+                            onClick={() =>
+                              Reschedule(agenda.reservations?.[0]?.id)
+                            }
+                          >
+                            <Tooltip
+                              title="Reprogramar el curso"
+                              placement="top"
+                            >
+                              <CachedIcon sx={{ color: "black" }} />
+                            </Tooltip>
+                          </IconButton>
+                          <IconButton
+                            size="small"
+                            onClick={() => DeleteAgendation(agenda.id)}
+                          >
+                            <Tooltip
+                              title="Eliminar Agendación"
+                              placement="top"
+                            >
+                              <DeleteIcon sx={{ color: "#FF0000" }} />
+                            </Tooltip>
+                          </IconButton>
+                        </>
+                      )}
 
                     {agenda.reservations?.[0]?.status === 2 &&
                       (type_user === "1" || type_user === "2") && (
-                        <IconButton
-                          size="small"
-                          onClick={() =>
-                            CanceledAgendation(agenda.reservations?.[0]?.id)
-                          }
-                        >
-                          <Tooltip title="Cancelar Agendación" placement="top">
-                            <HighlightOffIcon sx={{ color: "red" }} />
-                          </Tooltip>
-                        </IconButton>
+                        <>
+                          <IconButton
+                            size="small"
+                            onClick={() =>
+                              ClassDone(agenda.reservations?.[0]?.id)
+                            }
+                          >
+                            <Tooltip title="¿Clase Realizada?" placement="top">
+                              <CheckIcon sx={{ color: "green" }} />
+                            </Tooltip>
+                          </IconButton>
+                          <IconButton
+                            size="small"
+                            onClick={() =>
+                              CanceledAgendation(agenda.reservations?.[0]?.id)
+                            }
+                          >
+                            <Tooltip
+                              title="Cancelar Agendación"
+                              placement="top"
+                            >
+                              <HighlightOffIcon sx={{ color: "red" }} />
+                            </Tooltip>
+                          </IconButton>
+                        </>
                       )}
                   </StyledTableCell>
                 </StyledTableRow>
