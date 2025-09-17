@@ -229,6 +229,20 @@ const Login = () => {
                   </Typography>
                 </Button>
               </Link>
+              <Link
+                to="/olvidaste-tu-contraseña"
+                style={{ textDecoration: "none" }}
+              >
+                <h3
+                  style={{
+                    textAlign: "center",
+                    color: "black",
+                  }}
+                >
+                  ¿Olvidaste tu contraseña?
+                </h3>
+              </Link>
+              <br />
             </Box>
           </Box>
         </div>

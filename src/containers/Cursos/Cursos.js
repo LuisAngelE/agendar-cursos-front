@@ -74,7 +74,7 @@ const Cursos = () => {
           </Grid>
         )}
 
-        {(type_user === "1" || type_user === "2") && (
+        {type_user === "1" && (
           <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
             <Button
               onClick={handleClickOpen}

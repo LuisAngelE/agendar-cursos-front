@@ -5,7 +5,8 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
@@ -81,13 +82,8 @@ const getStatusColor = (status) => {
 };
 
 export default function TableAgenda({ agendas }) {
-  const {
-    AcceptAgendation,
-    CanceledAgendation,
-    ClassDone,
-    Reschedule,
-    DeleteAgendation,
-  } = useContext(AgendaContext);
+  const { AcceptAgendation, CanceledAgendation, ClassDone, Reschedule } =
+    useContext(AgendaContext);
   let type_user = localStorage.getItem("type_user");
 
   const [agenda_id, saveIdInstructor] = useState(null);
@@ -119,7 +115,6 @@ export default function TableAgenda({ agendas }) {
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell>Fecha de Creación</StyledTableCell>
               <StyledTableCell>Curso</StyledTableCell>
               <StyledTableCell>Fecha Solicitada</StyledTableCell>
               <StyledTableCell>Locación</StyledTableCell>
@@ -134,13 +129,6 @@ export default function TableAgenda({ agendas }) {
               agendas.map((agenda) => (
                 <StyledTableRow key={agenda.id}>
                   <StyledTableCell data-label="ID">{agenda.id}</StyledTableCell>
-                  <StyledTableCell data-label="Fecha Creación">
-                    {new Date(agenda.created_at).toLocaleString("es-ES", {
-                      dateStyle: "long",
-                      timeStyle: "short",
-                      hour12: true,
-                    })}
-                  </StyledTableCell>
                   <StyledTableCell data-label="Curso">
                     {agenda.course?.title}
                     <br />
@@ -167,13 +155,17 @@ export default function TableAgenda({ agendas }) {
                       "Sin Alumno"
                     )}
                   </StyledTableCell>
+
                   <StyledTableCell data-label="Instructor">
-                    {agenda.instructor
-                      ? `${agenda.instructor.name || ""} ${
-                          agenda.instructor.last_name || ""
-                        }`.trim()
-                      : agenda.instructor?.razon_social || "Sin Instructor"}
+                    {agenda.instructor ? (
+                      `${agenda.instructor.name || ""} ${
+                        agenda.instructor.last_name || ""
+                      }`.trim()
+                    ) : (
+                      <span style={{ color: "red" }}>Sin Instructor</span>
+                    )}
                   </StyledTableCell>
+
                   <StyledTableCell
                     data-label="Status"
                     style={{
@@ -190,6 +182,17 @@ export default function TableAgenda({ agendas }) {
                     }[agenda.reservations?.[0]?.status] || "Desconocido"}
                   </StyledTableCell>
                   <StyledTableCell data-label="Acciones">
+                    <Link to={`/Agenda/${agenda.id}`}>
+                      <IconButton size="small">
+                        <Tooltip
+                          title="Detalle del curso agendado"
+                          placement="top"
+                        >
+                          <VisibilityIcon sx={{ color: "blue" }} />
+                        </Tooltip>
+                      </IconButton>
+                    </Link>
+
                     {agenda.reservations?.[0]?.status === 1 &&
                       type_user === "1" &&
                       !agenda.instructor_id && (
@@ -198,7 +201,7 @@ export default function TableAgenda({ agendas }) {
                           onClick={() => handleOpenInstructor(agenda.id)}
                         >
                           <Tooltip title="Agregar Instructor" placement="top">
-                            <AccountCircleIcon sx={{ color: "blue" }} />
+                            <AccountCircleIcon sx={{ color: "brown" }} />
                           </Tooltip>
                         </IconButton>
                       )}
@@ -229,17 +232,6 @@ export default function TableAgenda({ agendas }) {
                               <EditIcon sx={{ color: "#e7a62f" }} />
                             </Tooltip>
                           </IconButton>
-                          <IconButton
-                            size="small"
-                            onClick={() => DeleteAgendation(agenda.id)}
-                          >
-                            <Tooltip
-                              title="Eliminar Agendación"
-                              placement="top"
-                            >
-                              <DeleteIcon sx={{ color: "#FF0000" }} />
-                            </Tooltip>
-                          </IconButton>
                         </>
                       )}
                     {agenda.reservations?.[0]?.status === 3 &&
@@ -256,17 +248,6 @@ export default function TableAgenda({ agendas }) {
                               placement="top"
                             >
                               <CachedIcon sx={{ color: "black" }} />
-                            </Tooltip>
-                          </IconButton>
-                          <IconButton
-                            size="small"
-                            onClick={() => DeleteAgendation(agenda.id)}
-                          >
-                            <Tooltip
-                              title="Eliminar Agendación"
-                              placement="top"
-                            >
-                              <DeleteIcon sx={{ color: "#FF0000" }} />
                             </Tooltip>
                           </IconButton>
                         </>
@@ -305,7 +286,7 @@ export default function TableAgenda({ agendas }) {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={9} align="center">
+                <TableCell colSpan={8} align="center">
                   No hay Cursos Agendados
                 </TableCell>
               </TableRow>

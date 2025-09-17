@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
+import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import DialogActions from "@mui/material/DialogActions";
 import { Grid, TextField, Box, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -77,33 +78,55 @@ export default function AgendaModal({ open, handleClose, id, curso }) {
                       const today = dayjs();
                       const isWeekend = day === 0 || day === 6;
                       const isPastDate = date.isBefore(today, "day");
-
-                      const isScheduled = curso.schedules.some((schedule) => {
-                        const scheduledDate = dayjs(schedule.start_date);
-                        return date.isSame(scheduledDate, "day");
-                      });
-
+                      const isScheduled =
+                        curso.schedules?.some((schedule) => {
+                          return date.isSame(dayjs(schedule.start_date), "day");
+                        }) ?? false;
                       return isWeekend || isPastDate || isScheduled;
                     }}
                   />
+
                   <Typography variant="subtitle1">
-                    Selecciona la hora
+                    Selecciona la hora (select)
+                  </Typography>
+                  <FormControl fullWidth>
+                    <InputLabel id="hour-label">Hora</InputLabel>
+                    <Select
+                      labelId="hour-label"
+                      value={value.format("HH:mm")}
+                      label="Hora"
+                      onChange={(e) => {
+                        const [hour, minute] = e.target.value
+                          .split(":")
+                          .map(Number);
+                        setValue(value.hour(hour).minute(minute));
+                      }}
+                    >
+                      {[8, 9, 10, 11, 12, 13, 14].map((h) => {
+                        const hourStr = String(h).padStart(2, "0");
+                        return (
+                          <MenuItem key={h} value={`${hourStr}:00`}>
+                            {`${hourStr}:00`}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+
+                  <Typography variant="subtitle1">
+                    Selecciona la hora (reloj)
                   </Typography>
                   <StaticTimePicker
                     displayStaticWrapperAs="desktop"
                     value={value}
-                    onChange={(newValue) =>
+                    onChange={(newValue) => {
                       setValue(
-                        value
-                          .date(newValue.date())
-                          .hour(newValue.hour())
-                          .minute(newValue.minute())
-                      )
-                    }
+                        value.hour(newValue.hour()).minute(newValue.minute())
+                      );
+                    }}
                     shouldDisableTime={(timeValue, clockType) => {
-                      if (clockType === "hours") {
+                      if (clockType === "hours")
                         return timeValue < 8 || timeValue > 14;
-                      }
                       return false;
                     }}
                   />

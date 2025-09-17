@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import { Grid, TextField, Box, Typography } from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useEffect, useState, useContext } from "react";
@@ -18,8 +19,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/es";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 
-export default function EditAgenda({ open, handleClose, id, cursos }) {  
-  console.log(cursos);
+export default function EditAgenda({ open, handleClose, id, cursos }) {
   const { UpdateAgendas } = useContext(AgendaContext);
   const [agenda, saveAgenda] = useState(null);
 
@@ -101,24 +101,48 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                         return isWeekend || isPastDate || isScheduled;
                       }}
                     />
+
                     <Typography variant="subtitle1">
-                      Selecciona la hora
+                      Selecciona la hora (select)
+                    </Typography>
+                    <FormControl fullWidth>
+                      <InputLabel id="hour-label">Hora</InputLabel>
+                      <Select
+                        labelId="hour-label"
+                        value={value.format("HH:mm")}
+                        label="Hora"
+                        onChange={(e) => {
+                          const [hour, minute] = e.target.value
+                            .split(":")
+                            .map(Number);
+                          setValue(value.hour(hour).minute(minute));
+                        }}
+                      >
+                        {[8, 9, 10, 11, 12, 13, 14].map((h) => {
+                          const hourStr = String(h).padStart(2, "0");
+                          return (
+                            <MenuItem key={h} value={`${hourStr}:00`}>
+                              {`${hourStr}:00`}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    </FormControl>
+
+                    <Typography variant="subtitle1">
+                      Selecciona la hora (reloj)
                     </Typography>
                     <StaticTimePicker
                       displayStaticWrapperAs="desktop"
                       value={value}
                       onChange={(newValue) =>
                         setValue(
-                          value
-                            .date(newValue.date())
-                            .hour(newValue.hour())
-                            .minute(newValue.minute())
+                          value.hour(newValue.hour()).minute(newValue.minute())
                         )
                       }
                       shouldDisableTime={(timeValue, clockType) => {
-                        if (clockType === "hours") {
+                        if (clockType === "hours")
                           return timeValue < 8 || timeValue > 14;
-                        }
                         return false;
                       }}
                     />

@@ -8,6 +8,7 @@ import { PrivateRouter } from "./PrivateRoute";
 import AuthContext from "../context/Auth/AuthContext";
 import { Grid } from "@mui/material";
 import LoadingComponent from "../components/loading/LoadingComponent";
+import ResetPassword from "../components/Auth/ResetPassword"; 
 
 const AppRouter = () => {
   const { autenticado, usuarioAutenticado, cargando } = useContext(AuthContext);
@@ -38,6 +39,12 @@ const AppRouter = () => {
             exact
             path="/registrarme"
             component={Register}
+            isAuthenticated={autenticado}
+          />
+          <PublicRouter
+            exact
+            path="/olvidaste-tu-contraseña"
+            component={ResetPassword}
             isAuthenticated={autenticado}
           />
           <PrivateRouter

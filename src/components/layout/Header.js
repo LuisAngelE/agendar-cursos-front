@@ -21,6 +21,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import EventIcon from "@mui/icons-material/Event";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupIcon from "@mui/icons-material/Group";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import BusinessIcon from "@mui/icons-material/Business";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
@@ -30,7 +31,7 @@ import AuthContext from "../../context/Auth/AuthContext";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import HomeIcon from "@mui/icons-material/Home";
 import Badge from "@mui/material/Badge";
-import SchoolIcon from "@mui/icons-material/School"; 
+import SchoolIcon from "@mui/icons-material/School";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 
 const drawerWidth = 240;
@@ -117,7 +118,7 @@ export default function Header({ children }) {
   const Admin = [
     {
       name: "Inicio",
-      value: "/",
+      value: "/Inicio",
       icon: <HomeIcon />,
     },
     {
@@ -194,6 +195,11 @@ export default function Header({ children }) {
       ),
     },
     {
+      name: "Mis Cursos Favoritos",
+      value: "/Cursos",
+      icon: <FavoriteIcon />,
+    },
+    {
       name: "Perfil",
       value: "/Perfil",
       icon: <PersonIcon />,
@@ -217,15 +223,19 @@ export default function Header({ children }) {
             "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%);",
         }}
       >
-        <Toolbar sx={{ position: "relative" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              position: "absolute",
-              left: 10,
               ...(open && { display: "none" }),
               color: "white",
             }}

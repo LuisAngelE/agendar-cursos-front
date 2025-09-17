@@ -4,7 +4,6 @@ import AgendaReducer from "./AgendaReducer";
 import MethodGet, {
   MethodPost,
   MethodPut,
-  MethodDelete,
 } from "../../config/service";
 import Swal from "sweetalert2";
 import {
@@ -245,42 +244,6 @@ const AgendaState = ({ children }) => {
     });
   };
 
-  const DeleteAgendation = (id) => {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "¿El curso agendado será eliminado?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "No, eliminar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        MethodDelete(`/courseSchedule/${id}`)
-          .then((res) => {
-            Swal.fire({
-              title: "Cancelado",
-              text: res.data.mensaje,
-              icon: "success",
-            });
-            GetAgendas();
-            dispatch({
-              type: CANCELED_AGENDATION,
-              payload: id,
-            });
-          })
-          .catch((error) => {
-            Swal.fire({
-              title: "Error",
-              text: error.response?.data?.mensaje || "Ocurrió un error",
-              icon: "error",
-            });
-          });
-      }
-    });
-  };
-
   const ClassDone = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
@@ -366,7 +329,6 @@ const AgendaState = ({ children }) => {
         AcceptAgendation,
         CanceledAgendation,
         UpdateAgendas,
-        DeleteAgendation,
         ClassDone,
         Reschedule,
       }}
