@@ -96,8 +96,8 @@ export default function RecipeReviewCard({ curso }) {
   };
 
   return (
-    <Link to={`/Cursos/${curso.id}`} style={{ textDecoration: "none" }}>
-      <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }}>
+      <Link to={`/Cursos/${curso.id}`} style={{ textDecoration: "none" }}>
         <CardHeader
           avatar={
             <Avatar
@@ -131,87 +131,85 @@ export default function RecipeReviewCard({ curso }) {
             Categoría: {curso.category?.name} <br />
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          {type_user === "1" && (
-            <>
-              <IconButton
-                size="small"
-                onClick={() => handleOpenMultimedia(curso.id)}
-              >
-                <Tooltip title="Agregar Multimedia" placement="top">
-                  <AddPhotoAlternateIcon sx={{ color: "green" }} />
-                </Tooltip>
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() => handleClickOpen(curso.id)}
-              >
-                <Tooltip title="Editar Curso" placement="top">
-                  <EditIcon sx={{ color: "#e7a62f" }} />
-                </Tooltip>
-              </IconButton>
-              <IconButton size="small" onClick={() => DeleteCursos(curso.id)}>
-                <Tooltip title="Eliminar Curso" placement="top">
-                  <DeleteIcon sx={{ color: "#FF0000" }} />
-                </Tooltip>
-              </IconButton>
-            </>
-          )}
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography sx={{ marginBottom: 2 }}>
-              Descripción: {curso.description}
-            </Typography>
-            {type_user === "3" && (
-              <Button
-                onClick={() => handleOpenAgenda(curso.id)}
-                fullWidth
-                variant="contained"
-                sx={{
-                  bgcolor: "#5D65A2",
-                  "&:hover": { bgcolor: "#5D65A2" },
-                }}
-              >
-                <MessageIcon sx={{ mr: 1 }} />
-                Me Interesa Este Curso
-              </Button>
-            )}
-          </CardContent>
-        </Collapse>
+      </Link>
 
-        {id_user !== null && (
-          <ModalMultimedia
-            open={modalMultimedia}
-            handleClose={handleCloseMultimedia}
-            id={id_user}
-          />
+      <CardActions disableSpacing>
+        {type_user === "1" && (
+          <>
+            <IconButton
+              size="small"
+              onClick={() => handleOpenMultimedia(curso.id)}
+            >
+              <Tooltip title="Agregar Multimedia" placement="top">
+                <AddPhotoAlternateIcon sx={{ color: "green" }} />
+              </Tooltip>
+            </IconButton>
+            <IconButton size="small" onClick={() => handleClickOpen(curso.id)}>
+              <Tooltip title="Editar Curso" placement="top">
+                <EditIcon sx={{ color: "#e7a62f" }} />
+              </Tooltip>
+            </IconButton>
+            <IconButton size="small" onClick={() => DeleteCursos(curso.id)}>
+              <Tooltip title="Eliminar Curso" placement="top">
+                <DeleteIcon sx={{ color: "#FF0000" }} />
+              </Tooltip>
+            </IconButton>
+          </>
         )}
-        {id_service !== null && (
-          <EditCursos
-            open={modalUpdate}
-            handleClose={handleClickClose}
-            id={id_service}
-            categorias={categorias}
-          />
-        )}
-        {id_agenda !== null && (
-          <AgendaModal
-            open={modalAgenda}
-            handleClose={handleCloseAgenda}
-            id={id_agenda}
-            curso={curso}
-          />
-        )}
-      </Card>
-    </Link>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography sx={{ marginBottom: 2 }}>
+            Descripción: {curso.description}
+          </Typography>
+          {type_user === "3" && (
+            <Button
+              onClick={() => handleOpenAgenda(curso.id)}
+              fullWidth
+              variant="contained"
+              sx={{
+                bgcolor: "#5D65A2",
+                "&:hover": { bgcolor: "#5D65A2" },
+              }}
+            >
+              <MessageIcon sx={{ mr: 1 }} />
+              Me Interesa Este Curso
+            </Button>
+          )}
+        </CardContent>
+      </Collapse>
+
+      {id_user !== null && (
+        <ModalMultimedia
+          open={modalMultimedia}
+          handleClose={handleCloseMultimedia}
+          id={id_user}
+        />
+      )}
+      {id_service !== null && (
+        <EditCursos
+          open={modalUpdate}
+          handleClose={handleClickClose}
+          id={id_service}
+          categorias={categorias}
+        />
+      )}
+      {id_agenda !== null && (
+        <AgendaModal
+          open={modalAgenda}
+          handleClose={handleCloseAgenda}
+          id={id_agenda}
+          curso={curso}
+        />
+      )}
+    </Card>
   );
 }

@@ -94,10 +94,9 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                         const isWeekend = day === 0 || day === 6;
                         const isPastDate = date.isBefore(today, "day");
 
-                        const isScheduled = cursos.some((curso) => {
-                          const scheduledDate = dayjs(curso.start_date);
-                          return date.isSame(scheduledDate, "day");
-                        });
+                        const scheduledDate = dayjs(agenda.start_date);
+                        const isScheduled = date.isSame(scheduledDate, "day");
+
                         return isWeekend || isPastDate || isScheduled;
                       }}
                     />

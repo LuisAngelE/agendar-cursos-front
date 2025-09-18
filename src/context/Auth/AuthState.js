@@ -280,6 +280,27 @@ const AuthState = (props) => {
     });
   };
 
+  const ResetPassword = (datos) => {
+    let url = "/forgotPassword";
+    MethodPost(url, datos)
+      .then((res) => {
+        Swal.fire({
+          title: "Verificado",
+          text: "Se ha enviado un correo electrónico con tu nueva contraseña generada.",
+          icon: "success",
+        }).then(() => {
+          window.location.href = "/iniciar-sesion";
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Error",
+          text: error.response.data.error,
+          icon: "error",
+        });        
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -297,6 +318,7 @@ const AuthState = (props) => {
         ChangePasswordUser,
         EditInfo,
         ChangePhoto,
+        ResetPassword,
       }}
     >
       {props.children}

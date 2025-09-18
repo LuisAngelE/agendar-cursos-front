@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 export default function CardInicio() {
   return (
     <Box sx={{ minWidth: 275 }}>
-      <Link to="/" style={{ textDecoration: "none", width: "100%" }}>
+      <Link to="/Inicio" style={{ textDecoration: "none", width: "100%" }}>
         <Card sx={{ border: "none" }}>
           <CardContent sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <HomeIcon sx={{ fontSize: 40, color: "#1C277D" }} />

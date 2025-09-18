@@ -21,22 +21,22 @@ const Inicio = () => {
             Inicio
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+        <Grid item xs={12} sm={6} md={5} lg={4} xl={4}>
           <CardInicio />
         </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+        <Grid item xs={12} sm={6} md={5} lg={4} xl={4}>
           <CardCategories />
         </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+        <Grid item xs={12} sm={6} md={5} lg={4} xl={4}>
           <CardCourses />
         </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+        <Grid item xs={12} sm={6} md={5} lg={4} xl={4}>
           <CardCoursesAgent />
         </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+        <Grid item xs={12} sm={6} md={5} lg={4} xl={4}>
           <CardUsersFisicas />
         </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={4} xl={4}>
+        <Grid item xs={12} sm={6} md={5} lg={4} xl={4}>
           <CardUsersMorales />
         </Grid>
       </Grid>
