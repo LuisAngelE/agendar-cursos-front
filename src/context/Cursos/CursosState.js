@@ -13,6 +13,8 @@ import {
   ADD_CURSOS,
   UPDATE_CURSOS,
   DELETE_CURSOS,
+  ADD_CURSO_FAVORITO,
+  DELETE_CURSO_FAVORITO,
 } from "../../types";
 const CursosState = ({ children }) => {
   const initialState = {
@@ -209,6 +211,82 @@ const CursosState = ({ children }) => {
     });
   };
 
+  const AddCursoFavorito = (course_id) => {
+    MethodPost("/favorites", { course_id })
+      .then((res) => {
+        dispatch({
+          type: ADD_CURSO_FAVORITO,
+          payload: course_id,
+        });
+        Swal.fire({
+          title: "Listo",
+          text: "Curso agregado a favoritos",
+          icon: "success",
+        });
+        GetCursos();
+      })
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
+          const errores = error.response.data.errors;
+          const mensajes = Object.values(errores).flat().join("\n");
+
+          Swal.fire({
+            title: "Error",
+            icon: "warning",
+            text: mensajes,
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            icon: "error",
+            text: "Ocurrió un error inesperado",
+          });
+        }
+      });
+  };
+
+  const DeleteCursoFavorito = (course_id) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "El curso será eliminado de tus favoritos",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "No, cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MethodDelete(`/favorites/${course_id}`)
+          .then((res) => {
+            Swal.fire({
+              title: "Eliminado",
+              text: res.data.mensaje,
+              icon: "success",
+            }).then(() => {
+              window.location.reload();
+            });
+            GetCursos();
+            dispatch({
+              type: DELETE_CURSO_FAVORITO,
+              payload: course_id,
+            });
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Error",
+              text: error.response?.data?.mensaje || "Ocurrió un error",
+              icon: "error",
+            });
+          });
+      }
+    });
+  };
+
   return (
     <CursosContext.Provider
       value={{
@@ -221,6 +299,8 @@ const CursosState = ({ children }) => {
         UpdateCursos,
         DeleteCursos,
         ChangePhotoCourse,
+        AddCursoFavorito,
+        DeleteCursoFavorito,
       }}
     >
       {children}

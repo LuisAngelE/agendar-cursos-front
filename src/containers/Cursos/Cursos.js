@@ -19,10 +19,6 @@ const Cursos = () => {
     GetCategories();
   }, [searchNombre, searchTipoCategoria]);
 
-  useEffect(() => {
-    GetCategories();
-  }, []);
-
   const [openModal, setOpenModal] = useState(false);
   const handleClickOpen = () => {
     setOpenModal(true);

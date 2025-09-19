@@ -33,6 +33,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import Badge from "@mui/material/Badge";
 import SchoolIcon from "@mui/icons-material/School";
 import AgendaContext from "../../context/Agenda/AgendaContext";
+import CursosFavoritosContext from "../../context/CursosFavoritos/CursosFavoritosContext";
 
 const drawerWidth = 240;
 
@@ -107,12 +108,17 @@ export default function Header({ children }) {
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
 
+  const { cursos, GetCursosFavoritos } = React.useContext(
+    CursosFavoritosContext
+  );
+  
   const { agendas, GetAgendas } = React.useContext(AgendaContext);
   const { cerrarSesion } = React.useContext(AuthContext);
   let type_user = localStorage.getItem("type_user");
 
   React.useEffect(() => {
     GetAgendas();
+    GetCursosFavoritos();
   }, []);
 
   const Admin = [
@@ -186,6 +192,15 @@ export default function Header({ children }) {
       icon: <MenuBookIcon />,
     },
     {
+      name: "Mis Cursos Favoritos",
+      value: "/CursosFavoritos",
+      icon: (
+        <Badge badgeContent={cursos.length} color="error">
+          <FavoriteIcon />
+        </Badge>
+      ),
+    },
+    {
       name: "Mis Cusos Agendados",
       value: "Agenda",
       icon: (
@@ -193,11 +208,6 @@ export default function Header({ children }) {
           <EventIcon />
         </Badge>
       ),
-    },
-    {
-      name: "Mis Cursos Favoritos",
-      value: "/Cursos",
-      icon: <FavoriteIcon />,
     },
     {
       name: "Perfil",

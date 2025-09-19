@@ -23,6 +23,7 @@ import CursosContext from "../../context/Cursos/CursosContext";
 import CategoriasContext from "../../context/Categorias/CategoriasContext";
 import ModalMultimedia from "../../containers/Cursos/ModalMultimedia";
 import AgendaModal from "../../containers/Agenda/AgendaModal";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -50,12 +51,28 @@ const ExpandMore = styled((props) => {
 
 export default function RecipeReviewCard({ curso }) {
   const { categorias, GetCategories } = React.useContext(CategoriasContext);
-  const { DeleteCursos } = React.useContext(CursosContext);
+  const { DeleteCursos, AddCursoFavorito, DeleteCursoFavorito } =
+    React.useContext(CursosContext);
   const type_user = localStorage.getItem("type_user");
+  const user_id = localStorage.getItem("user_id");
 
   React.useEffect(() => {
     GetCategories();
   }, []);
+
+  const isFavorito = (curso) => {
+    return curso.users_who_favorited?.some(
+      (user) => user.id.toString() === user_id
+    );
+  };
+
+  const handleToggleFavorito = (curso) => {
+    if (isFavorito(curso)) {
+      DeleteCursoFavorito(curso.id);
+    } else {
+      AddCursoFavorito(curso.id);
+    }
+  };
 
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -97,27 +114,41 @@ export default function RecipeReviewCard({ curso }) {
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <Link to={`/Cursos/${curso.id}`} style={{ textDecoration: "none" }}>
-        <CardHeader
-          avatar={
-            <Avatar
-              sx={{ bgcolor: "#F05E29", color: "#FFFFFF" }}
-              aria-label="recipe"
+      <CardHeader
+        avatar={
+          <Avatar
+            sx={{ bgcolor: "#F05E29", color: "#FFFFFF" }}
+            aria-label="recipe"
+          >
+            {curso.title?.charAt(0).toUpperCase() ?? "C"}
+          </Avatar>
+        }
+        action={
+          type_user === "3" ? (
+            <IconButton
+              size="small"
+              onClick={() => handleToggleFavorito(curso)}
             >
-              {curso.title?.charAt(0).toUpperCase() ?? "C"}
-            </Avatar>
-          }
-          action={
-            type_user === "3" ? (
-              <IconButton size="small">
-                <Tooltip title="Agregar a Favoritos" placement="top">
+              <Tooltip
+                title={
+                  isFavorito(curso)
+                    ? "Eliminar de favoritos"
+                    : "Agregar a favoritos"
+                }
+                placement="top"
+              >
+                {isFavorito(curso) ? (
                   <FavoriteIcon sx={{ color: "#FF0000" }} />
-                </Tooltip>
-              </IconButton>
-            ) : null
-          }
-          title={curso.title}
-        />
+                ) : (
+                  <FavoriteBorderIcon sx={{ color: "#FF0000" }} />
+                )}
+              </Tooltip>
+            </IconButton>
+          ) : null
+        }
+        title={curso.title}
+      />
+      <Link to={`/Cursos/${curso.id}`} style={{ textDecoration: "none" }}>
         <CardMedia
           component="img"
           height="194"
