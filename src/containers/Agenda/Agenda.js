@@ -23,7 +23,7 @@ const Agenda = () => {
               variant="h5"
               sx={{ color: "black" }}
             >
-              Cursos Agendados
+              Cursos Reservados
             </Typography>
           </Grid>
         )}
@@ -35,7 +35,7 @@ const Agenda = () => {
               variant="h5"
               sx={{ color: "black" }}
             >
-              Mis Cursos Agendados
+              Mis Cursos Reservados
             </Typography>
           </Grid>
         )}

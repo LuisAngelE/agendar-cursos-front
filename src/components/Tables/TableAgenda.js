@@ -176,16 +176,16 @@ export default function TableAgenda({ agendas }) {
                   >
                     {{
                       1: "Pendiente de Confirmación",
-                      2: "Agendación Confirmada",
-                      3: "Agendación Cancelada",
-                      4: "Clase Realizada",
+                      2: "Reservación Confirmada",
+                      3: "Reservación Cancelada",
+                      4: "Reservación Realizada",
                     }[agenda.reservations?.[0]?.status] || "Desconocido"}
                   </StyledTableCell>
                   <StyledTableCell data-label="Acciones">
                     <Link to={`/Agenda/${agenda.id}`}>
                       <IconButton size="small">
                         <Tooltip
-                          title="Detalle del curso agendado"
+                          title="Detalle del curso reservado"
                           placement="top"
                         >
                           <VisibilityIcon sx={{ color: "blue" }} />
@@ -215,7 +215,7 @@ export default function TableAgenda({ agendas }) {
                             AcceptAgendation(agenda.reservations?.[0]?.id)
                           }
                         >
-                          <Tooltip title="Aceptar Agendación" placement="top">
+                          <Tooltip title="Aceptar Reservación" placement="top">
                             <CheckCircleOutlineIcon sx={{ color: "green" }} />
                           </Tooltip>
                         </IconButton>
@@ -228,7 +228,7 @@ export default function TableAgenda({ agendas }) {
                             size="small"
                             onClick={() => handleClickOpen(agenda.id)}
                           >
-                            <Tooltip title="Editar Agendación" placement="top">
+                            <Tooltip title="Editar Reservación" placement="top">
                               <EditIcon sx={{ color: "#e7a62f" }} />
                             </Tooltip>
                           </IconButton>
@@ -273,7 +273,7 @@ export default function TableAgenda({ agendas }) {
                             }
                           >
                             <Tooltip
-                              title="Cancelar Agendación"
+                              title="Cancelar Reservación"
                               placement="top"
                             >
                               <HighlightOffIcon sx={{ color: "red" }} />
@@ -287,7 +287,7 @@ export default function TableAgenda({ agendas }) {
             ) : (
               <TableRow>
                 <TableCell colSpan={8} align="center">
-                  No hay Cursos Agendados
+                  No hay Cursos Reservados
                 </TableCell>
               </TableRow>
             )}

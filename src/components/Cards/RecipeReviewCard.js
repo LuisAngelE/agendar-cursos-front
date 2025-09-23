@@ -198,10 +198,10 @@ export default function RecipeReviewCard({ curso }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography sx={{ marginBottom: 2 }}>
+          <Typography raphy sx={{ marginBottom: 2 }}>
             Descripción: {curso.description}
           </Typography>
-          {type_user === "3" && (
+          {(type_user === "3" || type_user === "1") && (
             <Button
               onClick={() => handleOpenAgenda(curso.id)}
               fullWidth

@@ -62,7 +62,7 @@ export default function AddInstructor({ modal, handleClose, id }) {
                 helperText={errors.instructor_id?.message}
               >
                 <MenuItem value="">
-                  <em>-- Selecciona una categoría --</em>
+                  <em>-- Selecciona una instructor --</em>
                 </MenuItem>
                 {users.map((user) => (
                   <MenuItem key={user.id} value={user.id}>

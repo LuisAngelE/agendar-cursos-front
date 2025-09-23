@@ -14,7 +14,7 @@ export default function CardCoursesAgent() {
           <CardContent sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <SchoolIcon sx={{ fontSize: 40, color: "#F05E29" }} />
             <Typography variant="h5" component="div">
-              Cursos Agendados
+              Cursos Reservados
             </Typography>
           </CardContent>
         </Card>

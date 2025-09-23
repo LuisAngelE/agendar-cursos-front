@@ -175,13 +175,13 @@ const AgendaState = ({ children }) => {
   const AcceptAgendation = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
-      text: "¿El curso agendado será aceptado?",
+      text: "¿El curso seleccionado será reservado?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, agendar",
-      cancelButtonText: "No, agendar",
+      confirmButtonText: "Sí, aceptar",
+      cancelButtonText: "No, aceptar",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodPost(`/reservations/${id}/confirm`)
@@ -211,13 +211,13 @@ const AgendaState = ({ children }) => {
   const CanceledAgendation = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
-      text: "¿El curso agendado será cancelado?",
+      text: "¿El curso seleccionado será cancelado?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, cancelar",
-      cancelButtonText: "No, cancelar",
+      confirmButtonText: "Sí, aceptar",
+      cancelButtonText: "No, aceptar",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodPost(`/reservations/${id}/cancel`)
@@ -247,13 +247,13 @@ const AgendaState = ({ children }) => {
   const ClassDone = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
-      text: "¿El curso agendado sea realizado?",
+      text: "¿El curso seleccionado sea realizado?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, realizado",
-      cancelButtonText: "No, realizado",
+      confirmButtonText: "Sí, aceptar",
+      cancelButtonText: "No, aceptar",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodPost(`/reservations/${id}/served`)
@@ -283,13 +283,13 @@ const AgendaState = ({ children }) => {
   const Reschedule = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
-      text: "¿El curso agendado será reprogramado?",
+      text: "¿El curso seleccionado será reprogramado?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, reprogramar",
-      cancelButtonText: "No, reprogramar",
+      confirmButtonText: "Sí, aceptar",
+      cancelButtonText: "No, aceptar",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodPost(`/reservations/${id}/reschedule`)

@@ -18,10 +18,18 @@ import {
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import AgendaContext from "../../context/Agenda/AgendaContext";
+import SelectState from "../../components/SelectOptions/SelectState";
+import SelectMunicipality from "../../components/SelectOptions/SelectMunicipality";
 
 export default function EditAgenda({ open, handleClose, id, cursos }) {
   const { UpdateAgendas } = useContext(AgendaContext);
   const [agenda, saveAgenda] = useState(null);
+
+  const [state, saveState] = React.useState(null);
+  const [municipality, saveMunicipality] = React.useState(null);
+
+  const detectarCambiosState = (value) => saveState(value);
+  const detectarCambiosMunicipality = (value) => saveMunicipality(value);
 
   useEffect(() => {
     let url = `/courseSchedule/${id}`;
@@ -45,13 +53,15 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
     data.id = id;
     data.course_id = cursos[0].course_id;
     data.start_date = value.format("YYYY-MM-DD HH:mm:ss");
+    data.state_id = state?.value || agenda.state_id;
+    data.municipality_id = municipality?.value || agenda.municipality_id;
     UpdateAgendas(data);
     handleClose();
   };
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Editar Agendación</DialogTitle>
+      <DialogTitle>Editar Reservación</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -147,6 +157,19 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                     />
                   </Box>
                 </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12}>
+                <SelectState
+                  detectarCambiosState={detectarCambiosState}
+                  defaultValue={agenda.state}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <SelectMunicipality
+                  detectarCambiosMunicipality={detectarCambiosMunicipality}
+                  state_id={state?.value || agenda.state_id}
+                  defaultValue={agenda.municipality}
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField

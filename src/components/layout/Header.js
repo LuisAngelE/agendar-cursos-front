@@ -138,7 +138,7 @@ export default function Header({ children }) {
       icon: <MenuBookIcon />,
     },
     {
-      name: "Cursos Agendados",
+      name: "Cursos Reservados",
       value: "/Agenda",
       icon: (
         <Badge badgeContent={agendas.length} color="error">
@@ -170,7 +170,7 @@ export default function Header({ children }) {
       icon: <MenuBookIcon />,
     },
     {
-      name: "Mis Cursos Agendados",
+      name: "Mis Cursos Reservados",
       value: "/Agenda",
       icon: (
         <Badge badgeContent={agendas.length} color="error">
@@ -201,7 +201,7 @@ export default function Header({ children }) {
       ),
     },
     {
-      name: "Mis Cusos Agendados",
+      name: "Mis Cursos Reservados",
       value: "Agenda",
       icon: (
         <Badge badgeContent={agendas.length} color="error">

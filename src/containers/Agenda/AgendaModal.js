@@ -17,9 +17,22 @@ import dayjs from "dayjs";
 import { useContext } from "react";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 import "dayjs/locale/es";
+import SelectState from "../../components/SelectOptions/SelectState";
+import SelectMunicipality from "../../components/SelectOptions/SelectMunicipality";
 
 export default function AgendaModal({ open, handleClose, id, curso }) {
   const { AddAgendas } = useContext(AgendaContext);
+  let type_user = localStorage.getItem("type_user");  
+  
+  const [state, saveState] = React.useState(null);
+  const detectarCambiosState = (value) => {
+    saveState(value.value);
+  };
+
+  const [municipality, saveMunicipality] = React.useState(null);
+  const detectarCambiosMunicipality = (value) => {
+    saveMunicipality(value.value);
+  };
 
   const {
     register,
@@ -32,6 +45,8 @@ export default function AgendaModal({ open, handleClose, id, curso }) {
   const onSubmit = (data) => {
     data.course_id = id;
     data.start_date = value.format("YYYY-MM-DD HH:mm:ss");
+    data.state_id = state;
+    data.municipality_id = municipality;
     AddAgendas(data);
     handleClose();
   };
@@ -74,15 +89,23 @@ export default function AgendaModal({ open, handleClose, id, curso }) {
                       )
                     }
                     shouldDisableDate={(date) => {
-                      const day = date.day();
                       const today = dayjs();
+                      const day = date.day();
+                    
+                      // No permitir fines de semana ni fechas pasadas
                       const isWeekend = day === 0 || day === 6;
                       const isPastDate = date.isBefore(today, "day");
-                      const isScheduled =
-                        curso.schedules?.some((schedule) => {
-                          return date.isSame(dayjs(schedule.start_date), "day");
-                        }) ?? false;
-                      return isWeekend || isPastDate || isScheduled;
+
+                      // Contar cuántos horarios hay para este curso en esa fecha
+                      const countForThisDay =
+                        curso?.schedules?.filter((schedule) =>
+                          date.isSame(dayjs(schedule.start_date), "day")
+                        ).length ?? 0;
+
+                      // Si ya hay 3 o más en ese día, bloquear ese día
+                      const isFullDay = countForThisDay >= 3;
+
+                      return isWeekend || isPastDate || isFullDay;
                     }}
                   />
 
@@ -133,6 +156,17 @@ export default function AgendaModal({ open, handleClose, id, curso }) {
                 </Box>
               </LocalizationProvider>
             </Grid>
+            <Grid item xs={12}>
+              <SelectState detectarCambiosState={detectarCambiosState} />
+            </Grid>
+            {state !== null && (
+              <Grid item xs={12}>
+                <SelectMunicipality
+                  detectarCambiosMunicipality={detectarCambiosMunicipality}
+                  state_id={state}
+                />
+              </Grid>
+            )}
             <Grid item xs={12}>
               <TextField
                 fullWidth
