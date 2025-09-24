@@ -9,7 +9,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
-import CheckIcon from "@mui/icons-material/Check";
+import StarIcon from "@mui/icons-material/Star";
 import { IconButton, Tooltip } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
@@ -120,7 +120,7 @@ export default function TableAgenda({ agendas }) {
               <StyledTableCell>Locación</StyledTableCell>
               <StyledTableCell>Solicitante</StyledTableCell>
               <StyledTableCell>Instructor</StyledTableCell>
-              <StyledTableCell>Status</StyledTableCell>
+              <StyledTableCell>Estatus</StyledTableCell>
               <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -142,7 +142,8 @@ export default function TableAgenda({ agendas }) {
                     })}
                   </StyledTableCell>
                   <StyledTableCell data-label="Locación">
-                    {agenda.location}
+                    {agenda.state.name} {""}
+                    {agenda.municipality.name}
                   </StyledTableCell>
                   <StyledTableCell data-label="Alumno">
                     {agenda.reservations?.[0]?.student ? (
@@ -167,7 +168,7 @@ export default function TableAgenda({ agendas }) {
                   </StyledTableCell>
 
                   <StyledTableCell
-                    data-label="Status"
+                    data-label="Estatus"
                     style={{
                       color: getStatusColor(
                         agenda.reservations?.[0]?.status || 0
@@ -234,6 +235,7 @@ export default function TableAgenda({ agendas }) {
                           </IconButton>
                         </>
                       )}
+
                     {agenda.reservations?.[0]?.status === 3 &&
                       (type_user === "1" || type_user === "2") && (
                         <>
@@ -263,7 +265,7 @@ export default function TableAgenda({ agendas }) {
                             }
                           >
                             <Tooltip title="¿Clase Realizada?" placement="top">
-                              <CheckIcon sx={{ color: "green" }} />
+                              <StarIcon sx={{ color: "gold" }} />
                             </Tooltip>
                           </IconButton>
                           <IconButton

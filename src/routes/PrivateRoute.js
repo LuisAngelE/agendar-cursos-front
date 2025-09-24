@@ -16,7 +16,7 @@ export const PrivateRouter = ({
         isAuthenticated ? (
           <Component {...props} />
         ) : (
-          <Redirect to="/iniciar-sesion" />
+          <Redirect to="/" />
         )
       }
     />

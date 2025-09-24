@@ -201,20 +201,18 @@ export default function RecipeReviewCard({ curso }) {
           <Typography raphy sx={{ marginBottom: 2 }}>
             Descripción: {curso.description}
           </Typography>
-          {(type_user === "3" || type_user === "1") && (
-            <Button
-              onClick={() => handleOpenAgenda(curso.id)}
-              fullWidth
-              variant="contained"
-              sx={{
-                bgcolor: "#5D65A2",
-                "&:hover": { bgcolor: "#5D65A2" },
-              }}
-            >
-              <MessageIcon sx={{ mr: 1 }} />
-              Me Interesa Este Curso
-            </Button>
-          )}
+          <Button
+            onClick={() => handleOpenAgenda(curso.id)}
+            fullWidth
+            variant="contained"
+            sx={{
+              bgcolor: "#5D65A2",
+              "&:hover": { bgcolor: "#5D65A2" },
+            }}
+          >
+            <MessageIcon sx={{ mr: 1 }} />
+            Me Interesa Este Curso
+          </Button>
         </CardContent>
       </Collapse>
 

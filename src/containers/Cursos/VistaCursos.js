@@ -1,84 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
-import { Box, Grid, Typography, Chip, Paper } from "@mui/material";
+import MessageIcon from "@mui/icons-material/Message";
+import {
+  Box,
+  Grid,
+  Typography,
+  Chip,
+  Paper,
+  Divider,
+  Button,
+} from "@mui/material";
 import MethodGet from "../../config/service";
-import Default from "../../components/layout/img/default.png";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Pagination } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
+import MultimediaCursos from "./MultimediaCursos";
 
 export default function VistaCursos(props) {
   const { id } = props.match.params;
   const [curso, saveCurso] = useState({});
-  console.log(curso);
+  const { images = [], category = {}, user = {}, schedules = [] } = curso;
 
   useEffect(() => {
-    let url = `/course/${id}`;
-    MethodGet(url)
-      .then((res) => {
-        saveCurso(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    MethodGet(`/course/${id}`)
+      .then((res) => saveCurso(res.data))
+      .catch((error) => console.log(error));
   }, [id]);
 
   return (
     <Layout>
-      <Grid container spacing={3} sx={{ mt: 3 }}>
+      <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ borderRadius: 2, overflow: "hidden" }}>
-            <Swiper
-              effect={"coverflow"}
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView={"auto"}
-              coverflowEffect={{
-                rotate: 50,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true,
-              }}
-              pagination={true}
-              modules={[EffectCoverflow, Pagination]}
-              className="mySwiper"
-              style={{ height: 400 }}
-            >
-              {curso?.images && curso.images.length > 0 ? (
-                curso.images.map((img, index) => (
-                  <SwiperSlide key={index}>
-                    <img
-                      src={img.url}
-                      alt={`curso-${index}`}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        borderRadius: "10px",
-                      }}
-                    />
-                  </SwiperSlide>
-                ))
-              ) : (
-                <SwiperSlide>
-                  <img
-                    src={Default}
-                    alt="default"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </SwiperSlide>
-              )}
-            </Swiper>
-          </Paper>
+          <MultimediaCursos images={images} />
         </Grid>
 
         <Grid item xs={12} md={6}>
@@ -86,17 +36,101 @@ export default function VistaCursos(props) {
             {curso.title}
           </Typography>
 
-          <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mb: 2 }}>
-            {curso.modality && <Chip label={curso.modality} color="primary" />}
-            {curso.duration && (
-              <Chip label={curso.duration} color="secondary" />
+          <Typography variant="h5" sx={{ lineHeight: 1.6, mb: 2 }}>
+            Acerca del curso
+          </Typography>
+
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="body2">
+              <strong>Descripción :</strong> {curso.description}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Modalidad:</strong> {curso.modality}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Duración:</strong> {curso.duration}
+            </Typography>
+            {user?.razon_social && (
+              <Typography variant="body2">
+                <strong>Propietario:</strong> {user.razon_social}
+              </Typography>
             )}
-            {curso?.category?.name && <Chip label={curso.category.name} />}
           </Box>
 
-          <Typography variant="body1" sx={{ lineHeight: 1.6 }}>
-            {curso.description}
+          {category?.name && (
+            <Chip
+              label={`Categoría: ${category.name}`}
+              color="success"
+              sx={{ mb: 2 }}
+            />
+          )}
+
+          <br />
+
+          {category?.name && (
+            <Chip
+              label={`Modelo: ${category.name}`}
+              color="primary"
+              sx={{ mb: 2 }}
+            />
+          )}
+
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{
+              bgcolor: "#5D65A2",
+              "&:hover": { bgcolor: "#5D65A2" },
+            }}
+          >
+            <MessageIcon sx={{ mr: 1 }} />
+            Me Interesa Este Curso
+          </Button>
+
+          <Divider sx={{ my: 2 }} />
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Divider sx={{ my: 3 }} />
+
+          <Typography variant="h6" fontWeight="bold" gutterBottom>
+            Fechas Reservadas
           </Typography>
+          {schedules.length > 0 ? (
+            schedules.map((s) => (
+              <Paper
+                key={s.id}
+                variant="outlined"
+                sx={{ p: 2, mb: 1, borderRadius: 2 }}
+              >
+                <Typography variant="body2">
+                  📍{" "}
+                  <strong>
+                    {s.state.name}, {s.municipality.name}
+                  </strong>
+                </Typography>
+                <Typography variant="body2">
+                  🗓{" "}
+                  {new Date(s.start_date).toLocaleString("es-MX", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </Typography>
+                <Typography variant="body2">
+                  🧑‍💼{" "}
+                  <strong>
+                    {s.instructor
+                      ? `${s.instructor.name} ${s.instructor.last_name}`
+                      : "Instructor no asignado"}
+                  </strong>
+                </Typography>
+              </Paper>
+            ))
+          ) : (
+            <Typography variant="body2" color="text.secondary">
+              No hay fechas disponibles.
+            </Typography>
+          )}
         </Grid>
       </Grid>
     </Layout>

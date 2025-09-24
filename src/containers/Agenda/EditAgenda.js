@@ -24,7 +24,7 @@ import SelectMunicipality from "../../components/SelectOptions/SelectMunicipalit
 export default function EditAgenda({ open, handleClose, id, cursos }) {
   const { UpdateAgendas } = useContext(AgendaContext);
   const [agenda, saveAgenda] = useState(null);
-
+  
   const [state, saveState] = React.useState(null);
   const [municipality, saveMunicipality] = React.useState(null);
 
@@ -99,15 +99,19 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                         )
                       }
                       shouldDisableDate={(date) => {
-                        const day = date.day();
                         const today = dayjs();
+                        const day = date.day();
+
                         const isWeekend = day === 0 || day === 6;
                         const isPastDate = date.isBefore(today, "day");
 
-                        const scheduledDate = dayjs(agenda.start_date);
-                        const isScheduled = date.isSame(scheduledDate, "day");
+                        const agendasEseDia = cursos.filter((curso) =>
+                          dayjs(curso.start_date).isSame(date, "day")
+                        );
 
-                        return isWeekend || isPastDate || isScheduled;
+                        const isFullDay = agendasEseDia.length >= 3;
+
+                        return isWeekend || isPastDate || isFullDay;
                       }}
                     />
 
@@ -175,7 +179,7 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                 <TextField
                   fullWidth
                   defaultValue={agenda.location}
-                  label="Ingresa tu localidad donde tomarás el curso"
+                  label="Ingresa alguna referencia donde tomarás el curso"
                   multiline
                   rows={4}
                   {...register("location", {

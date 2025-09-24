@@ -165,7 +165,7 @@ const AuthState = (props) => {
           timer: 1500,
           showConfirmButton: false,
         }).then(() => {
-          window.location.href = "/iniciar-sesion";
+          window.location.href = "/";
         });
       }
     });
@@ -289,7 +289,7 @@ const AuthState = (props) => {
           text: "Se ha enviado un correo electrónico con tu nueva contraseña generada.",
           icon: "success",
         }).then(() => {
-          window.location.href = "/iniciar-sesion";
+          window.location.href = "/";
         });
       })
       .catch((error) => {

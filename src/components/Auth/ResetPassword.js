@@ -160,7 +160,7 @@ const ResetPassword = () => {
               >
                 Enviar
               </Button>
-              <Link to="iniciar-sesion" style={{ width: "100%" }}>
+              <Link to="/" style={{ width: "100%" }}>
                 <Button
                   fullWidth
                   variant="contained"

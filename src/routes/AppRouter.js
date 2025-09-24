@@ -40,7 +40,7 @@ const AppRouter = () => {
       <Switch>
         <PublicRouter
           exact
-          path="/iniciar-sesion"
+          path="/"
           component={Login}
           isAuthenticated={autenticado}
         />
