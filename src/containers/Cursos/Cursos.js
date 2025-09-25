@@ -89,7 +89,7 @@ const Cursos = () => {
             </Button>
           </Grid>
         )}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={4}>
           <TextField
             label="Buscar por nombre del curso"
             variant="outlined"
@@ -99,10 +99,27 @@ const Cursos = () => {
             onChange={(e) => setSearchNombre(e.target.value)}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={4}>
           <TextField
             select
             label="Filtrar por tipo de categoria"
+            value={searchTipoCategoria}
+            onChange={(e) => setSearchTipoCategoria(e.target.value)}
+            fullWidth
+            size="small"
+          >
+            <MenuItem value="">Todos</MenuItem>
+            {categorias.map((categoria) => (
+              <MenuItem key={categoria.id} value={categoria.id}>
+                {categoria.name}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+        <Grid item xs={12} md={12} lg={4}>
+          <TextField
+            select
+            label="Filtrar por tipo de modelo"
             value={searchTipoCategoria}
             onChange={(e) => setSearchTipoCategoria(e.target.value)}
             fullWidth

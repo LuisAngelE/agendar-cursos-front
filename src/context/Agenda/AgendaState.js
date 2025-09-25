@@ -1,10 +1,7 @@
 import React, { useReducer } from "react";
 import AgendaContext from "./AgendaContext";
 import AgendaReducer from "./AgendaReducer";
-import MethodGet, {
-  MethodPost,
-  MethodPut,
-} from "../../config/service";
+import MethodGet, { MethodPost, MethodPut } from "../../config/service";
 import Swal from "sweetalert2";
 import {
   GET_ALL_AGENDAS,
@@ -25,11 +22,17 @@ const AgendaState = ({ children }) => {
   };
   const [state, dispatch] = useReducer(AgendaReducer, initialState);
 
-  const GetAgendas = () => {
+  const GetAgendas = (nombre = "", status = "", estado = "") => {
     let type_user = localStorage.getItem("type_user");
     let user_id = localStorage.getItem("user_id");
     if (type_user === "1") {
       let url = `/courseSchedule`;
+      const params = new URLSearchParams();
+      if (nombre.trim() !== "") params.append("nombre", nombre);
+      if (status.trim() !== "") params.append("status", status);
+      if (estado !== "") params.append("estado", estado);
+      const queryString = params.toString();
+      if (queryString) url += `?${queryString}`;
       MethodGet(url)
         .then((res) => {
           dispatch({

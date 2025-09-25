@@ -101,9 +101,9 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                       shouldDisableDate={(date) => {
                         const today = dayjs();
                         const day = date.day();
+                        const isPastDate = date.isBefore(today, "day");
 
                         const isWeekend = day === 0 || day === 6;
-                        const isPastDate = date.isBefore(today, "day");
 
                         const agendasEseDia = cursos.filter((curso) =>
                           dayjs(curso.start_date).isSame(date, "day")

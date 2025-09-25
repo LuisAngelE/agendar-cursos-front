@@ -98,8 +98,6 @@ export default function AgendaModal({ open, handleClose, id }) {
                     shouldDisableDate={(date) => {
                       const today = dayjs();
                       const day = date.day();
-
-                      const isWeekend = day === 0 || day === 6;
                       const isPastDate = date.isBefore(today, "day");
 
                       const countForThisDay = cursos.reduce((acc, c) => {
@@ -113,7 +111,12 @@ export default function AgendaModal({ open, handleClose, id }) {
 
                       const isFullDay = countForThisDay >= 3;
 
-                      return isWeekend || isPastDate || isFullDay;
+                      if (Number(type_user) === 1) {
+                        return isPastDate || isFullDay;
+                      } else {
+                        const isWeekend = day === 0 || day === 6;
+                        return isWeekend || isPastDate || isFullDay;
+                      }
                     }}
                   />
 

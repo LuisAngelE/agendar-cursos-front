@@ -135,6 +135,28 @@ export default function AddCursos({ modal, handleClose, categorias }) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                select
+                fullWidth
+                label="Selecciona un Modelo"
+                defaultValue=""
+                {...register("model_id", {
+                  required: "Debes seleccionar un modelo",
+                })}
+                error={!!errors.model_id}
+                helperText={errors.model_id?.message}
+              >
+                <MenuItem value="">
+                  <em>-- Selecciona un Modelo --</em>
+                </MenuItem>
+                {categorias.map((categoria) => (
+                  <MenuItem key={categoria.id} value={categoria.id}>
+                    {categoria.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 fullWidth
                 label="Modalidad del curso"
                 defaultValue="Presencial"
