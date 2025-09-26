@@ -19,7 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: "white",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 15,
+    fontSize: 12,
   },
 }));
 
@@ -77,14 +77,13 @@ export default function TablePersonasFisicas({ users }) {
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell>Tipo de Persona</StyledTableCell>
               <StyledTableCell>Nombre</StyledTableCell>
-              <StyledTableCell>Apellido</StyledTableCell>
               <StyledTableCell>Fecha de Nacimiento</StyledTableCell>
               <StyledTableCell>Curp</StyledTableCell>
               <StyledTableCell>RFC</StyledTableCell>
               <StyledTableCell>Correo Electronico</StyledTableCell>
               <StyledTableCell>Telefono</StyledTableCell>
+              <StyledTableCell>NO. Colaborador</StyledTableCell>
               <StyledTableCell>Tipo de Usuario</StyledTableCell>
               <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
@@ -94,35 +93,24 @@ export default function TablePersonasFisicas({ users }) {
               users.map((user) => (
                 <StyledTableRow key={user.id}>
                   <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
-                  <StyledTableCell data-label="Tipo de Usuario">
-                    {{
-                      4: "Física",
-                      5: "Moral",
-                    }[user.type_person] || "Desconocido"}
-                  </StyledTableCell>
-
                   <StyledTableCell data-label="Nombre">
-                    {user.name}
+                    {user.name} {""} {user.last_name}
                   </StyledTableCell>
-
-                  <StyledTableCell data-label="Apellido">
-                    {user.last_name}
-                  </StyledTableCell>
-
                   <StyledTableCell data-label="Fecha de Nacimiento">
                     {new Date(user.birth_date).toISOString().split("T")[0]}
                   </StyledTableCell>
-
                   <StyledTableCell data-label="Curp">
                     {user.curp}
                   </StyledTableCell>
                   <StyledTableCell data-label="RFC">{user.rfc}</StyledTableCell>
-
                   <StyledTableCell data-label="Correo Electrónico">
                     {user.email}
                   </StyledTableCell>
                   <StyledTableCell data-label="Teléfono">
                     {user.phone}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="NO. Colaborador">
+                    {user.collaborator_number || "Sin Número de Colaborador"}
                   </StyledTableCell>
                   <StyledTableCell data-label="Tipo de Usuario">
                     {{

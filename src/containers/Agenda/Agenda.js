@@ -1,102 +1,96 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Layout from "../../components/layout/Layout";
+import PropTypes from "prop-types";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 import TableAgenda from "../../components/Tables/TableAgenda";
-import MethodGet from "../../config/service";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const Agenda = () => {
-  const [searchNombre, setSearchNombre] = React.useState("");
-  const [searchStatus, setSearchStatus] = React.useState("");
-  const [searchState, setSearchState] = React.useState("");
-  const [states, saveStates] = useState([]);
-
   const { agendas, GetAgendas } = useContext(AgendaContext);
+
   let type_user = localStorage.getItem("type_user");
 
-  useEffect(() => {
-    GetAgendas(searchNombre, searchStatus, searchState);
-  }, [searchNombre, searchStatus, searchState]);
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   useEffect(() => {
-    MethodGet("/states")
-      .then((res) => saveStates(res.data.data))
-      .catch(console.log);
+    GetAgendas();
   }, []);
 
   return (
     <Layout>
       <Grid container spacing={2} sx={{ padding: 2 }}>
-        {type_user === "1" && (
-          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
-            <Typography
-              fontWeight="bold"
-              fontFamily="monospace"
-              variant="h5"
-              sx={{ color: "black" }}
+        <Box sx={{ width: "100%", mt: 2 }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons="auto"
+              aria-label="agenda tabs"
             >
-              Cursos Reservados
-            </Typography>
-          </Grid>
-        )}
-        {(type_user === "2" || type_user === "3") && (
-          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
-            <Typography
-              fontWeight="bold"
-              fontFamily="monospace"
-              variant="h5"
-              sx={{ color: "black" }}
-            >
-              Mis Cursos Reservados
-            </Typography>
-          </Grid>
-        )}
-        <Grid item xs={12} md={12} lg={4}>
-          <TextField
-            label="Buscar por nombre del curso"
-            variant="outlined"
-            size="small"
-            fullWidth
-            value={searchNombre}
-            onChange={(e) => setSearchNombre(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} md={12} lg={4}>
-          <TextField
-            select
-            label="Filtrar por estatus"
-            value={searchStatus}
-            onChange={(e) => setSearchStatus(e.target.value)}
-            fullWidth
-            size="small"
-          >
-            <MenuItem value="">Todos</MenuItem>
-            <MenuItem value="1">Pendiente de Confirmación</MenuItem>
-            <MenuItem value="2">Reservación Confirmada</MenuItem>
-            <MenuItem value="3">Reservación Cancelada</MenuItem>
-            <MenuItem value="4">Reservación Realizada</MenuItem>
-          </TextField>
-        </Grid>
-        <Grid item xs={12} md={12} lg={4}>
-          <TextField
-            select
-            label="Filtrar por estado"
-            value={searchState}
-            onChange={(e) => setSearchState(e.target.value)}
-            fullWidth
-            size="small"
-          >
-            <MenuItem value="">Todos</MenuItem>
-            {states.map((state) => (
-              <MenuItem key={state.id} value={state.id}>
-                {state.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={12}>
-          <TableAgenda agendas={agendas} />
-        </Grid>
+              <Tab label="Pendiente de Confirmación" {...a11yProps(0)} />
+              <Tab label="Reservación Confirmada" {...a11yProps(1)} />
+              <Tab label="Reservación Cancelada" {...a11yProps(2)} />
+              <Tab label="Reservación Realizada" {...a11yProps(3)} />
+            </Tabs>
+          </Box>
+
+          <CustomTabPanel value={value} index={0}>
+            <TableAgenda
+              agendas={agendas.filter((a) => a.reservations?.[0]?.status === 1)}
+            />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            <TableAgenda
+              agendas={agendas.filter((a) => a.reservations?.[0]?.status === 2)}
+            />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            <TableAgenda
+              agendas={agendas.filter((a) => a.reservations?.[0]?.status === 3)}
+            />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={3}>
+            <TableAgenda
+              agendas={agendas.filter((a) => a.reservations?.[0]?.status === 4)}
+            />
+          </CustomTabPanel>
+        </Box>
       </Grid>
     </Layout>
   );

@@ -214,6 +214,25 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                   <MenuItem value={3}>Alumno</MenuItem>
                 </TextField>
               </Grid>
+              {users.collaborator_number && (
+                <Grid item xs={12}>
+                  <TextField
+                    type="number"
+                    fullWidth
+                    label="Número de Colaborador"
+                    defaultValue={users.collaborator_number}
+                    {...register("collaborator_number", {
+                      required: "El número de colaborador es obligatorio",
+                      maxLength: {
+                        value: 10,
+                        message: "Máximo 10 caracteres",
+                      },
+                    })}
+                    error={!!errors.collaborator_number}
+                    helperText={errors.collaborator_number?.message}
+                  />
+                </Grid>
+              )}
               <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                 <TextField
                   type={passwordValues.showPassword ? "text" : "password"}

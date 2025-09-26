@@ -59,6 +59,7 @@ export default function AddPersonasFisicas({ modal, handleClose }) {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm();
 
   const onSubmit = (data) => {
@@ -210,7 +211,6 @@ export default function AddPersonasFisicas({ modal, handleClose }) {
                 helperText={errors.phone?.message}
               />
             </Grid>
-
             <Grid item xs={12}>
               <TextField
                 select
@@ -229,6 +229,21 @@ export default function AddPersonasFisicas({ modal, handleClose }) {
                 <MenuItem value={3}>Alumno</MenuItem>
               </TextField>
             </Grid>
+            {[1, 2].includes(watch("type_user")) && (
+              <Grid item xs={12}>
+                <TextField
+                  type="number"
+                  fullWidth
+                  label="Número de Colaborador"
+                  {...register("collaborator_number", {
+                    required: "El número de colaborador es obligatorio",
+                    maxLength: { value: 10, message: "Máximo 10 caracteres" },
+                  })}
+                  error={!!errors.collaborator_number}
+                  helperText={errors.collaborator_number?.message}
+                />
+              </Grid>
+            )}
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <TextField
                 type={passwordValues.showPassword ? "text" : "password"}

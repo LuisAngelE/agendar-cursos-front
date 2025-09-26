@@ -19,7 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: "white",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 15,
+    fontSize: 12,
   },
 }));
 
@@ -77,13 +77,13 @@ export default function TablePersonasMorales({ users }) {
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell>Tipo de Persona</StyledTableCell>
               <StyledTableCell>Razon Social</StyledTableCell>
               <StyledTableCell>RFC</StyledTableCell>
               <StyledTableCell>Representante Legal</StyledTableCell>
               <StyledTableCell>Domicilio Fiscal</StyledTableCell>
               <StyledTableCell>Correo Electronico</StyledTableCell>
               <StyledTableCell>Telefono</StyledTableCell>
+              <StyledTableCell>NO. Colaborador</StyledTableCell>
               <StyledTableCell>Tipo de Usuario</StyledTableCell>
               <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
@@ -93,12 +93,6 @@ export default function TablePersonasMorales({ users }) {
               users.map((user) => (
                 <StyledTableRow key={user.id}>
                   <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
-                  <StyledTableCell data-label="Tipo de Persona">
-                    {{
-                      4: "Física",
-                      5: "Moral",
-                    }[user.type_person] || "Desconocido"}
-                  </StyledTableCell>
                   <StyledTableCell data-label="Razon Social">
                     {user.razon_social}
                   </StyledTableCell>
@@ -114,6 +108,9 @@ export default function TablePersonasMorales({ users }) {
                   </StyledTableCell>
                   <StyledTableCell data-label="Teléfono">
                     {user.phone}
+                  </StyledTableCell>
+                  <StyledTableCell data-label="NO. Colaborador">
+                    {user.collaborator_number}
                   </StyledTableCell>
                   <StyledTableCell data-label="Tipo de Usuario">
                     {{

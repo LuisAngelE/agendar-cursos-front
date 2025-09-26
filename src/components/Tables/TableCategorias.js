@@ -19,7 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: "white",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 15,
+    fontSize: 12,
   },
 }));
 

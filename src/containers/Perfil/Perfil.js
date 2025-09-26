@@ -19,6 +19,7 @@ import AttachFileMultimedia from "./AttachFileMultimedia";
 
 const Perfil = () => {
   const { user_me, UserMe } = useContext(AuthContext);
+  const type_user = localStorage.getItem("type_user");
 
   useEffect(() => {
     if (user_me === null) {
@@ -176,6 +177,11 @@ const Perfil = () => {
                   <Typography variant="body1" gutterBottom>
                     Teléfono: {user_me.phone}
                   </Typography>
+                  {(type_user === "1" || type_user === "2") && (
+                    <Typography variant="body1" gutterBottom>
+                      Número de Colaborador: {user_me.collaborator_number}
+                    </Typography>
+                  )}
                 </Box>
 
                 <Divider sx={{ my: 2 }} />
