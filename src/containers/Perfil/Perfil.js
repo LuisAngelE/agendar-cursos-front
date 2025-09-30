@@ -106,7 +106,7 @@ const Perfil = () => {
                   sx={{
                     mb: 2,
                     bgcolor: "#F05E29",
-                    "&:hover": { bgcolor: "#d94e1e" },
+                    "&:hover": { bgcolor: "#d94e1e", scale: "1.1" },
                   }}
                 >
                   <FlipCameraIosIcon sx={{ mr: 1 }} />
@@ -194,7 +194,7 @@ const Perfil = () => {
                       variant="contained"
                       sx={{
                         bgcolor: "#1C277D",
-                        "&:hover": { bgcolor: "#151d5d" },
+                        "&:hover": { bgcolor: "#151d5d", scale: "1.2" },
                       }}
                     >
                       <EditNoteIcon sx={{ mr: 1 }} />
@@ -208,7 +208,7 @@ const Perfil = () => {
                       variant="contained"
                       sx={{
                         bgcolor: "#F05E29",
-                        "&:hover": { bgcolor: "#d94e1e" },
+                        "&:hover": { bgcolor: "#d94e1e", scale: "1.2" },
                       }}
                     >
                       <LockResetIcon sx={{ mr: 1 }} />

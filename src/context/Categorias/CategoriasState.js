@@ -119,7 +119,7 @@ const CategoriasState = ({ children }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "No, cancelar",
+      cancelButtonText: "No, volver",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodDelete(`/categories/${id}`)

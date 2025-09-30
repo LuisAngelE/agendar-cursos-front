@@ -19,7 +19,13 @@ import AgendaModal from "../Agenda/AgendaModal";
 export default function VistaCursos(props) {
   const { id } = props.match.params;
   const [curso, saveCurso] = useState({});
-  const { images = [], category = {}, user = {}, schedules = [] } = curso;
+  const {
+    images = [],
+    category = {},
+    user = {},
+    schedules = [],
+    reservations = [],
+  } = curso;
   let type_user = localStorage.getItem("type_user");
 
   const [id_agenda, saveIdAgenda] = useState(null);
@@ -99,29 +105,30 @@ export default function VistaCursos(props) {
                 sx={{ mb: 2 }}
               />
             )}
-
-            <Button
-              onClick={() => handleOpenAgenda(curso.id)}
-              fullWidth
-              variant="contained"
-              sx={{
-                bgcolor: "#5D65A2",
-                "&:hover": { bgcolor: "#4a538d" },
-                borderRadius: 3,
-                py: 1.5,
-                fontWeight: "bold",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-                mt: 2,
-              }}
-            >
-              <MessageIcon sx={{ mr: 1 }} />
-              Me Interesa Este Curso
-            </Button>
+            {(type_user === "1" || type_user === "3") && (
+              <Button
+                onClick={() => handleOpenAgenda(curso.id)}
+                fullWidth
+                variant="contained"
+                sx={{
+                  bgcolor: "#5D65A2",
+                  "&:hover": { bgcolor: "#4a538d", scale: "1.1", },
+                  borderRadius: 3,
+                  py: 1.5,
+                  fontWeight: "bold",
+                  boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+                  mt: 2,
+                }}
+              >
+                <MessageIcon sx={{ mr: 1 }} />
+                Me Interesa Este Curso
+              </Button>
+            )}
 
             <Divider sx={{ my: 3 }} />
           </Grid>
 
-          {(type_user === "1" || type_user === "2") && (
+          {type_user === "1" && (
             <Grid item xs={12} md={6}>
               <Typography variant="h6" fontWeight="bold" gutterBottom>
                 Fechas Reservadas
@@ -159,6 +166,24 @@ export default function VistaCursos(props) {
                           : "Instructor no asignado"}
                       </strong>
                     </Typography>
+                    {reservations
+                      .filter((r) => r.schedule_id === s.id)
+                      .map((r) => (
+                        <Typography key={r.id} variant="body2">
+                          🔖{" "}
+                          <strong>
+                            {r.status === 1
+                              ? "Pendiente de Confirmación"
+                              : r.status === 2
+                              ? "Reservación Confirmada"
+                              : r.status === 3
+                              ? "Reservación Cancelada"
+                              : r.status === 4
+                              ? "Reservación Realizada"
+                              : "Otro"}
+                          </strong>
+                        </Typography>
+                      ))}
                   </Paper>
                 ))
               ) : (

@@ -178,7 +178,7 @@ const AgendaState = ({ children }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, aceptar",
-      cancelButtonText: "No, aceptar",
+      cancelButtonText: "No, volver",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodPost(`/reservations/${id}/confirm`)
@@ -205,40 +205,51 @@ const AgendaState = ({ children }) => {
     });
   };
 
-  const CanceledAgendation = (id) => {
-    Swal.fire({
+  const CanceledAgendation = async (id) => {
+    const { value: reason } = await Swal.fire({
       title: "¿Estás seguro?",
-      text: "¿El curso seleccionado será cancelado?",
-      icon: "question",
+      text: "El curso seleccionado será cancelado. Por favor, indica la razón:",
+      icon: "warning",
+      input: "textarea",
+      inputPlaceholder: "Escribe aquí la razón de la cancelación...",
+      inputAttributes: {
+        "aria-label": "Razón de cancelación",
+      },
       showCancelButton: true,
+      confirmButtonText: "Sí, cancelar",
+      cancelButtonText: "No, volver",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, aceptar",
-      cancelButtonText: "No, aceptar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        MethodPost(`/reservations/${id}/cancel`)
-          .then((res) => {
-            Swal.fire({
-              title: "Cancelado",
-              text: res.data.mensaje,
-              icon: "success",
-            });
-            GetAgendas();
-            dispatch({
-              type: CANCELED_AGENDATION,
-              payload: id,
-            });
-          })
-          .catch((error) => {
-            Swal.fire({
-              title: "Error",
-              text: error.response?.data?.mensaje || "Ocurrió un error",
-              icon: "error",
-            });
-          });
-      }
+      preConfirm: (value) => {
+        if (!value) {
+          Swal.showValidationMessage("Debes ingresar una razón");
+        }
+        return value;
+      },
     });
+
+    if (reason) {
+      MethodPost(`/reservations/${id}/cancel`, { motivo: reason })
+        .then((res) => {
+          Swal.fire({
+            title: "Cancelado",
+            text: res.data.mensaje,
+            icon: "success",
+          });
+          GetAgendas();
+          dispatch({
+            type: CANCELED_AGENDATION,
+            payload: id,
+          });
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: "Error",
+            text: error.response?.data?.mensaje || "Ocurrió un error",
+            icon: "error",
+          });
+        });
+    }
   };
 
   const ClassDone = (id) => {
@@ -250,7 +261,7 @@ const AgendaState = ({ children }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, aceptar",
-      cancelButtonText: "No, aceptar",
+      cancelButtonText: "No, volver",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodPost(`/reservations/${id}/served`)
@@ -286,7 +297,7 @@ const AgendaState = ({ children }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, aceptar",
-      cancelButtonText: "No, aceptar",
+      cancelButtonText: "No, volver",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodPost(`/reservations/${id}/reschedule`)

@@ -111,7 +111,7 @@ export default function Header({ children }) {
   const { cursos, GetCursosFavoritos } = React.useContext(
     CursosFavoritosContext
   );
-  
+
   const { agendas, GetAgendas } = React.useContext(AgendaContext);
   const { cerrarSesion } = React.useContext(AuthContext);
   let type_user = localStorage.getItem("type_user");
@@ -248,6 +248,8 @@ export default function Header({ children }) {
             sx={{
               ...(open && { display: "none" }),
               color: "white",
+              transition: "0.2s",
+              "&:hover": { rotate: "40deg" },
             }}
           >
             <MenuIcon />
@@ -273,7 +275,14 @@ export default function Header({ children }) {
           <Box sx={{ marginLeft: "auto" }}>
             <Tooltip title="Cerrar Sesión">
               <IconButton onClick={() => cerrarSesion()}>
-                <ExitToAppIcon sx={{ color: "white", fontSize: 25 }} />
+                <ExitToAppIcon
+                  sx={{
+                    color: "white",
+                    fontSize: 25,
+                    transition: "0.2s",
+                    "&:hover": { scale: "2" },
+                  }}
+                />
               </IconButton>
             </Tooltip>
           </Box>

@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useContext, useEffect, useState } from "react";
 import UsuariosContext from "../../context/Usuarios/UsuariosContext";
 import EditPersonasMorales from "../../containers/PersonasMorales/EditPersonasMorales";
+import { motion, AnimatePresence } from "framer-motion";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -91,7 +92,15 @@ export default function TablePersonasMorales({ users }) {
           <TableBody>
             {users.length > 0 ? (
               users.map((user) => (
-                <StyledTableRow key={user.id}>
+                <StyledTableRow
+                  key={user.id}
+                  component={motion.tr}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ scale: 1.02, backgroundColor: "#FCE3D9" }}
+                >
                   <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
                   <StyledTableCell data-label="Razon Social">
                     {user.razon_social}
@@ -126,7 +135,13 @@ export default function TablePersonasMorales({ users }) {
                       onClick={() => handleClickOpen(user.id)}
                     >
                       <Tooltip title="Editar Usuario" placement="top">
-                        <EditIcon sx={{ color: "#e7a62f" }} />
+                        <EditIcon
+                          sx={{
+                            color: "#e7a62f",
+                            transition: "0.2s",
+                            "&:hover": { rotate: "40deg" },
+                          }}
+                        />
                       </Tooltip>
                     </IconButton>
                     <IconButton
@@ -134,7 +149,13 @@ export default function TablePersonasMorales({ users }) {
                       onClick={() => DeleteUsersMorales(user.id)}
                     >
                       <Tooltip title="Eliminar Usuario" placement="top">
-                        <DeleteIcon sx={{ color: "#FF0000" }} />
+                        <DeleteIcon
+                          sx={{
+                            color: "#FF0000",
+                            transition: "0.2s",
+                            "&:hover": { scale: "2" },
+                          }}
+                        />
                       </Tooltip>
                     </IconButton>
                   </StyledTableCell>

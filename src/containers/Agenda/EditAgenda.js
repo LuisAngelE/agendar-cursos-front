@@ -24,9 +24,26 @@ import SelectMunicipality from "../../components/SelectOptions/SelectMunicipalit
 export default function EditAgenda({ open, handleClose, id, cursos }) {
   const { UpdateAgendas } = useContext(AgendaContext);
   const [agenda, saveAgenda] = useState(null);
-  
-  const [state, saveState] = React.useState(null);
-  const [municipality, saveMunicipality] = React.useState(null);
+  const [fechas, setFechas] = useState([]);
+
+  useEffect(() => {
+    const getFechas = async () => {
+      try {
+        const res = await fetch(
+          //"https://pruebasldrflotillainterna.ldrhumanresources.com/Servidor/endpoints/fechas_master_drivers.php"
+          "https://ldrflotillainterna.ldrhumanresources.com/Servidor/endpoints/fechas_master_drivers.php"
+        );
+        const data = await res.json();
+        setFechas(data);
+      } catch (error) {
+        console.error("Error al obtener fechas:", error);
+      }
+    };
+    getFechas();
+  }, []);
+
+  const [state, saveState] = useState(null);
+  const [municipality, saveMunicipality] = useState(null);
 
   const detectarCambiosState = (value) => saveState(value);
   const detectarCambiosMunicipality = (value) => saveMunicipality(value);
@@ -47,7 +64,7 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
     handleSubmit,
   } = useForm();
 
-  const [value, setValue] = React.useState(dayjs());
+  const [value, setValue] = useState(dayjs());
 
   const onSubmit = (data, e) => {
     data.id = id;
@@ -111,7 +128,16 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
 
                         const isFullDay = agendasEseDia.length >= 3;
 
-                        return isWeekend || isPastDate || isFullDay;
+                        const isBlockedByEndpoint = fechas.some((f) =>
+                          date.isSame(dayjs(f.start_date), "day")
+                        );
+
+                        return (
+                          isWeekend ||
+                          isPastDate ||
+                          isFullDay ||
+                          isBlockedByEndpoint
+                        );
                       }}
                     />
 
@@ -179,7 +205,7 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                 <TextField
                   fullWidth
                   defaultValue={agenda.location}
-                  label="Ingresa alguna referencia donde tomarás el curso"
+                  label="Ingresa la referencia del lugar donde tomarás el curso."
                   multiline
                   rows={4}
                   {...register("location", {

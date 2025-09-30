@@ -149,7 +149,7 @@ const CursosState = ({ children }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "No, cancelar",
+      cancelButtonText: "No, volver",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodDelete(`/course/${id}`)
@@ -258,7 +258,7 @@ const CursosState = ({ children }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "No, cancelar",
+      cancelButtonText: "No, volver",
     }).then((result) => {
       if (result.isConfirmed) {
         MethodDelete(`/favorites/${course_id}`)

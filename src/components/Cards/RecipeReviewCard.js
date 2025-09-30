@@ -24,6 +24,7 @@ import CategoriasContext from "../../context/Categorias/CategoriasContext";
 import ModalMultimedia from "../../containers/Cursos/ModalMultimedia";
 import AgendaModal from "../../containers/Agenda/AgendaModal";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { motion } from "framer-motion";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -113,13 +114,17 @@ export default function RecipeReviewCard({ curso }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      component={motion.div}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.02, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
+      transition={{ duration: 0.3 }}
+      sx={{ maxWidth: 345 }}
+    >
       <CardHeader
         avatar={
-          <Avatar
-            sx={{ bgcolor: "#F05E29", color: "#FFFFFF" }}
-            aria-label="recipe"
-          >
+          <Avatar sx={{ bgcolor: "#F05E29", color: "#FFFFFF" }}>
             {curso.title?.charAt(0).toUpperCase() ?? "C"}
           </Avatar>
         }
@@ -128,6 +133,9 @@ export default function RecipeReviewCard({ curso }) {
             <IconButton
               size="small"
               onClick={() => handleToggleFavorito(curso)}
+              component={motion.div}
+              whileTap={{ scale: 0.8 }}
+              whileHover={{ scale: 1.2 }}
             >
               <Tooltip
                 title={
@@ -149,12 +157,14 @@ export default function RecipeReviewCard({ curso }) {
         title={curso.title}
       />
       <Link to={`/Cursos/${curso.id}`} style={{ textDecoration: "none" }}>
-        <CardMedia
-          component="img"
-          height="194"
-          image={curso.image?.url || Default}
-          alt="Paella dish"
-        />
+        <motion.div whileHover={{ scale: 1.03 }}>
+          <CardMedia
+            component="img"
+            height="194"
+            image={curso.image?.url || Default}
+            alt="Paella dish"
+          />
+        </motion.div>
         <CardContent>
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Modalidad: {curso.modality} <br />
@@ -172,17 +182,35 @@ export default function RecipeReviewCard({ curso }) {
               onClick={() => handleOpenMultimedia(curso.id)}
             >
               <Tooltip title="Agregar Multimedia" placement="top">
-                <AddPhotoAlternateIcon sx={{ color: "green" }} />
+                <AddPhotoAlternateIcon
+                  sx={{
+                    color: "green",
+                    transition: "0.2s",
+                    "&:hover": { scale: "2" },
+                  }}
+                />
               </Tooltip>
             </IconButton>
             <IconButton size="small" onClick={() => handleClickOpen(curso.id)}>
               <Tooltip title="Editar Curso" placement="top">
-                <EditIcon sx={{ color: "#e7a62f" }} />
+                <EditIcon
+                  sx={{
+                    color: "#e7a62f",
+                    transition: "0.2s",
+                    "&:hover": { rotate: "40deg" },
+                  }}
+                />
               </Tooltip>
             </IconButton>
             <IconButton size="small" onClick={() => DeleteCursos(curso.id)}>
               <Tooltip title="Eliminar Curso" placement="top">
-                <DeleteIcon sx={{ color: "#FF0000" }} />
+                <DeleteIcon
+                  sx={{
+                    color: "#FF0000",
+                    transition: "0.2s",
+                    "&:hover": { scale: "2" },
+                  }}
+                />
               </Tooltip>
             </IconButton>
           </>
@@ -201,18 +229,20 @@ export default function RecipeReviewCard({ curso }) {
           <Typography raphy sx={{ marginBottom: 2 }}>
             Descripción: {curso.description}
           </Typography>
-          <Button
-            onClick={() => handleOpenAgenda(curso.id)}
-            fullWidth
-            variant="contained"
-            sx={{
-              bgcolor: "#5D65A2",
-              "&:hover": { bgcolor: "#5D65A2" },
-            }}
-          >
-            <MessageIcon sx={{ mr: 1 }} />
-            Me Interesa Este Curso
-          </Button>
+          {(type_user === "1" || type_user === "3") && (
+            <Button
+              onClick={() => handleOpenAgenda(curso.id)}
+              fullWidth
+              variant="contained"
+              sx={{
+                bgcolor: "#5D65A2",
+                "&:hover": { bgcolor: "#5D65A2" },
+              }}
+            >
+              <MessageIcon sx={{ mr: 1 }} />
+              Me Interesa Este Curso
+            </Button>
+          )}
         </CardContent>
       </Collapse>
 

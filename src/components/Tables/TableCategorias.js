@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import EditCategorias from "../../containers/Categorias/EditCategorias";
 import { useContext, useEffect, useState } from "react";
 import CategoriasContext from "../../context/Categorias/CategoriasContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -83,49 +84,67 @@ export default function TableCategorias({ categorias }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categorias.length > 0 ? (
-              categorias.map((categoria) => (
-                <StyledTableRow key={categoria.id}>
-                  <StyledTableCell data-label="ID">
-                    {categoria.id}
-                  </StyledTableCell>
-
-                  <StyledTableCell data-label="Nombre">
-                    {categoria.name}
-                  </StyledTableCell>
-
-                  <StyledTableCell data-label="Descripción">
-                    {categoria.description}
-                  </StyledTableCell>
-
-                  <StyledTableCell data-label="Acciones">
-                    <IconButton
-                      size="small"
-                      onClick={() => handleClickOpen(categoria.id)}
-                    >
-                      <Tooltip title="Editar Categoria" placement="top">
-                        <EditIcon sx={{ color: "#e7a62f" }} />
-                      </Tooltip>
-                    </IconButton>
-
-                    <IconButton
-                      size="small"
-                      onClick={() => DeleteCategorias(categoria.id)}
-                    >
-                      <Tooltip title="Eliminar Categoria" placement="top">
-                        <DeleteIcon sx={{ color: "#FF0000" }} />
-                      </Tooltip>
-                    </IconButton>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={4} align="center">
-                  No hay categorias disponibles
-                </TableCell>
-              </TableRow>
-            )}
+            <AnimatePresence>
+              {categorias.length > 0 ? (
+                categorias.map((categoria) => (
+                  <StyledTableRow
+                    key={categoria.id}
+                    component={motion.tr}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.3 }}
+                    whileHover={{ scale: 1.02, backgroundColor: "#FCE3D9" }}
+                  >
+                    <StyledTableCell data-label="ID">
+                      {categoria.id}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Nombre">
+                      {categoria.name}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Descripción">
+                      {categoria.description}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Acciones">
+                      <IconButton
+                        size="small"
+                        onClick={() => handleClickOpen(categoria.id)}
+                      >
+                        <Tooltip title="Editar Categoria" placement="top">
+                          <EditIcon
+                            sx={{
+                              color: "#e7a62f",
+                              transition: "0.2s",
+                              "&:hover": { rotate: "30deg" },
+                            }}
+                          />
+                        </Tooltip>
+                      </IconButton>
+                      <IconButton
+                        size="small"
+                        onClick={() => DeleteCategorias(categoria.id)}
+                      >
+                        <Tooltip title="Eliminar Categoria" placement="top">
+                          <DeleteIcon
+                            sx={{
+                              color: "#FF0000",
+                              transition: "0.2s",
+                              "&:hover": { scale: "2" },
+                            }}
+                          />
+                        </Tooltip>
+                      </IconButton>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No hay categorias disponibles
+                  </TableCell>
+                </TableRow>
+              )}
+            </AnimatePresence>
           </TableBody>
         </Table>
         {id_service !== null && (

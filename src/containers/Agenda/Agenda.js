@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, useMediaQuery, useTheme } from "@mui/material";
 import Layout from "../../components/layout/Layout";
 import PropTypes from "prop-types";
 import AgendaContext from "../../context/Agenda/AgendaContext";
@@ -18,7 +18,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: { xs: 1, sm: 3 } }}>{children}</Box>}
     </div>
   );
 }
@@ -39,9 +39,7 @@ function a11yProps(index) {
 const Agenda = () => {
   const { agendas, GetAgendas } = useContext(AgendaContext);
 
-  let type_user = localStorage.getItem("type_user");
-
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -51,6 +49,9 @@ const Agenda = () => {
     GetAgendas();
   }, []);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Layout>
       <Grid container spacing={2} sx={{ padding: 2 }}>
@@ -59,37 +60,28 @@ const Agenda = () => {
             <Tabs
               value={value}
               onChange={handleChange}
-              variant="scrollable"
+              variant={isMobile ? "fullWidth" : "scrollable"}
               scrollButtons="auto"
               aria-label="agenda tabs"
             >
-              <Tab label="Pendiente de Confirmación" {...a11yProps(0)} />
-              <Tab label="Reservación Confirmada" {...a11yProps(1)} />
-              <Tab label="Reservación Cancelada" {...a11yProps(2)} />
-              <Tab label="Reservación Realizada" {...a11yProps(3)} />
+              <Tab label="Pendientes de Confirmación" {...a11yProps(0)} />
+              <Tab label="Reservaciones Confirmadas" {...a11yProps(1)} />
+              <Tab label="Reservaciones Canceladas" {...a11yProps(2)} />
+              <Tab label="Reservaciones Realizadas" {...a11yProps(3)} />
             </Tabs>
           </Box>
 
-          <CustomTabPanel value={value} index={0}>
-            <TableAgenda
-              agendas={agendas.filter((a) => a.reservations?.[0]?.status === 1)}
-            />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            <TableAgenda
-              agendas={agendas.filter((a) => a.reservations?.[0]?.status === 2)}
-            />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
-            <TableAgenda
-              agendas={agendas.filter((a) => a.reservations?.[0]?.status === 3)}
-            />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={3}>
-            <TableAgenda
-              agendas={agendas.filter((a) => a.reservations?.[0]?.status === 4)}
-            />
-          </CustomTabPanel>
+          {[1, 2, 3, 4].map((status, index) => (
+            <CustomTabPanel key={index} value={value} index={index}>
+              <Box sx={{ overflowX: "auto" }}>
+                <TableAgenda
+                  agendas={agendas.filter(
+                    (a) => a.reservations?.[0]?.status === status
+                  )}
+                />
+              </Box>
+            </CustomTabPanel>
+          ))}
         </Box>
       </Grid>
     </Layout>

@@ -19,6 +19,7 @@ import CachedIcon from "@mui/icons-material/Cached";
 import AddInstructor from "../../containers/Agenda/AddInstructor";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 import EditAgenda from "../../containers/Agenda/EditAgenda";
+import { motion, AnimatePresence } from "framer-motion";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -127,7 +128,15 @@ export default function TableAgenda({ agendas }) {
           <TableBody>
             {agendas.length > 0 ? (
               agendas.map((agenda) => (
-                <StyledTableRow key={agenda.id}>
+                <StyledTableRow
+                  key={agenda.id}
+                  component={motion.tr}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ scale: 1.02, backgroundColor: "#FCE3D9" }}
+                >
                   <StyledTableCell data-label="ID">{agenda.id}</StyledTableCell>
                   <StyledTableCell data-label="Curso">
                     {agenda.course?.title}
@@ -189,7 +198,13 @@ export default function TableAgenda({ agendas }) {
                           title="Detalle del curso reservado"
                           placement="top"
                         >
-                          <VisibilityIcon sx={{ color: "blue" }} />
+                          <VisibilityIcon
+                            sx={{
+                              color: "blue",
+                              transition: "0.2s",
+                              "&:hover": { scale: "2" },
+                            }}
+                          />
                         </Tooltip>
                       </IconButton>
                     </Link>
@@ -202,7 +217,32 @@ export default function TableAgenda({ agendas }) {
                           onClick={() => handleOpenInstructor(agenda.id)}
                         >
                           <Tooltip title="Agregar Instructor" placement="top">
-                            <AccountCircleIcon sx={{ color: "brown" }} />
+                            <AccountCircleIcon
+                              sx={{
+                                color: "brown",
+                                transition: "0.2s",
+                                "&:hover": { scale: "2" },
+                              }}
+                            />
+                          </Tooltip>
+                        </IconButton>
+                      )}
+
+                    {agenda.reservations?.[0]?.status === 1 &&
+                      agenda.instructor_id &&
+                      type_user === "1" && (
+                        <IconButton
+                          size="small"
+                          onClick={() => handleOpenInstructor(agenda.id)}
+                        >
+                          <Tooltip title="Editar Instrcutor" placement="top">
+                            <EditIcon
+                              sx={{
+                                color: "#e7a62f",
+                                transition: "0.2s",
+                                "&:hover": { rotate: "40deg" },
+                              }}
+                            />
                           </Tooltip>
                         </IconButton>
                       )}
@@ -217,7 +257,13 @@ export default function TableAgenda({ agendas }) {
                           }
                         >
                           <Tooltip title="Aceptar Reservación" placement="top">
-                            <CheckCircleOutlineIcon sx={{ color: "green" }} />
+                            <CheckCircleOutlineIcon
+                              sx={{
+                                color: "green",
+                                transition: "0.2s",
+                                "&:hover": { scale: "2" },
+                              }}
+                            />
                           </Tooltip>
                         </IconButton>
                       )}
@@ -230,7 +276,13 @@ export default function TableAgenda({ agendas }) {
                             onClick={() => handleClickOpen(agenda.id)}
                           >
                             <Tooltip title="Editar Reservación" placement="top">
-                              <EditIcon sx={{ color: "#e7a62f" }} />
+                              <EditIcon
+                                sx={{
+                                  color: "#e7a62f",
+                                  transition: "0.2s",
+                                  "&:hover": { rotate: "40deg" },
+                                }}
+                              />
                             </Tooltip>
                           </IconButton>
                         </>
@@ -249,7 +301,13 @@ export default function TableAgenda({ agendas }) {
                               title="Reprogramar el curso"
                               placement="top"
                             >
-                              <CachedIcon sx={{ color: "black" }} />
+                              <CachedIcon
+                                sx={{
+                                  color: "black",
+                                  transition: "0.2s",
+                                  "&:hover": { rotate: "40deg" },
+                                }}
+                              />
                             </Tooltip>
                           </IconButton>
                         </>
@@ -265,7 +323,13 @@ export default function TableAgenda({ agendas }) {
                             }
                           >
                             <Tooltip title="¿Clase Realizada?" placement="top">
-                              <StarIcon sx={{ color: "gold" }} />
+                              <StarIcon
+                                sx={{
+                                  color: "gold",
+                                  transition: "0.2s",
+                                  "&:hover": { scale: "2" },
+                                }}
+                              />
                             </Tooltip>
                           </IconButton>
                           <IconButton
@@ -278,7 +342,13 @@ export default function TableAgenda({ agendas }) {
                               title="Cancelar Reservación"
                               placement="top"
                             >
-                              <HighlightOffIcon sx={{ color: "red" }} />
+                              <HighlightOffIcon
+                                sx={{
+                                  color: "red",
+                                  transition: "0.2s",
+                                  "&:hover": { scale: "2" },
+                                }}
+                              />
                             </Tooltip>
                           </IconButton>
                         </>

@@ -44,6 +44,7 @@ const Categorias = () => {
               "&:hover": {
                 color: "white",
                 backgroundColor: "#F05E29",
+                scale: "1.2",
               },
             }}
           >

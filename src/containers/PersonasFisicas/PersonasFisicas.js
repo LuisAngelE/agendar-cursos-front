@@ -45,6 +45,7 @@ const PersonasFisicas = () => {
               "&:hover": {
                 color: "white",
                 backgroundColor: "#F05E29",
+                scale: "1.2",
               },
             }}
           >

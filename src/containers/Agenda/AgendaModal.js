@@ -21,18 +21,36 @@ import SelectState from "../../components/SelectOptions/SelectState";
 import SelectMunicipality from "../../components/SelectOptions/SelectMunicipality";
 import CursosContext from "../../context/Cursos/CursosContext";
 import { useEffect } from "react";
+import { useState } from "react";
 
 export default function AgendaModal({ open, handleClose, id }) {
   const { cursos, GetCursos } = useContext(CursosContext);
   const { AddAgendas } = useContext(AgendaContext);
   let type_user = localStorage.getItem("type_user");
+  const [fechas, setFechas] = useState([]);
 
-  const [state, saveState] = React.useState(null);
+  useEffect(() => {
+    const getFechas = async () => {
+      try {
+        const res = await fetch(
+          //"https://pruebasldrflotillainterna.ldrhumanresources.com/Servidor/endpoints/fechas_master_drivers.php"
+          "https://ldrflotillainterna.ldrhumanresources.com/Servidor/endpoints/fechas_master_drivers.php"
+        );
+        const data = await res.json();
+        setFechas(data);
+      } catch (error) {
+        console.error("Error al obtener fechas:", error);
+      }
+    };
+    getFechas();
+  }, []);
+
+  const [state, saveState] = useState(null);
   const detectarCambiosState = (value) => {
     saveState(value.value);
   };
 
-  const [municipality, saveMunicipality] = React.useState(null);
+  const [municipality, saveMunicipality] = useState(null);
   const detectarCambiosMunicipality = (value) => {
     saveMunicipality(value.value);
   };
@@ -43,7 +61,7 @@ export default function AgendaModal({ open, handleClose, id }) {
     handleSubmit,
   } = useForm();
 
-  const [value, setValue] = React.useState(dayjs());
+  const [value, setValue] = useState(dayjs());
 
   const onSubmit = (data) => {
     data.course_id = id;
@@ -111,11 +129,20 @@ export default function AgendaModal({ open, handleClose, id }) {
 
                       const isFullDay = countForThisDay >= 3;
 
+                      const isBlockedByEndpoint = fechas.some((f) =>
+                        date.isSame(dayjs(f.start_date), "day")
+                      );
+
                       if (Number(type_user) === 1) {
-                        return isPastDate || isFullDay;
+                        return isPastDate || isFullDay || isBlockedByEndpoint;
                       } else {
                         const isWeekend = day === 0 || day === 6;
-                        return isWeekend || isPastDate || isFullDay;
+                        return (
+                          isWeekend ||
+                          isPastDate ||
+                          isFullDay ||
+                          isBlockedByEndpoint
+                        );
                       }
                     }}
                   />
@@ -181,7 +208,7 @@ export default function AgendaModal({ open, handleClose, id }) {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Ingresa alguna referencia donde tomarás el curso"
+                label="Ingresa la referencia del lugar donde tomarás el curso."
                 multiline
                 rows={4}
                 {...register("location", {
