@@ -124,13 +124,12 @@ const Register = () => {
             <Box
               sx={{
                 boxShadow: 3,
+                m: 5,
                 p: 4,
-                width: "100%",
-                maxWidth: "500px",
-                margin: "auto",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                position: "relative",
+                marginTop: 5,
+                width: "80%", 
+                maxWidth: { xs: "100%", sm: 500, md: 600 },
               }}
               className={classes.caja}
             >

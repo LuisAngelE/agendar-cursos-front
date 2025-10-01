@@ -27,19 +27,9 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
   const [fechas, setFechas] = useState([]);
 
   useEffect(() => {
-    const getFechas = async () => {
-      try {
-        const res = await fetch(
-          //"https://pruebasldrflotillainterna.ldrhumanresources.com/Servidor/endpoints/fechas_master_drivers.php"
-          "https://ldrflotillainterna.ldrhumanresources.com/Servidor/endpoints/fechas_master_drivers.php"
-        );
-        const data = await res.json();
-        setFechas(data);
-      } catch (error) {
-        console.error("Error al obtener fechas:", error);
-      }
-    };
-    getFechas();
+    MethodGet("/course-schedules/dates")
+      .then((res) => setFechas(res.data))
+      .catch(console.log);
   }, []);
 
   const [state, saveState] = useState(null);
@@ -74,6 +64,11 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
     data.municipality_id = municipality?.value || agenda.municipality_id;
     UpdateAgendas(data);
     handleClose();
+  };
+
+  const countEventsByDate = (date) => {
+    if (!Array.isArray(fechas)) return 0;
+    return fechas.filter((e) => dayjs(e.start_date).isSame(date, "day")).length;
   };
 
   return (
@@ -122,22 +117,9 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
 
                         const isWeekend = day === 0 || day === 6;
 
-                        const agendasEseDia = cursos.filter((curso) =>
-                          dayjs(curso.start_date).isSame(date, "day")
-                        );
+                        const alreadyThree = countEventsByDate(date) >= 3;
 
-                        const isFullDay = agendasEseDia.length >= 3;
-
-                        const isBlockedByEndpoint = fechas.some((f) =>
-                          date.isSame(dayjs(f.start_date), "day")
-                        );
-
-                        return (
-                          isWeekend ||
-                          isPastDate ||
-                          isFullDay ||
-                          isBlockedByEndpoint
-                        );
+                        return isWeekend || isPastDate || alreadyThree;
                       }}
                     />
 

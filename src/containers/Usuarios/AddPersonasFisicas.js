@@ -52,7 +52,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddPersonasFisicas({ modal, handleClose }) {
+export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
   const { AddPersonaFisicas } = React.useContext(UsuariosContext);
 
   const {
@@ -64,7 +64,7 @@ export default function AddPersonasFisicas({ modal, handleClose }) {
 
   const onSubmit = (data) => {
     AddPersonaFisicas(data);
-    handleClose();
+    handleCloseFisica();
   };
 
   const [passwordValues, setPasswordValues] = React.useState({
@@ -97,11 +97,11 @@ export default function AddPersonasFisicas({ modal, handleClose }) {
 
   return (
     <BootstrapDialog
-      onClose={handleClose}
+      onClose={handleCloseFisica}
       aria-labelledby="customized-dialog-title"
       open={modal}
     >
-      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseFisica}>
         Agregar Persona Física
       </BootstrapDialogTitle>
       <form

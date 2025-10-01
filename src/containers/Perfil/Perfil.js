@@ -16,6 +16,7 @@ import LockResetIcon from "@mui/icons-material/LockReset";
 import ResetPassword from "./ResetPassword";
 import EditInfo from "./EditInfo";
 import AttachFileMultimedia from "./AttachFileMultimedia";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Perfil = () => {
   const { user_me, UserMe } = useContext(AuthContext);
@@ -72,7 +73,15 @@ const Perfil = () => {
       >
         {user_me && (
           <Grid item xs={12} sm={10} md={8} lg={6}>
-            <Card sx={{ borderRadius: 4, boxShadow: 4, p: 2 }}>
+            <Card
+              sx={{ borderRadius: 4, boxShadow: 4, p: 2 }}
+              component={motion.tr}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.02 }}
+            >
               <CardContent>
                 <Typography
                   variant="h4"

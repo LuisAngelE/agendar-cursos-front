@@ -11,12 +11,16 @@ import {
   ADD_USERS,
   DELETE_USERS,
   GET_ALL_USERS,
+  GET_ALL_USERS_FISICOS,
+  GET_ALL_USERS_MORALES,
   UPDATE_USERS,
   SHOW_ERRORS_API,
 } from "../../types";
 const UsuariosState = ({ children }) => {
   const initialState = {
     users: [],
+    usersFisicos: [],
+    usersMorales: [],
     user: null,
     ErrorsApi: [],
     success: false,
@@ -27,7 +31,7 @@ const UsuariosState = ({ children }) => {
     MethodGet("/users/fisicas")
       .then((res) => {
         dispatch({
-          type: GET_ALL_USERS,
+          type: GET_ALL_USERS_FISICOS,
           payload: res.data.data,
         });
       })
@@ -40,7 +44,7 @@ const UsuariosState = ({ children }) => {
     MethodGet("/users/morales")
       .then((res) => {
         dispatch({
-          type: GET_ALL_USERS,
+          type: GET_ALL_USERS_MORALES,
           payload: res.data.data,
         });
       })
@@ -296,6 +300,8 @@ const UsuariosState = ({ children }) => {
     <UsuariosContext.Provider
       value={{
         users: state.users,
+        usersFisicos: state.usersFisicos,
+        usersMorales: state.usersMorales,
         user: state.user,
         ErrorsApi: state.ErrorsApi,
         success: state.success,

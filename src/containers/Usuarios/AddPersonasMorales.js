@@ -52,7 +52,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddPersonasMorales({ modal, handleClose }) {
+export default function AddPersonasMorales({ modal, handleCloseMoral }) {
   const { AddPersonaMorales } = React.useContext(UsuariosContext);
 
   const {
@@ -63,7 +63,7 @@ export default function AddPersonasMorales({ modal, handleClose }) {
   } = useForm();
   const onSubmit = (data) => {
     AddPersonaMorales(data);
-    handleClose();
+    handleCloseMoral();
   };
   const [passwordValues, setPasswordValues] = React.useState({
     password: "",
@@ -91,11 +91,11 @@ export default function AddPersonasMorales({ modal, handleClose }) {
   };
   return (
     <BootstrapDialog
-      onClose={handleClose}
+      onClose={handleCloseMoral}
       aria-labelledby="customized-dialog-title"
       open={modal}
     >
-      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseMoral}>
         Agregar Persona Moral
       </BootstrapDialogTitle>
       <form

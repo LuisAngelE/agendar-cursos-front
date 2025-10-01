@@ -22,6 +22,7 @@ import SelectMunicipality from "../../components/SelectOptions/SelectMunicipalit
 import CursosContext from "../../context/Cursos/CursosContext";
 import { useEffect } from "react";
 import { useState } from "react";
+import MethodGet from "../../config/service";
 
 export default function AgendaModal({ open, handleClose, id }) {
   const { cursos, GetCursos } = useContext(CursosContext);
@@ -30,19 +31,9 @@ export default function AgendaModal({ open, handleClose, id }) {
   const [fechas, setFechas] = useState([]);
 
   useEffect(() => {
-    const getFechas = async () => {
-      try {
-        const res = await fetch(
-          //"https://pruebasldrflotillainterna.ldrhumanresources.com/Servidor/endpoints/fechas_master_drivers.php"
-          "https://ldrflotillainterna.ldrhumanresources.com/Servidor/endpoints/fechas_master_drivers.php"
-        );
-        const data = await res.json();
-        setFechas(data);
-      } catch (error) {
-        console.error("Error al obtener fechas:", error);
-      }
-    };
-    getFechas();
+    MethodGet("/course-schedules/dates")
+      .then((res) => setFechas(res.data))
+      .catch(console.log);
   }, []);
 
   const [state, saveState] = useState(null);
@@ -75,6 +66,11 @@ export default function AgendaModal({ open, handleClose, id }) {
   useEffect(() => {
     GetCursos();
   }, []);
+
+  const countEventsByDate = (date) => {
+    if (!Array.isArray(fechas)) return 0;
+    return fechas.filter((e) => dayjs(e.start_date).isSame(date, "day")).length;
+  };
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -118,31 +114,13 @@ export default function AgendaModal({ open, handleClose, id }) {
                       const day = date.day();
                       const isPastDate = date.isBefore(today, "day");
 
-                      const countForThisDay = cursos.reduce((acc, c) => {
-                        return (
-                          acc +
-                          (c.schedules?.filter((schedule) =>
-                            date.isSame(dayjs(schedule.start_date), "day")
-                          ).length ?? 0)
-                        );
-                      }, 0);
-
-                      const isFullDay = countForThisDay >= 3;
-
-                      const isBlockedByEndpoint = fechas.some((f) =>
-                        date.isSame(dayjs(f.start_date), "day")
-                      );
+                      const alreadyThree = countEventsByDate(date) >= 3;
 
                       if (Number(type_user) === 1) {
-                        return isPastDate || isFullDay || isBlockedByEndpoint;
+                        return isPastDate || alreadyThree;
                       } else {
                         const isWeekend = day === 0 || day === 6;
-                        return (
-                          isWeekend ||
-                          isPastDate ||
-                          isFullDay ||
-                          isBlockedByEndpoint
-                        );
+                        return isWeekend || isPastDate || alreadyThree;
                       }
                     }}
                   />

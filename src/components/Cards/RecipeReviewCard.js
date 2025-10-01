@@ -236,7 +236,7 @@ export default function RecipeReviewCard({ curso }) {
               variant="contained"
               sx={{
                 bgcolor: "#5D65A2",
-                "&:hover": { bgcolor: "#5D65A2" },
+                "&:hover": { bgcolor: "#5D65A2", scale: "1.1", },
               }}
             >
               <MessageIcon sx={{ mr: 1 }} />

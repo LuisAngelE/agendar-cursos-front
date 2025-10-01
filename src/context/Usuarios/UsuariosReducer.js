@@ -2,6 +2,8 @@ import {
   ADD_USERS,
   DELETE_USERS,
   GET_ALL_USERS,
+  GET_ALL_USERS_FISICOS,
+  GET_ALL_USERS_MORALES,
   UPDATE_USERS,
   SHOW_ERRORS_API,
 } from "../../types";
@@ -12,6 +14,20 @@ const UsuariosReducer = (state, action) => {
       return {
         ...state,
         users: action.payload,
+        success: false,
+        ErrorsApi: [],
+      };
+    case GET_ALL_USERS_FISICOS:
+      return {
+        ...state,
+        usersFisicos: action.payload,
+        success: false,
+        ErrorsApi: [],
+      };
+    case GET_ALL_USERS_MORALES:
+      return {
+        ...state,
+        usersMorales: action.payload,
         success: false,
         ErrorsApi: [],
       };

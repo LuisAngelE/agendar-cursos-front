@@ -22,7 +22,6 @@ import EventIcon from "@mui/icons-material/Event";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupIcon from "@mui/icons-material/Group";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import BusinessIcon from "@mui/icons-material/Business";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
 import Logo from "../layout/img/logo.png";
@@ -147,14 +146,9 @@ export default function Header({ children }) {
       ),
     },
     {
-      name: "Personas Físicas",
-      value: "/PersonasFisicas",
+      name: "Usuarios",
+      value: "/Usuarios",
       icon: <GroupIcon />,
-    },
-    {
-      name: "Personas Morales",
-      value: "/PersonasMorales",
-      icon: <BusinessIcon />,
     },
     {
       name: "Mi Perfil",

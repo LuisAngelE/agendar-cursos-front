@@ -8,9 +8,11 @@ export const LOGIN_EXITOSO = "LOGIN_EXITOSO";
 export const CERRAR_SESION = "CERRAR_SESION";
 
 export const GET_ALL_USERS = "GET_ALL_USERS";
-export const ADD_USERS = "GET_ALL_USERS";
-export const UPDATE_USERS = "GET_ALL_USERS";
-export const DELETE_USERS = "GET_ALL_USERS";
+export const GET_ALL_USERS_FISICOS = "GET_ALL_USERS_FISICOS";
+export const GET_ALL_USERS_MORALES = "GET_ALL_USERS_MORALES";
+export const ADD_USERS = "ADD_USERS";
+export const UPDATE_USERS = "UPDATE_USERS";
+export const DELETE_USERS = "DELETE_USERS";
 export const GET_USER_ME = "GET_USER_ME";
 export const USER_CHANGEPASSWORD = "USER_CHANGEPASSWORD";
 export const UPDATE_INFO = "UPDATE_INFO";

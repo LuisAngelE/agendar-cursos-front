@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useContext, useEffect, useState } from "react";
 import UsuariosContext from "../../context/Usuarios/UsuariosContext";
-import EditPersonasMorales from "../../containers/PersonasMorales/EditPersonasMorales";
+import EditPersonasMorales from "../../containers/Usuarios/EditPersonasMorales";
 import { motion, AnimatePresence } from "framer-motion";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({

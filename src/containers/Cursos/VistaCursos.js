@@ -15,6 +15,7 @@ import {
 import MethodGet from "../../config/service";
 import MultimediaCursos from "./MultimediaCursos";
 import AgendaModal from "../Agenda/AgendaModal";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function VistaCursos(props) {
   const { id } = props.match.params;
@@ -48,7 +49,16 @@ export default function VistaCursos(props) {
 
   return (
     <Layout>
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Container
+        maxWidth="lg"
+        sx={{ py: 4 }}
+        component={motion.tr}
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, x: -100 }}
+        transition={{ duration: 0.3 }}
+        whileHover={{ scale: 1.02 }}
+      >
         <Grid container spacing={4} alignItems="flex-start">
           <Grid item xs={12} md={6}>
             <Box sx={{ aspectRatio: "16/9", width: "100%" }}>
@@ -112,7 +122,7 @@ export default function VistaCursos(props) {
                 variant="contained"
                 sx={{
                   bgcolor: "#5D65A2",
-                  "&:hover": { bgcolor: "#4a538d", scale: "1.1", },
+                  "&:hover": { bgcolor: "#4a538d", scale: "1.1" },
                   borderRadius: 3,
                   py: 1.5,
                   fontWeight: "bold",
