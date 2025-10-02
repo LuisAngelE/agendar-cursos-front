@@ -12,11 +12,13 @@ import {
   UPDATE_AGENDAS,
   RESCHEDULE,
   CLASS_DONE,
+  GET_ALL_AGENDAS_COUNT,
 } from "../../types";
 const AgendaState = ({ children }) => {
   const initialState = {
     agendas: [],
     agenda: null,
+    agendasCount: [],
     ErrorsApi: [],
     success: false,
   };
@@ -43,6 +45,36 @@ const AgendaState = ({ children }) => {
         .then((res) => {
           dispatch({
             type: GET_ALL_AGENDAS,
+            payload: res.data,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  const GetAgendasCount = () => {
+    let type_user = localStorage.getItem("type_user");
+    let user_id = localStorage.getItem("user_id");
+    if (type_user === "1") {
+      let url = `/indexCount`;
+      MethodGet(url)
+        .then((res) => {
+          dispatch({
+            type: GET_ALL_AGENDAS_COUNT,
+            payload: res.data,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (type_user === "2" || type_user === "3") {
+      let url = `/indexTypeUserAgendaCount/${user_id}`;
+      MethodGet(url)
+        .then((res) => {
+          dispatch({
+            type: GET_ALL_AGENDAS_COUNT,
             payload: res.data,
           });
         })
@@ -328,6 +360,7 @@ const AgendaState = ({ children }) => {
     <AgendaContext.Provider
       value={{
         agendas: state.agendas,
+        agendasCount: state.agendasCount,
         agenda: state.agenda,
         ErrorsApi: state.ErrorsApi,
         success: state.success,
@@ -339,6 +372,7 @@ const AgendaState = ({ children }) => {
         UpdateAgendas,
         ClassDone,
         Reschedule,
+        GetAgendasCount,
       }}
     >
       {children}

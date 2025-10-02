@@ -15,11 +15,35 @@ import {
 import MethodGet from "../../config/service";
 import MultimediaCursos from "./MultimediaCursos";
 import AgendaModal from "../Agenda/AgendaModal";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function VistaCursos(props) {
   const { id } = props.match.params;
-  const [curso, saveCurso] = useState({});
+
+  const [curso, setCurso] = useState(null);
+  const [id_agenda, saveIdAgenda] = useState(null);
+  const [modalAgenda, openModalAgenda] = useState(false);
+
+  useEffect(() => {
+    MethodGet(`/course/${id}`)
+      .then((res) => setCurso(res.data))
+      .catch((error) => console.log(error));
+  }, [id]);
+
+  const handleOpenAgenda = (id) => {
+    openModalAgenda(true);
+    saveIdAgenda(id);
+  };
+
+  const handleCloseAgenda = () => {
+    openModalAgenda(false);
+    saveIdAgenda(null);
+  };
+
+  if (!curso) {
+    return <Layout>Cargando...</Layout>;
+  }
+
   const {
     images = [],
     category = {},
@@ -27,25 +51,8 @@ export default function VistaCursos(props) {
     schedules = [],
     reservations = [],
   } = curso;
+
   let type_user = localStorage.getItem("type_user");
-
-  const [id_agenda, saveIdAgenda] = useState(null);
-  const [modalAgenda, openModalAgenda] = useState(false);
-
-  const handleOpenAgenda = (id) => {
-    openModalAgenda(true);
-    saveIdAgenda(id);
-  };
-  const handleCloseAgenda = () => {
-    openModalAgenda(false);
-    saveIdAgenda(null);
-  };
-
-  useEffect(() => {
-    MethodGet(`/course/${id}`)
-      .then((res) => saveCurso(res.data))
-      .catch((error) => console.log(error));
-  }, [id]);
 
   return (
     <Layout>

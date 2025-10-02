@@ -16,8 +16,11 @@ const Cursos = () => {
 
   useEffect(() => {
     GetCursos(searchNombre, searchTipoCategoria);
-    GetCategories();
   }, [searchNombre, searchTipoCategoria]);
+
+  useEffect(() => {
+    GetCategories();
+  }, []);
 
   const [openModal, setOpenModal] = useState(false);
   const handleClickOpen = () => {
@@ -138,7 +141,7 @@ const Cursos = () => {
         {cursos.length > 0
           ? cursos.map((curso) => (
               <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
-                <RecipeReviewCard curso={curso} />
+                <RecipeReviewCard curso={curso} categorias={categorias} />
               </Grid>
             ))
           : null}

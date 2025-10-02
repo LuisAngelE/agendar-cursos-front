@@ -50,16 +50,11 @@ const ExpandMore = styled((props) => {
   ],
 }));
 
-export default function RecipeReviewCard({ curso }) {
-  const { categorias, GetCategories } = React.useContext(CategoriasContext);
+export default function RecipeReviewCard({ curso, categorias }) {
   const { DeleteCursos, AddCursoFavorito, DeleteCursoFavorito } =
     React.useContext(CursosContext);
   const type_user = localStorage.getItem("type_user");
   const user_id = localStorage.getItem("user_id");
-
-  React.useEffect(() => {
-    GetCategories();
-  }, []);
 
   const isFavorito = (curso) => {
     return curso.users_who_favorited?.some(

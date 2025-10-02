@@ -111,12 +111,12 @@ export default function Header({ children }) {
     CursosFavoritosContext
   );
 
-  const { agendas, GetAgendas } = React.useContext(AgendaContext);
+  const { agendasCount, GetAgendasCount } = React.useContext(AgendaContext);
   const { cerrarSesion } = React.useContext(AuthContext);
   let type_user = localStorage.getItem("type_user");
 
   React.useEffect(() => {
-    GetAgendas();
+    GetAgendasCount();
     GetCursosFavoritos();
   }, []);
 
@@ -140,7 +140,7 @@ export default function Header({ children }) {
       name: "Cursos Reservados",
       value: "/Agenda",
       icon: (
-        <Badge badgeContent={agendas.length} color="error">
+        <Badge badgeContent={agendasCount.length} color="error">
           <SchoolIcon />
         </Badge>
       ),
@@ -167,7 +167,7 @@ export default function Header({ children }) {
       name: "Mis Cursos Reservados",
       value: "/Agenda",
       icon: (
-        <Badge badgeContent={agendas.length} color="error">
+        <Badge badgeContent={agendasCount.length} color="error">
           <SchoolIcon />
         </Badge>
       ),
@@ -198,7 +198,7 @@ export default function Header({ children }) {
       name: "Mis Cursos Reservados",
       value: "Agenda",
       icon: (
-        <Badge badgeContent={agendas.length} color="error">
+        <Badge badgeContent={agendasCount.length} color="error">
           <EventIcon />
         </Badge>
       ),
