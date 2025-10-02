@@ -4,21 +4,14 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const GraphicsDona = () => {
-  const labels = ["Red", "Blue", "Yellow"];
-  const dataValues = [300, 50, 100];
-
+const GraphicsDona = ({ dataValues, labels }) => {
   const data = {
     labels,
     datasets: [
       {
-        label: "My First Dataset",
+        label: "Conteo de elementos",
         data: dataValues,
-        backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-        ],
+        backgroundColor: ["#F05E29", "#43A047", "#1E88E5", "#8E24AA"],
         hoverOffset: 4,
       },
     ],
@@ -26,11 +19,8 @@ const GraphicsDona = () => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false, 
-    plugins: {
-      legend: { position: "top" },
-      tooltip: { enabled: true },
-    },
+    maintainAspectRatio: false,
+    plugins: { legend: { position: "top" }, tooltip: { enabled: true } },
     cutout: "50%",
   };
 

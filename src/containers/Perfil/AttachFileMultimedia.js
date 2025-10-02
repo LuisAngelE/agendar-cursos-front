@@ -68,11 +68,7 @@ export default function AttachFileMultimedia({ open, handleClose, id }) {
               }}
             >
               <div>
-                <img
-                  src={image.urlPhoto}
-                  className={classes.logoimagen}
-                  alt="agrega evidencia"
-                />
+                <img src={image.urlPhoto} className={classes.logoimagen} />
               </div>
             </Box>
             <input

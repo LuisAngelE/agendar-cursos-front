@@ -10,6 +10,8 @@ import BusinessIcon from "@mui/icons-material/Business";
 import { motion } from "framer-motion";
 import Graphics from "../../components/Graphics/Graphics";
 import GraphicsDona from "../../components/Graphics/GraphicsDona";
+import GraficasContext from "../../context/Graficas/GraficasContext";
+import { useContext, useEffect } from "react";
 
 const cardsData = [
   {
@@ -41,15 +43,15 @@ const cardsData = [
     bgColor: "#E3F2FD",
   },
   {
-    title: "Usuarios Físicas",
-    subtitle: "Gestión de usuarios físicos",
+    title: "Personas Físicas",
+    subtitle: "Gestión de personas físicas",
     icon: <GroupIcon sx={{ fontSize: 50, color: "#FBC02D" }} />,
     link: "/Usuarios",
     bgColor: "#FFFDE7",
   },
   {
-    title: "Usuarios Morales",
-    subtitle: "Gestión de usuarios morales",
+    title: "Personas Morales",
+    subtitle: "Gestión de personas morales",
     icon: <BusinessIcon sx={{ fontSize: 50, color: "#8E24AA" }} />,
     link: "/Usuarios",
     bgColor: "#F3E5F5",
@@ -57,6 +59,32 @@ const cardsData = [
 ];
 
 const Inicio = () => {
+  const {
+    total_categories,
+    total_course,
+    total_reservartion,
+    total_users,
+
+    CountCategories,
+    CountCourse,
+    CountReservation,
+    CountUser,
+  } = useContext(GraficasContext);
+
+  useEffect(() => {
+    CountCategories();
+    CountCourse();
+    CountReservation();
+    CountUser();
+  }, []);
+
+  const dataValues = [
+    total_categories,
+    total_course,
+    total_reservartion,
+    total_users,
+  ].map((v) => v || 0);
+
   return (
     <Layout>
       <Grid container spacing={4} sx={{ padding: 3 }}>
@@ -77,10 +105,7 @@ const Inicio = () => {
                   justifyContent: "center",
                   transition: "transform 0.2s, box-shadow 0.2s",
                   cursor: "pointer",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                    boxShadow: 6,
-                  },
+                  "&:hover": { transform: "scale(1.05)", boxShadow: 6 },
                 }}
                 component={motion.div}
                 initial={{ opacity: 0, y: 15 }}
@@ -134,7 +159,10 @@ const Inicio = () => {
               height: "100%",
             }}
           >
-            <Graphics />
+            <Graphics
+              labels={["Categorías", "Cursos", "Reservaciones", "Usuarios"]}
+              dataValues={dataValues}
+            />
           </Box>
         </Grid>
 
@@ -148,7 +176,10 @@ const Inicio = () => {
               height: "100%",
             }}
           >
-            <GraphicsDona />
+            <GraphicsDona
+              labels={["Categorías", "Cursos", "Reservaciones", "Usuarios"]}
+              dataValues={dataValues}
+            />
           </Box>
         </Grid>
       </Grid>

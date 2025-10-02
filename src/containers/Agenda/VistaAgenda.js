@@ -17,6 +17,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SchoolIcon from "@mui/icons-material/School";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { motion } from "framer-motion";
 
 export default function VistaAgenda(props) {
   const { id } = props.match.params;
@@ -41,10 +42,20 @@ export default function VistaAgenda(props) {
     <Layout>
       <Grid container justifyContent="center" sx={{ mt: 4, px: 2 }}>
         <Grid item xs={12} md={8} lg={6}>
-          <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
+          <Card
+            component={motion.div}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            sx={{ borderRadius: 4, boxShadow: 6 }}
+          >
             <CardContent>
-              {/* Título */}
-              <Typography variant="h4" gutterBottom fontWeight="bold">
+              <Typography
+                variant="h4"
+                gutterBottom
+                fontWeight="bold"
+                sx={{ color: "primary.main" }}
+              >
                 {agenda.course?.title}
               </Typography>
               <Chip
@@ -54,7 +65,6 @@ export default function VistaAgenda(props) {
                 sx={{ mb: 2 }}
               />
 
-              {/* Descripción */}
               <Typography
                 variant="body1"
                 color="text.secondary"
@@ -66,13 +76,14 @@ export default function VistaAgenda(props) {
 
               <Divider sx={{ my: 2 }} />
 
-              {/* Info general */}
-              <Grid container spacing={2}>
+              <Grid container spacing={2} sx={{ mb: 2 }}>
                 <Grid item xs={12} sm={6}>
                   <Box display="flex" alignItems="center" gap={1}>
                     <EventIcon color="primary" />
                     <Typography variant="body2">
-                      {new Date(agenda.start_date).toLocaleDateString()}
+                      {new Date(agenda.start_date).toLocaleDateString("es-MX", {
+                        dateStyle: "long",
+                      })}
                     </Typography>
                   </Box>
                 </Grid>
@@ -80,7 +91,9 @@ export default function VistaAgenda(props) {
                   <Box display="flex" alignItems="center" gap={1}>
                     <AccessTimeIcon color="primary" />
                     <Typography variant="body2">
-                      {new Date(agenda.start_date).toLocaleTimeString()}
+                      {new Date(agenda.start_date).toLocaleTimeString("es-MX", {
+                        timeStyle: "short",
+                      })}
                     </Typography>
                   </Box>
                 </Grid>
@@ -95,8 +108,10 @@ export default function VistaAgenda(props) {
                 <Grid item xs={12} sm={6}>
                   <Box display="flex" alignItems="center" gap={1}>
                     <PersonIcon color="primary" />
-                    <Typography variant="body2">
-                      {agenda.instructor?.name} {agenda.instructor?.last_name}
+                    <Typography variant="body2" fontWeight="medium">
+                      {agenda.instructor
+                        ? `${agenda.instructor.name} ${agenda.instructor.last_name}`
+                        : "Instructor no asignado"}
                     </Typography>
                   </Box>
                 </Grid>
@@ -113,8 +128,12 @@ export default function VistaAgenda(props) {
 
               <Divider sx={{ my: 3 }} />
 
-              {/* Reservaciones */}
-              <Typography variant="h6" gutterBottom fontWeight="medium">
+              <Typography
+                variant="h6"
+                gutterBottom
+                fontWeight="bold"
+                sx={{ mb: 2 }}
+              >
                 Reservaciones
               </Typography>
 
@@ -123,16 +142,21 @@ export default function VistaAgenda(props) {
                   <Paper
                     key={res.id}
                     elevation={2}
+                    component={motion.div}
+                    whileHover={{ scale: 1.02 }}
                     sx={{
                       p: 2,
                       mb: 2,
-                      borderRadius: 2,
+                      borderRadius: 3,
                       display: "flex",
                       alignItems: "center",
                       gap: 2,
+                      bgcolor: "#fafafa",
                     }}
                   >
-                    <Avatar>{res.student?.name?.charAt(0)}</Avatar>
+                    <Avatar sx={{ bgcolor: "primary.main" }}>
+                      {res.student?.name?.charAt(0)}
+                    </Avatar>
                     <Box>
                       <Typography variant="body2" fontWeight="medium">
                         {res.student?.name} {res.student?.last_name}
