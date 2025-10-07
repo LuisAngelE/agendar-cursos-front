@@ -12,6 +12,7 @@ import ResetPassword from "../components/Auth/ResetPassword";
 import AdminRoutes from "./AdminRoutes";
 import InstructorRoutes from "./InstructorRoutes";
 import AlumnoRoutes from "./AlumnoRoutes";
+import CursosPublicos from "../containers/CursosPublicos/CursosPublicos";
 
 const AppRouter = () => {
   const { autenticado, usuarioAutenticado, cargando } = useContext(AuthContext);
@@ -56,7 +57,11 @@ const AppRouter = () => {
           component={ResetPassword}
           isAuthenticated={autenticado}
         />
-
+        <PublicRouter
+          exact
+          path="/cursos-publicos"
+          component={CursosPublicos}
+        />
         {PrivateComponent && (
           <PrivateRouter
             path="/"
