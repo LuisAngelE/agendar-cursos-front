@@ -191,8 +191,8 @@ export default function EditPersonasMorales({ open, handleClose, id }) {
                     {...register("collaborator_number", {
                       required: "El número de colaborador es obligatorio",
                       maxLength: {
-                        value: 10,
-                        message: "Máximo 10 caracteres",
+                        value: 6,
+                        message: "Máximo 6 caracteres",
                       },
                     })}
                     error={!!errors.collaborator_number}

@@ -31,9 +31,9 @@ const cardsData = [
   {
     title: "Cursos",
     subtitle: "Todos los cursos disponibles",
-    icon: <MenuBookIcon sx={{ fontSize: 50, color: "#43A047" }} />,
+    icon: <MenuBookIcon sx={{ fontSize: 50, color: "#8E24AA" }} />,
     link: "/Cursos",
-    bgColor: "#E8F5E9",
+    bgColor: "#F3E5F5",
   },
   {
     title: "Cursos Reservados",
@@ -52,9 +52,9 @@ const cardsData = [
   {
     title: "Personas Morales",
     subtitle: "Gestión de personas morales",
-    icon: <BusinessIcon sx={{ fontSize: 50, color: "#8E24AA" }} />,
+    icon: <BusinessIcon sx={{ fontSize: 50, color: "#43A047" }} />,
     link: "/Usuarios",
-    bgColor: "#F3E5F5",
+    bgColor: "#E8F5E9",
   },
 ];
 

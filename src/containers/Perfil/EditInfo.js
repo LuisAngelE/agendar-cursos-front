@@ -281,7 +281,7 @@ export default function EditInfo({ modal, handleClose, User }) {
                     defaultValue={User.collaborator_number}
                     {...register("collaborator_number", {
                       required: "El número de colaborador es obligatorio",
-                      maxLength: { value: 10, message: "Máximo 10 caracteres" },
+                      maxLength: { value: 6, message: "Máximo 6 caracteres" },
                     })}
                     error={!!errors.collaborator_number}
                     helperText={errors.collaborator_number?.message}

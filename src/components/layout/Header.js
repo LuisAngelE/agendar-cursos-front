@@ -24,7 +24,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
-import Logo from "../layout/img/logo.png";
+import Logo from "../layout/img/logoNegro.png";
 import CategoryIcon from "@mui/icons-material/Category";
 import AuthContext from "../../context/Auth/AuthContext";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -223,8 +223,7 @@ export default function Header({ children }) {
         position="fixed"
         open={open}
         sx={{
-          background:
-            "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%);",
+          background: " #E8F5E9",
         }}
       >
         <Toolbar
@@ -241,7 +240,7 @@ export default function Header({ children }) {
             edge="start"
             sx={{
               ...(open && { display: "none" }),
-              color: "white",
+              color: "black",
               transition: "0.2s",
               "&:hover": { rotate: "40deg" },
             }}
@@ -271,7 +270,7 @@ export default function Header({ children }) {
               <IconButton onClick={() => cerrarSesion()}>
                 <ExitToAppIcon
                   sx={{
-                    color: "white",
+                    color: "black",
                     fontSize: 25,
                     transition: "0.2s",
                     "&:hover": { scale: "2" },
@@ -284,12 +283,12 @@ export default function Header({ children }) {
       </AppBar>
 
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader sx={{ backgroundColor: "#1C277D" }}>
+        <DrawerHeader sx={{ backgroundColor: "#E8F5E9" }}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
-              <ChevronRightIcon sx={{ color: "white" }} />
+              <ChevronRightIcon sx={{ color: "black" }} />
             ) : (
-              <ChevronLeftIcon sx={{ color: "white" }} />
+              <ChevronLeftIcon sx={{ color: "black" }} />
             )}
           </IconButton>
         </DrawerHeader>

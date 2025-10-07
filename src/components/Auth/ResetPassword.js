@@ -2,7 +2,7 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useForm } from "react-hook-form";
-import Logo from "../layout/img/logo.png";
+import Logo from "../layout/img/logoNegro.png";
 import React, { useContext, useState } from "react";
 import AuthContext from "../../context/Auth/AuthContext";
 const useStyles = makeStyles({
@@ -20,8 +20,7 @@ const useStyles = makeStyles({
     width: "100%",
     //backgroundImage: "url(https://source.unsplash.com/random/2560x1440)",
     background: "rgb(255,255,255)",
-    background:
-      "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%);",
+    background: "#E8F5E9",
     backgroundRepeat: "no-repeat",
     opacity: 1,
     overflowY: "none",
@@ -101,29 +100,20 @@ const ResetPassword = () => {
                 />
               </Box>
               <br />
-              <div
-                style={{
+
+              <Typography
+                variant="body1"
+                sx={{
                   textAlign: "center",
-                  color: "black",
-                  marginBottom: "25px",
-                  fontFamily: "monospace",
-                  fontWeight: "bold",
+                  color: "text.secondary",
+                  mb: 3,
+                  maxWidth: 400,
+                  mx: "auto",
                 }}
               >
-                Recupera tu cuenta
-              </div>
-              <div
-                style={{
-                  textAlign: "center",
-                  color: "black",
-                  marginBottom: "25px",
-                  fontFamily: "monospace",
-                  fontWeight: "bold",
-                }}
-              >
-                Ingrese su correo electrónico para enviar un código de
-                verificación y restaurar su cuenta.
-              </div>
+                Ingresa tu correo electrónico para enviarte un código de
+                verificación y restaurar tu cuenta.
+              </Typography>
 
               <Grid item xs={12} md={12} lg={12} xl={12}>
                 <TextField
@@ -147,37 +137,37 @@ const ResetPassword = () => {
                 fullWidth
                 variant="contained"
                 sx={{
-                  backgroundColor: "#041954",
+                  backgroundColor: "#F05E29",
                   color: "white",
                   fontWeight: "bold",
                   mt: 3,
                   mb: 2,
                   "&:hover": {
-                    backgroundColor: "#041954 ",
+                    backgroundColor: "#F05E29 ",
                     color: "white",
                   },
                 }}
               >
                 Enviar
               </Button>
-              <Link to="/" style={{ width: "100%" }}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#F05E29",
-                    color: "white",
-                    fontWeight: "bold",
-                    mb: 2,
-                    "&:hover": {
-                      backgroundColor: "#F05E29",
-                      color: "white",
-                    },
-                  }}
-                >
-                  Iniciar Sesión
-                </Button>
-              </Link>
+              <Box sx={{ textAlign: "center", width: "100%", mt: 2, mb: 4 }}>
+                <Typography variant="body2" color="text.secondary">
+                  ¿Ya tienes cuenta?{" "}
+                  <Link
+                    to="/"
+                    style={{
+                      color: "#F05E29",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      transition: "color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => (e.target.style.color = "#c24c1f")}
+                    onMouseLeave={(e) => (e.target.style.color = "#F05E29")}
+                  >
+                    Inicia sesión aquí
+                  </Link>
+                </Typography>
+              </Box>
             </Box>
           </div>
         </Grid>

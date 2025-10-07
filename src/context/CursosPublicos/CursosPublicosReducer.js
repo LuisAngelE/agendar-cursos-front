@@ -1,18 +1,13 @@
-import { GET_ALL_CURSOS, ADD_CURSOS, SHOW_ERRORS_API } from "../../types";
+import { GET_ALL_CURSOS_PUBLICOS, SHOW_ERRORS_API } from "../../types";
 
-const CursosReducerContext = (state, action) => {
+const CursosPublicosReducer = (state, action) => {
   switch (action.type) {
-    case GET_ALL_CURSOS:
+    case GET_ALL_CURSOS_PUBLICOS:
       return {
         ...state,
-        cursos: action.payload,
+        cursosPublicos: action.payload,
         success: false,
         ErrorsApi: [],
-      };
-    case ADD_CURSOS:
-      return {
-        ...state,
-        cursos: [action.payload, ...state.cursos],
       };
     case SHOW_ERRORS_API:
       return {
@@ -24,4 +19,4 @@ const CursosReducerContext = (state, action) => {
   }
 };
 
-export default CursosReducerContext;
+export default CursosPublicosReducer;

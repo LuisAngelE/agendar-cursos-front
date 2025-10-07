@@ -11,13 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 import * as Yup from "yup";
-import { makeStyles, styled } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useForm } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthContext from "../../context/Auth/AuthContext";
-import Logo from "../layout/img/logo.png";
+import Logo from "../layout/img/logoNegro.png";
 import { useFormik } from "formik";
 const useStyles = makeStyles({
   textlogin: {
@@ -34,8 +34,7 @@ const useStyles = makeStyles({
     width: "100%",
     //backgroundImage: "url(https://source.unsplash.com/random/2560x1440)",
     background: "rgb(255,255,255)",
-    background:
-      "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%);",
+    background: "#E8F5E9",
     backgroundRepeat: "no-repeat",
     opacity: 1,
     overflowY: "none",
@@ -67,7 +66,7 @@ const Login = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const { iniciarSesion, autenticado } = useContext(AuthContext);
+  const { iniciarSesion } = useContext(AuthContext);
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(validationSchema()),
@@ -76,10 +75,8 @@ const Login = () => {
     },
   });
   const {
-    register,
     formState: { errors },
     handleSubmit,
-    setValue,
   } = useForm();
 
   return (
@@ -133,7 +130,7 @@ const Login = () => {
                   <TextField
                     fullWidth
                     id="email"
-                    label="Correo Electrónico:"
+                    label="Correo electrónico"
                     name="email"
                     autoComplete="off"
                     onChange={formik.handleChange}
@@ -146,7 +143,7 @@ const Login = () => {
                       htmlFor="password"
                       error={formik.errors?.password ? true : false}
                     >
-                      Contraseña:
+                      Contraseña
                     </InputLabel>
                     <OutlinedInput
                       error={formik.errors?.password ? true : false}
@@ -174,7 +171,7 @@ const Login = () => {
                           </IconButton>
                         </InputAdornment>
                       }
-                      label="password"
+                      label="Contraseña"
                     />
                   </FormControl>
                 </Grid>
@@ -184,65 +181,61 @@ const Login = () => {
                 fullWidth
                 variant="contained"
                 sx={{
-                  backgroundColor: "#041954",
+                  backgroundColor: "#F05E29",
                   color: "white",
                   fontWeight: "bold",
                   mt: 3,
                   mb: 2,
                   "&:hover": {
-                    backgroundColor: "#041954",
+                    backgroundColor: "#F05E29",
                     color: "white",
                   },
                 }}
               >
-                <Typography
-                  fontFamily="monospace"
-                  fontWeight="bold"
-                  variant="subtitle1"
-                >
-                  Iniciar Sesión
-                </Typography>
+                Iniciar Sesión
               </Button>
-              <Link to="/registrarme">
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#F05E29",
-                    color: "white",
-                    fontWeight: "bold",
-                    mt: 0,
-                    mb: 6,
-                    "&:hover": {
-                      backgroundColor: "#F05E29",
-                      color: "white",
-                    },
-                  }}
-                >
-                  <Typography
-                    fontFamily="monospace"
-                    fontWeight="bold"
-                    variant="subtitle1"
+              <Box sx={{ textAlign: "center", mt: 2 }}>
+                <Typography variant="body2" color="text.secondary">
+                  ¿No tienes cuenta?{" "}
+                  <Link
+                    to="/registrarme"
+                    style={{
+                      color: "#F05E29",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      transition: "color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => (e.target.style.color = "#c24c1f")}
+                    onMouseLeave={(e) => (e.target.style.color = "#F05E29")}
                   >
-                    Registrarse
-                  </Typography>
-                </Button>
-              </Link>
-              <Link
-                to="/olvidaste-tu-contraseña"
-                style={{ textDecoration: "none" }}
-              >
-                <h3
-                  style={{
-                    textAlign: "center",
-                    color: "black",
+                    Regístrate aquí
+                  </Link>
+                </Typography>
+                <br />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mt: 1,
+                    color: "text.secondary",
+                    fontSize: "0.9rem",
                   }}
                 >
-                  ¿Olvidaste tu contraseña?
-                </h3>
-              </Link>
-              <br />
+                  <Link
+                    to="/olvidaste-tu-contraseña"
+                    style={{
+                      color: "#6b6b6b",
+                      textDecoration: "none",
+                      fontWeight: 500,
+                      transition: "color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => (e.target.style.color = "#F05E29")}
+                    onMouseLeave={(e) => (e.target.style.color = "#6b6b6b")}
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </Link>
+                </Typography>
+                <br />
+              </Box>
             </Box>
           </Box>
         </div>

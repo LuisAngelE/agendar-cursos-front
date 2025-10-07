@@ -65,9 +65,9 @@ const Agenda = () => {
               aria-label="agenda tabs"
             >
               <Tab label="Pendientes de Confirmación" {...a11yProps(0)} />
-              <Tab label="Reservaciones Confirmadas" {...a11yProps(1)} />
-              <Tab label="Reservaciones Canceladas" {...a11yProps(2)} />
-              <Tab label="Reservaciones Realizadas" {...a11yProps(3)} />
+              <Tab label="Confirmados" {...a11yProps(1)} />
+              <Tab label="Cancelados" {...a11yProps(2)} />
+              <Tab label="Realizados" {...a11yProps(3)} />
             </Tabs>
           </Box>
 

@@ -3,10 +3,10 @@ import { styled } from "@mui/material/styles";
 import { Box, Grid, AppBar as MuiAppBar, Toolbar } from "@mui/material";
 import Logo from "../../components/layout/img/logo.png";
 import { useState } from "react";
-import CursosContext from "../../context/Cursos/CursosContext";
 import { useContext } from "react";
 import RecipeReviewCard from "./RecipeReviewCard";
 import { useEffect } from "react";
+import CursosPublicosContext from "../../context/CursosPublicos/CursosPublicosContext";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -28,11 +28,11 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const CursosPublicos = () => {
-  const { cursos, GetCursos } = useContext(CursosContext);
+  const { cursosPublicos, GetCursosPublicos } = useContext(CursosPublicosContext);
   const [open] = useState(false);
 
   useEffect(() => {
-    GetCursos();
+    GetCursosPublicos();
   }, []);
 
   return (
@@ -69,8 +69,8 @@ const CursosPublicos = () => {
       </Box>
       
       <Grid container spacing={2} sx={{ padding: 2, marginTop: 8, }}>
-        {cursos.length > 0
-          ? cursos.map((curso) => (
+        {cursosPublicos.length > 0
+          ? cursosPublicos.map((curso) => (
               <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
                 <RecipeReviewCard curso={curso} />
               </Grid>
