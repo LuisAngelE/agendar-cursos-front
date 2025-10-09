@@ -16,8 +16,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#1C277D",
-    color: "white",
+    backgroundColor: "#E3F2FD",
+    color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
@@ -79,13 +79,13 @@ export default function TablePersonasFisicas({ users }) {
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Nombre</StyledTableCell>
-              <StyledTableCell>Fecha de Nacimiento</StyledTableCell>
-              <StyledTableCell>Curp</StyledTableCell>
+              <StyledTableCell>Fecha de nacimiento</StyledTableCell>
+              <StyledTableCell>CURP</StyledTableCell>
               <StyledTableCell>RFC</StyledTableCell>
-              <StyledTableCell>Correo Electronico</StyledTableCell>
+              <StyledTableCell>Correo electronico</StyledTableCell>
               <StyledTableCell>Telefono</StyledTableCell>
               <StyledTableCell>NO. Colaborador</StyledTableCell>
-              <StyledTableCell>Tipo de Usuario</StyledTableCell>
+              <StyledTableCell>Tipo de usuario</StyledTableCell>
               <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -99,29 +99,29 @@ export default function TablePersonasFisicas({ users }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -100 }}
                   transition={{ duration: 0.3 }}
-                  whileHover={{ scale: 1.02, backgroundColor: "#FCE3D9" }}
+                  whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                 >
                   <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
                   <StyledTableCell data-label="Nombre">
                     {user.name} {""} {user.last_name}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Fecha de Nacimiento">
+                  <StyledTableCell data-label="Fecha de nacimiento">
                     {new Date(user.birth_date).toISOString().split("T")[0]}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Curp">
+                  <StyledTableCell data-label="CURP">
                     {user.curp}
                   </StyledTableCell>
                   <StyledTableCell data-label="RFC">{user.rfc}</StyledTableCell>
-                  <StyledTableCell data-label="Correo Electrónico">
+                  <StyledTableCell data-label="Correo electrónico">
                     {user.email}
                   </StyledTableCell>
                   <StyledTableCell data-label="Teléfono">
                     {user.phone}
                   </StyledTableCell>
                   <StyledTableCell data-label="NO. Colaborador">
-                    {user.collaborator_number || "Sin Número de Colaborador"}
+                    {user.collaborator_number || "Sin número de colaborador"}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Tipo de Usuario">
+                  <StyledTableCell data-label="Tipo de usuario">
                     {{
                       1: "Administrador",
                       2: "Instructor",
@@ -133,7 +133,7 @@ export default function TablePersonasFisicas({ users }) {
                       size="small"
                       onClick={() => handleClickOpen(user.id)}
                     >
-                      <Tooltip title="Editar Usuario" placement="top">
+                      <Tooltip title="Editar usuario" placement="top">
                         <EditIcon
                           sx={{
                             color: "#e7a62f",
@@ -148,7 +148,7 @@ export default function TablePersonasFisicas({ users }) {
                       size="small"
                       onClick={() => DeleteUsersFisicos(user.id)}
                     >
-                      <Tooltip title="Eliminar Usuario" placement="top">
+                      <Tooltip title="Eliminar usuario" placement="top">
                         <DeleteIcon
                           sx={{
                             color: "#FF0000",

@@ -9,6 +9,7 @@ import NoResultados from "../components/layout/NoResultados";
 import VistaCursos from "../containers/Cursos/VistaCursos";
 import VistaAgenda from "../containers/Agenda/VistaAgenda";
 import Usuarios from "../containers/Usuarios/Usuarios";
+import Calendario from "../containers/Calendario/Calendario";
 
 const AdminRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AdminRoutes = () => {
       <Route exact path="/Agenda/:id" component={VistaAgenda} />
       <Route exact path="/Perfil" component={Perfil} />
       <Route exact path="/Categorias" component={Categorias} />
+      <Route exact path="/Calendario" component={Calendario} />
 
       <Route exact path="/no-resultados" component={NoResultados} />
       <Route component={NoResultados} />

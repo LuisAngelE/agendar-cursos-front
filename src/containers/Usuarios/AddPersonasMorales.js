@@ -95,8 +95,11 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
       aria-labelledby="customized-dialog-title"
       open={modal}
     >
-      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseMoral}>
-        Agregar Persona Moral
+      <BootstrapDialogTitle
+        id="customized-dialog-title"
+        onClose={handleCloseMoral}
+      >
+        Agregar persona moral
       </BootstrapDialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -111,9 +114,9 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Razon Social"
+                label="Razon social"
                 {...register("razon_social", {
-                  required: "La Razon Social es obligatoria",
+                  required: "La razon social es obligatoria",
                   maxLength: { value: 50, message: "Máximo 50 caracteres" },
                 })}
                 error={!!errors.razon_social}
@@ -130,7 +133,13 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                     value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
                     message: "RFC inválido",
                   },
+                  onChange: (e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                  },
                 })}
+                inputProps={{
+                  style: { textTransform: "uppercase" },
+                }}
                 error={!!errors.rfc}
                 helperText={errors.rfc?.message}
               />
@@ -138,9 +147,9 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Representante Legal"
+                label="Representante legal"
                 {...register("representante_legal", {
-                  required: "El Representante Legal es obligatorio",
+                  required: "El representante legal es obligatorio",
                   maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
                 error={!!errors.representante_legal}
@@ -150,9 +159,9 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Domicilio Fiscal"
+                label="Domicilio fiscal"
                 {...register("domicilio_fiscal", {
-                  required: "El Domicilio Fiscal es obligatorio",
+                  required: "El domicilio fiscal es obligatorio",
                   maxLength: { value: 200, message: "Máximo 200 caracteres" },
                 })}
                 error={!!errors.domicilio_fiscal}
@@ -165,7 +174,7 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                 fullWidth
                 label="Correo electrónico"
                 {...register("email", {
-                  required: "El correo es obligatorio",
+                  required: "El correo electrónico es obligatorio",
                   pattern: { value: /^\S+@\S+$/i, message: "Correo inválido" },
                 })}
                 error={!!errors.email}
@@ -190,8 +199,7 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
               <TextField
                 select
                 fullWidth
-                label="Tipo de Usuario"
-                defaultValue=""
+                label="Tipo de usuario"
                 {...register("type_user", { required: "Selecciona un tipo" })}
                 error={!!errors.type_user}
                 helperText={errors.type_user?.message}
@@ -256,7 +264,7 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                     message: "Minimo 8 caracteres",
                   },
                   maxLength: {
-                    value: 16,
+                    value: 50,
                     message: "Maximo 50 caracteres",
                   },
                 })}
@@ -287,13 +295,13 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                     </InputAdornment>
                   ),
                 }}
-                label="Confirma la Contraseña:"
+                label="Confirma la contraseña:"
                 error={errors.password_confirmation ? true : false}
                 helperText={errors?.password_confirmation?.message}
                 {...register("password_confirmation", {
                   required: {
                     value: true,
-                    message: "Es requerido Confirmar la contraseña",
+                    message: "Es requerido confirmar la contraseña",
                   },
                   minLength: {
                     value: 8,
@@ -316,10 +324,10 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
             fullWidth
             sx={{
               color: "white",
-              backgroundColor: "#F05E29",
+              backgroundColor: "#1976D2",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#F05E29",
+                backgroundColor: "#1976D2",
               },
             }}
           >

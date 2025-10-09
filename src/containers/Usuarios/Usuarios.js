@@ -98,14 +98,14 @@ export default function Usuarios() {
                 onClick={handleClickOpenFisica}
                 sx={{
                   color: "white",
-                  backgroundColor: "#F05E29",
+                  backgroundColor: "#1976D2",
                   "&:hover": {
                     color: "white",
-                    backgroundColor: "#d94f22",
+                    backgroundColor: "#1976D2",
                   },
                 }}
               >
-                Agregar Persona Física
+                Agregar
               </Button>
             </Grid>
           </Grid>
@@ -129,14 +129,14 @@ export default function Usuarios() {
                 onClick={handleClickOpenMoral}
                 sx={{
                   color: "white",
-                  backgroundColor: "#F05E29",
+                  backgroundColor: "#1976D2",
                   "&:hover": {
                     color: "white",
-                    backgroundColor: "#d94f22",
+                    backgroundColor: "#1976D2",
                   },
                 }}
               >
-                Agregar Persona Moral
+                Agregar
               </Button>
             </Grid>
           </Grid>

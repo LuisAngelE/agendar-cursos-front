@@ -19,6 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import EventIcon from "@mui/icons-material/Event";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupIcon from "@mui/icons-material/Group";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -137,13 +138,18 @@ export default function Header({ children }) {
       icon: <MenuBookIcon />,
     },
     {
-      name: "Cursos Reservados",
+      name: "Cursos reservados",
       value: "/Agenda",
       icon: (
         <Badge badgeContent={agendasCount.length} color="error">
           <SchoolIcon />
         </Badge>
       ),
+    },
+    {
+      name: "Calendario",
+      value: "/Calendario",
+      icon: <CalendarMonthIcon />,
     },
     {
       name: "Usuarios",
@@ -151,7 +157,7 @@ export default function Header({ children }) {
       icon: <GroupIcon />,
     },
     {
-      name: "Mi Perfil",
+      name: "Mi perfil",
       value: "/Perfil",
       icon: <PersonIcon />,
     },
@@ -159,12 +165,12 @@ export default function Header({ children }) {
 
   const Instructor = [
     {
-      name: "Mis Cursos",
+      name: "Mis cursos",
       value: "/Cursos",
       icon: <MenuBookIcon />,
     },
     {
-      name: "Mis Cursos Reservados",
+      name: "Mis cursos reservados",
       value: "/Agenda",
       icon: (
         <Badge badgeContent={agendasCount.length} color="error">
@@ -173,7 +179,12 @@ export default function Header({ children }) {
       ),
     },
     {
-      name: "Mi Perfil",
+      name: "Mi calendario",
+      value: "/Calendario",
+      icon: <CalendarMonthIcon />,
+    },
+    {
+      name: "Mi perfil",
       value: "/Perfil",
       icon: <PersonIcon />,
     },
@@ -181,12 +192,12 @@ export default function Header({ children }) {
 
   const Alumnos = [
     {
-      name: "Todos los Cursos",
+      name: "Todos los cursos",
       value: "/Cursos",
       icon: <MenuBookIcon />,
     },
     {
-      name: "Mis Cursos Favoritos",
+      name: "Mis cursos favoritos",
       value: "/CursosFavoritos",
       icon: (
         <Badge badgeContent={cursos.length} color="error">
@@ -195,13 +206,18 @@ export default function Header({ children }) {
       ),
     },
     {
-      name: "Mis Cursos Reservados",
+      name: "Mis cursos reservados",
       value: "Agenda",
       icon: (
         <Badge badgeContent={agendasCount.length} color="error">
           <EventIcon />
         </Badge>
       ),
+    },
+    {
+      name: "Mi calendario",
+      value: "/Calendario",
+      icon: <CalendarMonthIcon />,
     },
     {
       name: "Perfil",

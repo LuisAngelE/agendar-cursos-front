@@ -1,7 +1,7 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Grid, AppBar as MuiAppBar, Toolbar } from "@mui/material";
-import Logo from "../../components/layout/img/logo.png";
+import Logo from "../../components/layout/img/logoNegro.png";
 import { useState } from "react";
 import { useContext } from "react";
 import RecipeReviewCard from "./RecipeReviewCard";
@@ -43,7 +43,7 @@ const CursosPublicos = () => {
           open={open}
           sx={{
             background:
-              "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%)",
+              "#E8F5E9",
           }}
         >
           <Toolbar sx={{ position: "relative" }}>

@@ -81,10 +81,10 @@ const Cursos = () => {
               fullWidth
               sx={{
                 color: "white",
-                backgroundColor: "#F05E29",
+                backgroundColor: "#1976D2",
                 "&:hover": {
                   color: "white",
-                  backgroundColor: "#F05E29",
+                  backgroundColor: "#1976D2",
                   scale: "1.2",
                 },
               }}
@@ -106,7 +106,7 @@ const Cursos = () => {
         <Grid item xs={12} md={12} lg={4}>
           <TextField
             select
-            label="Filtrar por tipo de categoria"
+            label="Filtrar por tipo de categoría"
             value={searchTipoCategoria}
             onChange={(e) => setSearchTipoCategoria(e.target.value)}
             fullWidth

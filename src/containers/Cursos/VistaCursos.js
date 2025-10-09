@@ -139,26 +139,27 @@ export default function VistaCursos(props) {
                 )}
               </Box>
 
-              {(type_user === "1" || type_user === "3") && (
-                <Button
-                  onClick={() => handleOpenAgenda(curso.id)}
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#5D65A2",
-                    "&:hover": { bgcolor: "#4a538d" },
-                    borderRadius: 3,
-                    py: 1.5,
-                    fontWeight: "bold",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                  }}
-                  component={motion.button}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <MessageIcon sx={{ mr: 1 }} />
-                  Me Interesa Este Curso
-                </Button>
-              )}
+              {curso.status !== 2 &&
+                (type_user === "1" || type_user === "3") && (
+                  <Button
+                    onClick={() => handleOpenAgenda(curso.id)}
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#5D65A2",
+                      "&:hover": { bgcolor: "#4a538d" },
+                      borderRadius: 3,
+                      py: 1.5,
+                      fontWeight: "bold",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                    }}
+                    component={motion.button}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <MessageIcon sx={{ mr: 1 }} />
+                    Me Interesa Este Curso
+                  </Button>
+                )}
             </Card>
           </Grid>
 
@@ -231,7 +232,7 @@ export default function VistaCursos(props) {
                 </Typography>
               )}
             </Grid>
-          )}  
+          )}
         </Grid>
 
         {id_agenda !== null && (

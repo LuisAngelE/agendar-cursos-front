@@ -64,7 +64,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
   };
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Editar Usuario Fisico</DialogTitle>
+      <DialogTitle>Editar persona física</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -77,14 +77,14 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
         <DialogContent>
           {users && (
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   type="text"
                   fullWidth
                   name="nombre"
                   variant="outlined"
                   defaultValue={users.name}
-                  label="Nombre:"
+                  label="Nombre"
                   {...register("name", {
                     required: "El nombre es requerido",
                     minLength: { value: 1, message: "Mínimo 1 caracteres" },
@@ -101,11 +101,28 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                   name="last_name"
                   variant="outlined"
                   defaultValue={users.last_name}
-                  label="Apellido:"
+                  label="Apellido paterno"
                   {...register("last_name", {
-                    required: "El apellido es obligatorio",
+                    required: "El apellido paterno es obligatorio",
                     minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                    maxLength: { value: 255, message: "Máximo 255 caracteres" },
+                    maxLength: { value: 100, message: "Máximo 255 caracteres" },
+                  })}
+                  error={!!errors.last_name}
+                  helperText={errors.last_name?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  type="text"
+                  fullWidth
+                  name="last_name"
+                  variant="outlined"
+                  defaultValue={users.last_name}
+                  label="Apellido materno"
+                  {...register("last_name", {
+                    required: "El apellido materno es obligatorio",
+                    minLength: { value: 1, message: "Mínimo 1 caracteres" },
+                    maxLength: { value: 100, message: "Máximo 255 caracteres" },
                   })}
                   error={!!errors.last_name}
                   helperText={errors.last_name?.message}
@@ -118,7 +135,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                   defaultValue={
                     users.birth_date ? users.birth_date.split("T")[0] : ""
                   }
-                  label="Fecha de Nacimiento"
+                  label="Fecha de nacimiento"
                   InputLabelProps={{ shrink: true }}
                   {...register("birth_date", {
                     required: "La fecha de nacimiento es obligatoria",
@@ -139,7 +156,13 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                       value: /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/,
                       message: "CURP inválida",
                     },
+                    onChange: (e) => {
+                      e.target.value = e.target.value.toUpperCase();
+                    },
                   })}
+                  inputProps={{
+                    style: { textTransform: "uppercase" },
+                  }}
                   error={!!errors.curp}
                   helperText={errors.curp?.message}
                 />
@@ -155,7 +178,13 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                       value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
                       message: "RFC inválido",
                     },
+                    onChange: (e) => {
+                      e.target.value = e.target.value.toUpperCase();
+                    },
                   })}
+                  inputProps={{
+                    style: { textTransform: "uppercase" },
+                  }}
                   error={!!errors.rfc}
                   helperText={errors.rfc?.message}
                 />
@@ -167,7 +196,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                   name="email"
                   variant="outlined"
                   defaultValue={users.email}
-                  label="Correo electrónico:"
+                  label="Correo electrónico"
                   {...register("email", {
                     required: "El correo es obligatorio",
                     pattern: {
@@ -219,7 +248,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                   <TextField
                     type="number"
                     fullWidth
-                    label="Número de Colaborador"
+                    label="Número de colaborador"
                     defaultValue={users.collaborator_number}
                     {...register("collaborator_number", {
                       required: "El número de colaborador es obligatorio",
@@ -257,7 +286,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                       </InputAdornment>
                     ),
                   }}
-                  label="Contraseña:"
+                  label="Contraseña"
                   error={errors.password ? true : false}
                   helperText={errors?.password?.message}
                   {...register("password", {
@@ -266,7 +295,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                       message: "Minimo 8 caracteres",
                     },
                     maxLength: {
-                      value: 16,
+                      value: 50,
                       message: "Maximo 50 caracteres",
                     },
                   })}
@@ -299,7 +328,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                       </InputAdornment>
                     ),
                   }}
-                  label="Confirma la Contraseña:"
+                  label="Confirma la contraseña"
                   error={errors.password_confirmation ? true : false}
                   helperText={errors?.password_confirmation?.message}
                   {...register("password_confirmation", {

@@ -31,9 +31,9 @@ const Perfil = () => {
   const [saludo, setSaludo] = useState("");
   useEffect(() => {
     const hora = new Date().getHours();
-    if (hora >= 6 && hora < 12) setSaludo("Buenos Días");
-    else if (hora >= 12 && hora < 18) setSaludo("Buenas Tardes");
-    else setSaludo("Buenas Noches");
+    if (hora >= 6 && hora < 12) setSaludo("buenos días");
+    else if (hora >= 12 && hora < 18) setSaludo("buenas tardes");
+    else setSaludo("buenas noches");
   }, []);
 
   const [id_user, saveUser] = useState(null);
@@ -84,10 +84,11 @@ const Perfil = () => {
             >
               <CardContent>
                 <Typography
-                  variant="h4"
                   align="center"
                   fontWeight="bold"
-                  gutterBottom
+                  fontFamily="monospace"
+                  variant="h5"
+                  sx={{ color: "black" }}
                 >
                   Hola {saludo}, {user_me.name} {user_me.last_name}{" "}
                   {user_me.razon_social}
@@ -114,12 +115,13 @@ const Perfil = () => {
                   variant="contained"
                   sx={{
                     mb: 2,
-                    bgcolor: "#F05E29",
-                    "&:hover": { bgcolor: "#d94e1e", scale: "1.1" },
+                    bgcolor: "#F3E5F5",
+                    color: "black",
+                    "&:hover": { bgcolor: "#F3E5F5", scale: "1.1" },
                   }}
                 >
                   <FlipCameraIosIcon sx={{ mr: 1 }} />
-                  Cambiar Foto de Perfil
+                  Cambiar foto de perfil
                 </Button>
 
                 <Divider sx={{ my: 2 }} />
@@ -130,7 +132,7 @@ const Perfil = () => {
                   fontWeight="bold"
                   gutterBottom
                 >
-                  Información Personal
+                  Información personal
                 </Typography>
 
                 <Box sx={{ textAlign: "center", mb: 2 }}>
@@ -153,7 +155,7 @@ const Perfil = () => {
                   {user_me.type_person === 4 && (
                     <>
                       <Typography variant="body1" gutterBottom>
-                        Fecha de Nacimiento:{" "}
+                        Fecha de nacimiento:{" "}
                         {
                           new Date(user_me.birth_date)
                             .toISOString()
@@ -169,10 +171,10 @@ const Perfil = () => {
                   {user_me.type_person === 5 && (
                     <>
                       <Typography variant="body1" gutterBottom>
-                        Representante Legal: {user_me.representante_legal}
+                        Representante legal: {user_me.representante_legal}
                       </Typography>
                       <Typography variant="body1" gutterBottom>
-                        Domicilio Fiscal: {user_me.domicilio_fiscal}
+                        Domicilio fiscal: {user_me.domicilio_fiscal}
                       </Typography>
                     </>
                   )}
@@ -188,7 +190,7 @@ const Perfil = () => {
                   </Typography>
                   {(type_user === "1" || type_user === "2") && (
                     <Typography variant="body1" gutterBottom>
-                      Número de Colaborador: {user_me.collaborator_number}
+                      Número de colaborador: {user_me.collaborator_number}
                     </Typography>
                   )}
                 </Box>
@@ -202,8 +204,9 @@ const Perfil = () => {
                       fullWidth
                       variant="contained"
                       sx={{
-                        bgcolor: "#1C277D",
-                        "&:hover": { bgcolor: "#151d5d", scale: "1.2" },
+                        bgcolor: "#FFF3E0",
+                        color: "black",
+                        "&:hover": { bgcolor: "#FFF3E0", scale: "1.2" },
                       }}
                     >
                       <EditNoteIcon sx={{ mr: 1 }} />
@@ -216,12 +219,13 @@ const Perfil = () => {
                       fullWidth
                       variant="contained"
                       sx={{
-                        bgcolor: "#F05E29",
-                        "&:hover": { bgcolor: "#d94e1e", scale: "1.2" },
+                        bgcolor: "#E3F2FD",
+                        color: "black",
+                        "&:hover": { bgcolor: "#E3F2FD", scale: "1.2" },
                       }}
                     >
                       <LockResetIcon sx={{ mr: 1 }} />
-                      Cambiar mi Contraseña
+                      Cambiar mi contraseña
                     </Button>
                   </Grid>
                 </Grid>

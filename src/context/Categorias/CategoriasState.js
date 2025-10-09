@@ -13,6 +13,7 @@ import {
   UPDATE_CATEGORIAS,
   DELETE_CATEGORIAS,
 } from "../../types";
+
 const CategoriasState = ({ children }) => {
   const initialState = {
     categorias: [],
@@ -20,28 +21,46 @@ const CategoriasState = ({ children }) => {
     ErrorsApi: [],
     success: false,
   };
+
   const [state, dispatch] = useReducer(CategoriasReducer, initialState);
+
+  const handleError = (error) => {
+    const data = error.response?.data;
+
+    if (data?.errors) {
+      const mensajes = Object.values(data.errors).flat().join("\n");
+      Swal.fire({
+        title: "Error de validación",
+        icon: "warning",
+        text: mensajes,
+      });
+    } else if (data?.mensaje) {
+      Swal.fire({
+        title: data.error || "Error",
+        icon: "error",
+        text: data.mensaje,
+      });
+    } else {
+      Swal.fire({
+        title: "Error",
+        icon: "error",
+        text: "Ocurrió un error inesperado",
+      });
+    }
+  };
 
   const GetCategories = () => {
     MethodGet("/categories")
       .then((res) => {
-        dispatch({
-          type: GET_ALL_CATEGORIAS,
-          payload: res.data,
-        });
+        dispatch({ type: GET_ALL_CATEGORIAS, payload: res.data });
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch(handleError);
   };
 
   const AddCategorias = (data) => {
     MethodPost("/categories", data)
       .then((res) => {
-        dispatch({
-          type: ADD_CATEGORIAS,
-          payload: res.data,
-        });
+        dispatch({ type: ADD_CATEGORIAS, payload: res.data });
         Swal.fire({
           title: "Éxito",
           text: "Categoría agregada con éxito",
@@ -49,37 +68,13 @@ const CategoriasState = ({ children }) => {
         });
         GetCategories();
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-
-          Swal.fire({
-            title: "Error",
-            icon: "warning",
-            text: mensajes,
-          });
-        } else {
-          Swal.fire({
-            title: "Error",
-            icon: "error",
-            text: "Ocurrió un error inesperado",
-          });
-        }
-      });
+      .catch(handleError);
   };
 
   const UpdateCategorias = (data) => {
     MethodPut(`/categories/${data.id}`, data)
       .then((res) => {
-        dispatch({
-          type: UPDATE_CATEGORIAS,
-          payload: res.data,
-        });
+        dispatch({ type: UPDATE_CATEGORIAS, payload: res.data });
         Swal.fire({
           title: "Éxito",
           text: "Categoría actualizada con éxito",
@@ -87,27 +82,7 @@ const CategoriasState = ({ children }) => {
         });
         GetCategories();
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-          Swal.fire({
-            title: "Error",
-            icon: "warning",
-            text: mensajes,
-          });
-        } else {
-          Swal.fire({
-            title: "Error",
-            icon: "error",
-            text: "Ocurrió un error inesperado",
-          });
-        }
-      });
+      .catch(handleError);
   };
 
   const DeleteCategorias = (id) => {
@@ -124,24 +99,15 @@ const CategoriasState = ({ children }) => {
       if (result.isConfirmed) {
         MethodDelete(`/categories/${id}`)
           .then((res) => {
+            dispatch({ type: DELETE_CATEGORIAS, payload: id });
             Swal.fire({
               title: "Eliminado",
               text: res.data.mensaje,
               icon: "success",
             });
             GetCategories();
-            dispatch({
-              type: DELETE_CATEGORIAS,
-              payload: id,
-            });
           })
-          .catch((error) => {
-            Swal.fire({
-              title: "Error",
-              text: error.response?.data?.mensaje || "Ocurrió un error",
-              icon: "error",
-            });
-          });
+          .catch(handleError);
       }
     });
   };

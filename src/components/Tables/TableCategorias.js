@@ -16,8 +16,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#1C277D",
-    color: "white",
+    backgroundColor: "#E3F2FD",
+    color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
@@ -59,7 +59,7 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-export default function TableCategorias({ categorias }) {
+export default function TableCategorias({ categorias }) {  
   const { DeleteCategorias } = useContext(CategoriasContext);
   const [modalUpdate, OpenModalUpdate] = useState(false);
   const [id_service, saveIdService] = useState(null);
@@ -94,7 +94,7 @@ export default function TableCategorias({ categorias }) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, x: -100 }}
                     transition={{ duration: 0.3 }}
-                    whileHover={{ scale: 1.02, backgroundColor: "#FCE3D9" }}
+                    whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                   >
                     <StyledTableCell data-label="ID">
                       {categoria.id}
@@ -140,7 +140,7 @@ export default function TableCategorias({ categorias }) {
               ) : (
                 <TableRow>
                   <TableCell colSpan={4} align="center">
-                    No hay categorias disponibles
+                    No hay categorías disponibles
                   </TableCell>
                 </TableRow>
               )}

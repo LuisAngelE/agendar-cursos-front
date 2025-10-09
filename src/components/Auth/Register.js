@@ -241,7 +241,13 @@ const Register = () => {
                             value: /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/,
                             message: "CURP inválida",
                           },
+                          onChange: (e) => {
+                            e.target.value = e.target.value.toUpperCase();
+                          },
                         })}
+                        inputProps={{
+                          style: { textTransform: "uppercase" },
+                        }}
                         error={!!errors.curp}
                         helperText={errors.curp?.message}
                       />
@@ -307,7 +313,13 @@ const Register = () => {
                         value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
                         message: "RFC inválido",
                       },
+                      onChange: (e) => {
+                        e.target.value = e.target.value.toUpperCase();
+                      },
                     })}
+                    inputProps={{
+                      style: { textTransform: "uppercase" },
+                    }}
                     error={!!errors.rfc}
                     helperText={errors.rfc?.message}
                   />

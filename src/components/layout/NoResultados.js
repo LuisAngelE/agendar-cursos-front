@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
-import Logo from "../layout/img/logo.png";
+import Logo from "../layout/img/logoNegro.png";
 import AuthContext from "../../context/Auth/AuthContext";
 import Noresultados from "./gif/404.gif";
 
@@ -46,8 +46,7 @@ const NoResultados = () => {
         position="fixed"
         open={open}
         sx={{
-          background:
-            "linear-gradient(90deg,rgba(28, 39, 125, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(240, 94, 41, 1) 100%)",
+          background: "#E8F5E9",
         }}
       >
         <Toolbar sx={{ position: "relative" }}>
@@ -72,7 +71,14 @@ const NoResultados = () => {
           <Box sx={{ marginLeft: "auto" }}>
             <Tooltip title="Cerrar Sesión">
               <IconButton onClick={() => cerrarSesion()}>
-                <ExitToAppIcon sx={{ color: "white", fontSize: 25 }} />
+                <ExitToAppIcon
+                  sx={{
+                    color: "black",
+                    fontSize: 25,
+                    transition: "0.2s",
+                    "&:hover": { scale: "2" },
+                  }}
+                />
               </IconButton>
             </Tooltip>
           </Box>
@@ -105,39 +111,19 @@ const NoResultados = () => {
             }}
           />
         </Grid>
-
-        <Grid item>
-          <Typography
-            variant="h5"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ fontSize: { xs: "1.2rem", md: "1.5rem" } }}
-          >
-            No se encontraron resultados
-          </Typography>
-          <Typography
-            variant="body1"
-            color="text.secondary"
-            mb={3}
-            sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
-          >
-            Parece que la página que buscas no existe o no tiene información.
-          </Typography>
-        </Grid>
-
         <Grid item sx={{ width: "100%", maxWidth: 300 }}>
           <Link to="/Perfil" style={{ textDecoration: "none" }}>
             <Button
               fullWidth
               variant="contained"
               sx={{
-                backgroundColor: "#F05E29",
-                color: "white",
+                backgroundColor: "#E8F5E9",
+                color: "black",
                 fontWeight: "bold",
                 borderRadius: 2,
                 py: 1.2,
                 "&:hover": {
-                  backgroundColor: "#d94d1f",
+                  backgroundColor: "#E8F5E9",
                 },
               }}
             >

@@ -71,7 +71,7 @@ export default function AddCategorias({ modal, handleClose }) {
       open={modal}
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Agregar Categoría
+        Agregar categoría
       </BootstrapDialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -120,14 +120,14 @@ export default function AddCategorias({ modal, handleClose }) {
             fullWidth
             sx={{
               color: "white",
-              backgroundColor: "#F05E29",
+              backgroundColor: "#1976D2",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#F05E29",
+                backgroundColor: "#1976D2",
               },
             }}
           >
-            Agregar Categoría
+            Agregar categoría
           </Button>
         </DialogActions>
       </form>

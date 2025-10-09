@@ -8,7 +8,7 @@ import { Box, Grid, IconButton, InputLabel, Tooltip } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AuthContext from "../../context/Auth/AuthContext";
-import Default from "../../components/layout/img/default.png";
+import Default from "../../components/layout/img/default.webp";
 import CursosContext from "../../context/Cursos/CursosContext";
 
 const useStyles = makeStyles({
@@ -82,7 +82,7 @@ export default function ModalMultimedia({ open, handleClose, id }) {
               onChange={handleChangeImage}
             />
             <InputLabel sx={{ textAlign: "center" }}>
-              Selecciona tu Imagen
+              Selecciona tu imagen
               <label htmlFor="icon-button-file-first">
                 <IconButton
                   color="primary"

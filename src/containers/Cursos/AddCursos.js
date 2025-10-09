@@ -71,7 +71,7 @@ export default function AddCursos({ modal, handleClose, categorias }) {
       open={modal}
     >
       <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Agregar Curso
+        Agregar curso
       </BootstrapDialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -192,14 +192,14 @@ export default function AddCursos({ modal, handleClose, categorias }) {
             fullWidth
             sx={{
               color: "white",
-              backgroundColor: "#F05E29",
+              backgroundColor: "#1976D2",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#F05E29",
+                backgroundColor: "#1976D2",
               },
             }}
           >
-            Agregar Curso
+            Agregar curso
           </Button>
         </DialogActions>
       </form>

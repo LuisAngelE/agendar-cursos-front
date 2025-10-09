@@ -29,7 +29,7 @@ export default function AgendaModal({ open, handleClose }) {
       fullWidth={fullWidth}
       maxWidth={maxWidth}
     >
-      <DialogTitle>Me Interesa Este Curso</DialogTitle>
+      <DialogTitle>Me interesa este curso</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -47,7 +47,7 @@ export default function AgendaModal({ open, handleClose }) {
                   fullWidth
                   label="Correo electrónico"
                   {...register("email", {
-                    required: "El correo es obligatorio",
+                    required: "El correo electrónico es obligatorio",
                     pattern: {
                       value: /^\S+@\S+$/i,
                       message: "Correo inválido",
@@ -68,14 +68,14 @@ export default function AgendaModal({ open, handleClose }) {
             fullWidth
             sx={{
               color: "white",
-              backgroundColor: "#F05E29",
+              backgroundColor: "#1976D2",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#F05E29",
+                backgroundColor: "#1976D2",
               },
             }}
           >
-            Enivar
+            Enviar
           </Button>
         </DialogActions>
       </form>

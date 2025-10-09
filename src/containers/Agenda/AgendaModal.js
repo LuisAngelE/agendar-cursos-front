@@ -74,7 +74,7 @@ export default function AgendaModal({ open, handleClose, id }) {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle> Me Interesa Este Curso</DialogTitle>
+      <DialogTitle> Me interesa este curso</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -208,14 +208,14 @@ export default function AgendaModal({ open, handleClose, id }) {
             fullWidth
             sx={{
               color: "white",
-              backgroundColor: "#F05E29",
+              backgroundColor: "#1976D2",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#F05E29",
+                backgroundColor: "#1976D2",
               },
             }}
           >
-            Agendar Curso
+            Agendar curso
           </Button>
         </DialogActions>
       </form>

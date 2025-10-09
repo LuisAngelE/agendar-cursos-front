@@ -5,8 +5,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import CategoryIcon from "@mui/icons-material/Category";
 import SchoolIcon from "@mui/icons-material/School";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import GroupIcon from "@mui/icons-material/Group";
-import BusinessIcon from "@mui/icons-material/Business";
 import { motion } from "framer-motion";
 import Graphics from "../../components/Graphics/Graphics";
 import GraphicsDona from "../../components/Graphics/GraphicsDona";
@@ -43,16 +43,16 @@ const cardsData = [
     bgColor: "#E3F2FD",
   },
   {
-    title: "Personas Físicas",
-    subtitle: "Gestión de personas físicas",
-    icon: <GroupIcon sx={{ fontSize: 50, color: "#FBC02D" }} />,
+    title: "Calendario",
+    subtitle: "Gestión de calendario de todos los cursos",
+    icon: <CalendarMonthIcon sx={{ fontSize: 50, color: "#FBC02D" }} />,
     link: "/Usuarios",
     bgColor: "#FFFDE7",
   },
   {
-    title: "Personas Morales",
-    subtitle: "Gestión de personas morales",
-    icon: <BusinessIcon sx={{ fontSize: 50, color: "#43A047" }} />,
+    title: "Usuarios",
+    subtitle: "Gestión de personas físicas y morales",
+    icon: <GroupIcon sx={{ fontSize: 50, color: "#43A047" }} />,
     link: "/Usuarios",
     bgColor: "#E8F5E9",
   },

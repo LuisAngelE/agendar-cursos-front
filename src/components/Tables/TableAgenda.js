@@ -23,8 +23,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#1C277D",
-    color: "white",
+    backgroundColor: "#E3F2FD",
+    color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
@@ -69,11 +69,11 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
 const getStatusColor = (status) => {
   switch (status) {
     case 1:
-      return "#FF4500";
+      return "#ff0000ff";
     case 2:
       return "#008000";
     case 3:
-      return "#B22222";
+      return "#ff0000ff";
     case 4:
       return "#0000CD";
 
@@ -117,7 +117,7 @@ export default function TableAgenda({ agendas }) {
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Curso</StyledTableCell>
-              <StyledTableCell>Fecha Solicitada</StyledTableCell>
+              <StyledTableCell>Fecha y hora solicitada</StyledTableCell>
               <StyledTableCell>Locación</StyledTableCell>
               <StyledTableCell>Solicitante</StyledTableCell>
               <StyledTableCell>Instructor</StyledTableCell>
@@ -135,7 +135,7 @@ export default function TableAgenda({ agendas }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -100 }}
                   transition={{ duration: 0.3 }}
-                  whileHover={{ scale: 1.02, backgroundColor: "#FCE3D9" }}
+                  whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                 >
                   <StyledTableCell data-label="ID">{agenda.id}</StyledTableCell>
                   <StyledTableCell data-label="Curso">
@@ -143,7 +143,7 @@ export default function TableAgenda({ agendas }) {
                     <br />
                     {agenda.course?.modality}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Fecha Solicitada">
+                  <StyledTableCell data-label="Fecha  hora solicitada">
                     {new Date(agenda.start_date).toLocaleString("es-ES", {
                       dateStyle: "long",
                       timeStyle: "short",
@@ -185,10 +185,10 @@ export default function TableAgenda({ agendas }) {
                     }}
                   >
                     {{
-                      1: "Pendiente de Confirmación",
-                      2: "Reservación Confirmada",
-                      3: "Reservación Cancelada",
-                      4: "Reservación Realizada",
+                      1: "Pendiente de confirmación",
+                      2: "Confirmado",
+                      3: "Cancelado",
+                      4: "Realizado",
                     }[agenda.reservations?.[0]?.status] || "Desconocido"}
                   </StyledTableCell>
                   <StyledTableCell data-label="Acciones">
@@ -216,7 +216,7 @@ export default function TableAgenda({ agendas }) {
                           size="small"
                           onClick={() => handleOpenInstructor(agenda.id)}
                         >
-                          <Tooltip title="Agregar Instructor" placement="top">
+                          <Tooltip title="Agregar instructor" placement="top">
                             <AccountCircleIcon
                               sx={{
                                 color: "brown",
@@ -235,7 +235,7 @@ export default function TableAgenda({ agendas }) {
                           size="small"
                           onClick={() => handleOpenInstructor(agenda.id)}
                         >
-                          <Tooltip title="Editar Instrcutor" placement="top">
+                          <Tooltip title="Editar instrcutor" placement="top">
                             <EditIcon
                               sx={{
                                 color: "#e7a62f",
@@ -256,7 +256,7 @@ export default function TableAgenda({ agendas }) {
                             AcceptAgendation(agenda.reservations?.[0]?.id)
                           }
                         >
-                          <Tooltip title="Aceptar Reservación" placement="top">
+                          <Tooltip title="Aceptar reservación" placement="top">
                             <CheckCircleOutlineIcon
                               sx={{
                                 color: "green",
@@ -275,7 +275,7 @@ export default function TableAgenda({ agendas }) {
                             size="small"
                             onClick={() => handleClickOpen(agenda.id)}
                           >
-                            <Tooltip title="Editar Reservación" placement="top">
+                            <Tooltip title="Editar reservación" placement="top">
                               <EditIcon
                                 sx={{
                                   color: "#e7a62f",
@@ -322,7 +322,7 @@ export default function TableAgenda({ agendas }) {
                               ClassDone(agenda.reservations?.[0]?.id)
                             }
                           >
-                            <Tooltip title="¿Clase Realizada?" placement="top">
+                            <Tooltip title="¿Clase realizada?" placement="top">
                               <StarIcon
                                 sx={{
                                   color: "gold",
@@ -339,7 +339,7 @@ export default function TableAgenda({ agendas }) {
                             }
                           >
                             <Tooltip
-                              title="Cancelar Reservación"
+                              title="Cancelar reservación"
                               placement="top"
                             >
                               <HighlightOffIcon

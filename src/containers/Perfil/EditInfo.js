@@ -76,7 +76,7 @@ export default function EditInfo({ modal, handleClose, User }) {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          Editar mi Información
+          Editar mi información
         </BootstrapDialogTitle>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -97,7 +97,7 @@ export default function EditInfo({ modal, handleClose, User }) {
                       name="nombre"
                       variant="outlined"
                       defaultValue={User.name}
-                      label="Nombre:"
+                      label="Nombre"
                       {...register("name", {
                         required: "El nombre es requerido",
                         minLength: { value: 1, message: "Mínimo 1 caracteres" },
@@ -137,7 +137,7 @@ export default function EditInfo({ modal, handleClose, User }) {
                       defaultValue={
                         User.birth_date ? User.birth_date.split("T")[0] : ""
                       }
-                      label="Fecha de Nacimiento"
+                      label="Fecha de nacimiento"
                       InputLabelProps={{ shrink: true }}
                       {...register("birth_date", {
                         required: "La fecha de nacimiento es obligatoria",
@@ -161,7 +161,13 @@ export default function EditInfo({ modal, handleClose, User }) {
                           value: /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/,
                           message: "CURP inválida",
                         },
+                        onChange: (e) => {
+                          e.target.value = e.target.value.toUpperCase();
+                        },
                       })}
+                      inputProps={{
+                        style: { textTransform: "uppercase" },
+                      }}
                       error={!!errors.curp}
                       helperText={errors.curp?.message}
                     />
@@ -174,9 +180,9 @@ export default function EditInfo({ modal, handleClose, User }) {
                     <TextField
                       fullWidth
                       defaultValue={User.razon_social}
-                      label="Razon Social"
+                      label="Razon social"
                       {...register("razon_social", {
-                        required: "La Razon Social es obligatoria",
+                        required: "La razon social es obligatoria",
                         maxLength: {
                           value: 50,
                           message: "Máximo 50 caracteres",
@@ -190,9 +196,9 @@ export default function EditInfo({ modal, handleClose, User }) {
                     <TextField
                       fullWidth
                       defaultValue={User.representante_legal}
-                      label="Representante Legal"
+                      label="Representante legal"
                       {...register("representante_legal", {
-                        required: "El Representante Legal es obligatorio",
+                        required: "El representante legal es obligatorio",
                         maxLength: {
                           value: 100,
                           message: "Máximo 100 caracteres",
@@ -206,9 +212,9 @@ export default function EditInfo({ modal, handleClose, User }) {
                     <TextField
                       fullWidth
                       defaultValue={User.domicilio_fiscal}
-                      label="Domicilio Fiscal"
+                      label="Domicilio fiscal"
                       {...register("domicilio_fiscal", {
-                        required: "El Domicilio Fiscal es obligatorio",
+                        required: "El domicilio fiscal es obligatorio",
                         maxLength: {
                           value: 200,
                           message: "Máximo 200 caracteres",
@@ -231,7 +237,13 @@ export default function EditInfo({ modal, handleClose, User }) {
                       value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
                       message: "RFC inválido",
                     },
+                    onChange: (e) => {
+                      e.target.value = e.target.value.toUpperCase();
+                    },
                   })}
+                  inputProps={{
+                    style: { textTransform: "uppercase" },
+                  }}
                   error={!!errors.rfc}
                   helperText={errors.rfc?.message}
                 />
@@ -243,9 +255,9 @@ export default function EditInfo({ modal, handleClose, User }) {
                   name="email"
                   variant="outlined"
                   defaultValue={User.email}
-                  label="Correo electrónico:"
+                  label="Correo electrónico"
                   {...register("email", {
-                    required: "El correo es obligatorio",
+                    required: "El correo electrónico es obligatorio",
                     pattern: {
                       value: /^\S+@\S+$/i,
                       message: "Correo inválido",
@@ -277,7 +289,7 @@ export default function EditInfo({ modal, handleClose, User }) {
                   <TextField
                     type="number"
                     fullWidth
-                    label="Número de Colaborador"
+                    label="Número de colaborador"
                     defaultValue={User.collaborator_number}
                     {...register("collaborator_number", {
                       required: "El número de colaborador es obligatorio",
@@ -298,10 +310,10 @@ export default function EditInfo({ modal, handleClose, User }) {
               fullWidth
               sx={{
                 color: "white",
-                backgroundColor: "#1C277D",
+                backgroundColor: "#1976D2",
                 "&:hover": {
                   color: "white",
-                  backgroundColor: "#1C277D",
+                  backgroundColor: "#1976D2",
                 },
               }}
             >

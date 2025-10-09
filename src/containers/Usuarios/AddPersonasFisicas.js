@@ -101,8 +101,11 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
       aria-labelledby="customized-dialog-title"
       open={modal}
     >
-      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseFisica}>
-        Agregar Persona Física
+      <BootstrapDialogTitle
+        id="customized-dialog-title"
+        onClose={handleCloseFisica}
+      >
+        Agregar persona física
       </BootstrapDialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -114,7 +117,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
       >
         <DialogContent dividers>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Nombre"
@@ -130,9 +133,22 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                label="Apellido"
+                label="Apellido paterno"
                 {...register("last_name", {
-                  required: "El apellido es obligatorio",
+                  required: "El apellido paterno es obligatorio",
+                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
+                  maxLength: { value: 100, message: "Máximo 100 caracteres" },
+                })}
+                error={!!errors.last_name}
+                helperText={errors.last_name?.message}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Apellido materno"
+                {...register("last_name", {
+                  required: "El apellido materno es obligatorio",
                   minLength: { value: 1, message: "Mínimo 1 caracteres" },
                   maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
@@ -144,7 +160,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
               <TextField
                 type="date"
                 fullWidth
-                label="Fecha de Nacimiento"
+                label="Fecha de nacimiento"
                 InputLabelProps={{ shrink: true }}
                 {...register("birth_date", {
                   required: "La fecha de nacimiento es obligatoria",
@@ -164,7 +180,13 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                     value: /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/,
                     message: "CURP inválida",
                   },
+                  onChange: (e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                  },
                 })}
+                inputProps={{
+                  style: { textTransform: "uppercase" }, 
+                }}
                 error={!!errors.curp}
                 helperText={errors.curp?.message}
               />
@@ -179,7 +201,13 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                     value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
                     message: "RFC inválido",
                   },
+                   onChange: (e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                  },
                 })}
+                inputProps={{
+                  style: { textTransform: "uppercase" }, 
+                }}
                 error={!!errors.rfc}
                 helperText={errors.rfc?.message}
               />
@@ -215,7 +243,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
               <TextField
                 select
                 fullWidth
-                label="Tipo de Usuario"
+                label="Tipo de usuario"
                 defaultValue=""
                 {...register("type_user", { required: "Selecciona un tipo" })}
                 error={!!errors.type_user}
@@ -234,7 +262,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 <TextField
                   type="number"
                   fullWidth
-                  label="Número de Colaborador"
+                  label="Número de colaborador"
                   {...register("collaborator_number", {
                     required: "El número de colaborador es obligatorio",
                     maxLength: { value: 6, message: "Máximo 6 caracteres" },
@@ -268,7 +296,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                     </InputAdornment>
                   ),
                 }}
-                label="Contraseña:"
+                label="Contraseña"
                 error={errors.password ? true : false}
                 helperText={errors?.password?.message}
                 {...register("password", {
@@ -281,7 +309,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                     message: "Minimo 8 caracteres",
                   },
                   maxLength: {
-                    value: 16,
+                    value: 50,
                     message: "Maximo 50 caracteres",
                   },
                 })}
@@ -312,13 +340,13 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                     </InputAdornment>
                   ),
                 }}
-                label="Confirma la Contraseña:"
+                label="Confirma la contraseña"
                 error={errors.password_confirmation ? true : false}
                 helperText={errors?.password_confirmation?.message}
                 {...register("password_confirmation", {
                   required: {
                     value: true,
-                    message: "Es requerido Confirmar la contraseña",
+                    message: "Es requerido confirmar la contraseña",
                   },
                   minLength: {
                     value: 8,
@@ -341,10 +369,10 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
             fullWidth
             sx={{
               color: "white",
-              backgroundColor: "#F05E29",
+              backgroundColor: "#1976D2",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#F05E29",
+                backgroundColor: "#1976D2",
               },
             }}
           >

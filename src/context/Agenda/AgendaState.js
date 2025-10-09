@@ -241,7 +241,7 @@ const AgendaState = ({ children }) => {
     const { value: reason } = await Swal.fire({
       title: "¿Estás seguro?",
       text: "El curso seleccionado será cancelado. Por favor, indica la razón:",
-      icon: "warning",
+      icon: "question",
       input: "textarea",
       inputPlaceholder: "Escribe aquí la razón de la cancelación...",
       inputAttributes: {
@@ -252,6 +252,12 @@ const AgendaState = ({ children }) => {
       cancelButtonText: "No, volver",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
+
+      customClass: {
+        popup: "swal-custom-font",
+        input: "swal-custom-font",
+      },
+
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage("Debes ingresar una razón");

@@ -104,7 +104,7 @@ export default function ResetPassword({ modal, handleClose }) {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          Cambiar mi Contraseña
+          Cambiar mi contraseña
         </BootstrapDialogTitle>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -121,7 +121,7 @@ export default function ResetPassword({ modal, handleClose }) {
                   type={passwordValues.showPassword ? "text" : "password"}
                   fullWidth
                   name="current_password"
-                  label="Contraseña Actual"
+                  label="Contraseña actual"
                   error={errors.current_password ? true : false}
                   helperText={errors?.current_password?.message}
                   InputProps={{
@@ -163,7 +163,7 @@ export default function ResetPassword({ modal, handleClose }) {
                   type={passwordValues.showPassword ? "text" : "password"}
                   fullWidth
                   name="password"
-                  label="Nueva Contraseña"
+                  label="Nueva contraseña"
                   error={errors.password ? true : false}
                   helperText={errors?.password?.message}
                   InputProps={{
@@ -207,7 +207,7 @@ export default function ResetPassword({ modal, handleClose }) {
                   }
                   fullWidth
                   name="password_confirmation"
-                  label="Confirma tu Contraseña"
+                  label="Confirma tu contraseña"
                   error={errors.password_confirmation ? true : false}
                   helperText={errors?.password_confirmation?.message}
                   InputProps={{
@@ -256,10 +256,10 @@ export default function ResetPassword({ modal, handleClose }) {
               fullWidth
               sx={{
                 color: "white",
-                backgroundColor: "#d94e1e",
+                backgroundColor: "#1976D2",
                 "&:hover": {
                   color: "white",
-                  backgroundColor: "#d94e1e",
+                  backgroundColor: "#1976D2",
                 },
               }}
             >

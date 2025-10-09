@@ -38,7 +38,7 @@ export default function AddInstructor({ modal, handleClose, id }) {
       fullWidth={fullWidth}
       maxWidth={maxWidth}
     >
-      <DialogTitle>Agregar Instructor</DialogTitle>
+      <DialogTitle>Agregar instructor</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -53,10 +53,10 @@ export default function AddInstructor({ modal, handleClose, id }) {
               <TextField
                 select
                 fullWidth
-                label="Selecciona un Instructor"
+                label="Selecciona un instructor"
                 defaultValue=""
                 {...register("instructor_id", {
-                  required: "Debes seleccionar un Instructor",
+                  required: "Debes seleccionar un instructor",
                 })}
                 error={!!errors.instructor_id}
                 helperText={errors.instructor_id?.message}
@@ -82,14 +82,14 @@ export default function AddInstructor({ modal, handleClose, id }) {
             fullWidth
             sx={{
               color: "white",
-              backgroundColor: "#F05E29",
+              backgroundColor: "#1976D2",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#F05E29",
+                backgroundColor: "#1976D2",
               },
             }}
           >
-            Agregar Instructor
+            Agregar instructor
           </Button>
         </DialogActions>
       </form>

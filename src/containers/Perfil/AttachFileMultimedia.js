@@ -80,7 +80,7 @@ export default function AttachFileMultimedia({ open, handleClose, id }) {
               onChange={handleChangeImage}
             />
             <InputLabel sx={{ textAlign: "center" }}>
-              Selecciona tu Imagen
+              Selecciona tu imagen
               <label htmlFor="icon-button-file-first">
                 <IconButton
                   color="primary"

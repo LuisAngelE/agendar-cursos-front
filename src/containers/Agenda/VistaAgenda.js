@@ -63,7 +63,7 @@ export default function VistaAgenda(props) {
                 sx={{ color: "#2e7d32" }}
               >
                 <EventIcon sx={{ mr: 1, verticalAlign: "middle" }} />
-                Detalle de la Reservación
+                Detalle de la reservación
               </Typography>
 
               <Grid container spacing={2}>
@@ -258,7 +258,7 @@ export default function VistaAgenda(props) {
                 sx={{ color: "#1565c0" }}
               >
                 <SchoolIcon sx={{ mr: 1, verticalAlign: "middle" }} />
-                Información del Curso
+                Información del curso
               </Typography>
 
               <Typography

@@ -16,6 +16,7 @@ import {
   ADD_CURSO_FAVORITO,
   DELETE_CURSO_FAVORITO,
 } from "../../types";
+
 const CursosState = ({ children }) => {
   const initialState = {
     cursos: [],
@@ -23,55 +24,54 @@ const CursosState = ({ children }) => {
     ErrorsApi: [],
     success: false,
   };
+
   const [state, dispatch] = useReducer(CursosReducer, initialState);
+
+  const handleError = (error) => {
+    const data = error.response?.data;
+
+    if (data?.errors) {
+      const mensajes = Object.values(data.errors).flat().join("\n");
+      Swal.fire({
+        title: "Error de validación",
+        icon: "warning",
+        text: mensajes,
+      });
+    } else if (data?.mensaje || data?.error) {
+      Swal.fire({
+        title: data.error || "Error",
+        icon: "error",
+        text: data.mensaje || data.error,
+      });
+    } else {
+      Swal.fire({
+        title: "Error",
+        icon: "error",
+        text: "Ocurrió un error inesperado",
+      });
+    }
+  };
 
   const GetCursos = (nombre = "", category_id = "") => {
     let type_user = localStorage.getItem("type_user");
     let user_id = localStorage.getItem("user_id");
-    if (type_user === "1" || type_user === "3") {
-      let url = "/course";
-      const params = new URLSearchParams();
-      if (nombre.trim() !== "") params.append("nombre", nombre);
-      if (category_id !== "") params.append("category_id", category_id);
-      const queryString = params.toString();
-      if (queryString) url += `?${queryString}`;
-      MethodGet(url)
-        .then((res) => {
-          dispatch({
-            type: GET_ALL_CURSOS,
-            payload: res.data,
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else if (type_user === "2") {
-      let url = `/indexTypeUserCourse/${user_id}`;
-      const params = new URLSearchParams();
-      if (nombre.trim() !== "") params.append("nombre", nombre);
-      if (category_id !== "") params.append("category_id", category_id);
-      const queryString = params.toString();
-      if (queryString) url += `?${queryString}`;
-      MethodGet(url)
-        .then((res) => {
-          dispatch({
-            type: GET_ALL_CURSOS,
-            payload: res.data,
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
+    let url = type_user === "2" ? `/indexTypeUserCourse/${user_id}` : "/course";
+
+    const params = new URLSearchParams();
+    if (nombre.trim() !== "") params.append("nombre", nombre);
+    if (category_id !== "") params.append("category_id", category_id);
+    const queryString = params.toString();
+    if (queryString) url += `?${queryString}`;
+
+    MethodGet(url)
+      .then((res) => dispatch({ type: GET_ALL_CURSOS, payload: res.data }))
+      .catch(handleError);
   };
 
   const AddCursos = (data) => {
     MethodPost("/course", data)
       .then((res) => {
-        dispatch({
-          type: ADD_CURSOS,
-          payload: res.data,
-        });
+        dispatch({ type: ADD_CURSOS, payload: res.data });
         Swal.fire({
           title: "Listo",
           text: "Curso agregado con éxito",
@@ -79,37 +79,13 @@ const CursosState = ({ children }) => {
         });
         GetCursos();
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-
-          Swal.fire({
-            title: "Error",
-            icon: "warning",
-            text: mensajes,
-          });
-        } else {
-          Swal.fire({
-            title: "Error",
-            icon: "error",
-            text: "Ocurrió un error inesperado",
-          });
-        }
-      });
+      .catch(handleError);
   };
 
   const UpdateCursos = (data) => {
     MethodPut(`/course/${data.id}`, data)
       .then((res) => {
-        dispatch({
-          type: UPDATE_CURSOS,
-          payload: res.data,
-        });
+        dispatch({ type: UPDATE_CURSOS, payload: res.data });
         Swal.fire({
           title: "Listo",
           text: "Curso actualizado con éxito",
@@ -117,27 +93,7 @@ const CursosState = ({ children }) => {
         });
         GetCursos();
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-          Swal.fire({
-            title: "Error",
-            icon: "warning",
-            text: mensajes,
-          });
-        } else {
-          Swal.fire({
-            title: "Error",
-            icon: "error",
-            text: "Ocurrió un error inesperado",
-          });
-        }
-      });
+      .catch(handleError);
   };
 
   const DeleteCursos = (id) => {
@@ -154,24 +110,15 @@ const CursosState = ({ children }) => {
       if (result.isConfirmed) {
         MethodDelete(`/course/${id}`)
           .then((res) => {
+            dispatch({ type: DELETE_CURSOS, payload: id });
             Swal.fire({
               title: "Eliminado",
               text: res.data.mensaje,
               icon: "success",
             });
             GetCursos();
-            dispatch({
-              type: DELETE_CURSOS,
-              payload: id,
-            });
           })
-          .catch((error) => {
-            Swal.fire({
-              title: "Error",
-              text: error.response?.data?.mensaje || "Ocurrió un error",
-              icon: "error",
-            });
-          });
+          .catch(handleError);
       }
     });
   };
@@ -189,35 +136,29 @@ const CursosState = ({ children }) => {
       if (result.value) {
         const formData = new FormData();
         formData.append("image", data.image);
-        let url = `/courses/${data.id}/images`;
-        MethodPost(url, formData, { headerConfig })
-          .then((res) => {
+        MethodPost(`/courses/${data.id}/images`, formData, { headerConfig })
+          .then(() => {
             Swal.fire({
               title: "Foto",
               text: "Modificada Correctamente",
               icon: "success",
-            }).then(() => {
-              window.location.reload();
-            });
+            }).then(() => window.location.reload());
           })
-          .catch((error) => {
+          .catch(() =>
             Swal.fire({
               title: "Error",
               icon: "error",
               text: "Esta imagen no es compatible. Por favor, selecciona otra imagen.",
-            });
-          });
+            })
+          );
       }
     });
   };
 
   const AddCursoFavorito = (course_id) => {
     MethodPost("/favorites", { course_id })
-      .then((res) => {
-        dispatch({
-          type: ADD_CURSO_FAVORITO,
-          payload: course_id,
-        });
+      .then(() => {
+        dispatch({ type: ADD_CURSO_FAVORITO, payload: course_id });
         Swal.fire({
           title: "Listo",
           text: "Curso agregado a favoritos",
@@ -225,28 +166,7 @@ const CursosState = ({ children }) => {
         });
         GetCursos();
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-
-          Swal.fire({
-            title: "Error",
-            icon: "warning",
-            text: mensajes,
-          });
-        } else {
-          Swal.fire({
-            title: "Error",
-            icon: "error",
-            text: "Ocurrió un error inesperado",
-          });
-        }
-      });
+      .catch(handleError);
   };
 
   const DeleteCursoFavorito = (course_id) => {
@@ -262,27 +182,16 @@ const CursosState = ({ children }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         MethodDelete(`/favorites/${course_id}`)
-          .then((res) => {
+          .then(() => {
+            dispatch({ type: DELETE_CURSO_FAVORITO, payload: course_id });
             Swal.fire({
               title: "Eliminado",
-              text: res.data.mensaje,
+              text: "Curso eliminado de favoritos",
               icon: "success",
-            }).then(() => {
-              window.location.reload();
-            });
+            }).then(() => window.location.reload());
             GetCursos();
-            dispatch({
-              type: DELETE_CURSO_FAVORITO,
-              payload: course_id,
-            });
           })
-          .catch((error) => {
-            Swal.fire({
-              title: "Error",
-              text: error.response?.data?.mensaje || "Ocurrió un error",
-              icon: "error",
-            });
-          });
+          .catch(handleError);
       }
     });
   };

@@ -73,7 +73,7 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Editar Reservación</DialogTitle>
+      <DialogTitle>Editar reservación</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -210,10 +210,10 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
             fullWidth
             sx={{
               color: "white",
-              backgroundColor: "#1565c0",
+              backgroundColor: "#F05E29",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#1565c0",
+                backgroundColor: "#F05E29",
               },
             }}
           >

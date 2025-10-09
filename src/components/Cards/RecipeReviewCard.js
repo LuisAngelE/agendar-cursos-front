@@ -1,82 +1,72 @@
 import * as React from "react";
+import { useState, useContext } from "react";
 import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import EditIcon from "@mui/icons-material/Edit";
-import MessageIcon from "@mui/icons-material/Message";
-import { Button, IconButton, Tooltip } from "@mui/material";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import Default from "../layout/img/default.png";
-import { useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Collapse,
+  Avatar,
+  Typography,
+  IconButton,
+  Tooltip,
+  Button,
+} from "@mui/material";
+import {
+  Favorite as FavoriteIcon,
+  FavoriteBorder as FavoriteBorderIcon,
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  Message as MessageIcon,
+  AddPhotoAlternate as AddPhotoAlternateIcon,
+  ExpandMore as ExpandMoreIcon,
+} from "@mui/icons-material";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import Default from "../layout/img/default.webp";
 import EditCursos from "../../containers/Cursos/EditCursos";
-import CursosContext from "../../context/Cursos/CursosContext";
-import CategoriasContext from "../../context/Categorias/CategoriasContext";
 import ModalMultimedia from "../../containers/Cursos/ModalMultimedia";
 import AgendaModal from "../../containers/Agenda/AgendaModal";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { motion } from "framer-motion";
+import CursosContext from "../../context/Cursos/CursosContext";
 
+// Styled ExpandMore
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
-})(({ theme }) => ({
+})(({ theme, expand }) => ({
   marginLeft: "auto",
   transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
   }),
-  variants: [
-    {
-      props: ({ expand }) => !expand,
-      style: {
-        transform: "rotate(0deg)",
-      },
-    },
-    {
-      props: ({ expand }) => !!expand,
-      style: {
-        transform: "rotate(180deg)",
-      },
-    },
-  ],
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
 }));
 
 export default function RecipeReviewCard({ curso, categorias }) {
   const { DeleteCursos, AddCursoFavorito, DeleteCursoFavorito } =
-    React.useContext(CursosContext);
+    useContext(CursosContext);
   const type_user = localStorage.getItem("type_user");
   const user_id = localStorage.getItem("user_id");
 
-  const isFavorito = (curso) => {
-    return curso.users_who_favorited?.some(
-      (user) => user.id.toString() === user_id
-    );
-  };
+  const [expanded, setExpanded] = useState(true);
+  const [modalMultimedia, openModalMultimedia] = useState(false);
+  const [modalUpdate, OpenModalUpdate] = useState(false);
+  const [modalAgenda, openModalAgenda] = useState(false);
+  const [id_user, saveUser] = useState(null);
+  const [id_service, saveIdService] = useState(null);
+  const [id_agenda, saveIdAgenda] = useState(null);
+
+  const isFavorito = (curso) =>
+    curso.users_who_favorited?.some((user) => user.id.toString() === user_id);
 
   const handleToggleFavorito = (curso) => {
-    if (isFavorito(curso)) {
-      DeleteCursoFavorito(curso.id);
-    } else {
-      AddCursoFavorito(curso.id);
-    }
+    if (isFavorito(curso)) DeleteCursoFavorito(curso.id);
+    else AddCursoFavorito(curso.id);
   };
 
-  const [expanded, setExpanded] = React.useState(false);
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const handleExpandClick = () => setExpanded(!expanded);
 
-  const [id_user, saveUser] = useState(null);
-  const [modalMultimedia, openModalMultimedia] = useState(false);
   const handleOpenMultimedia = (id) => {
     openModalMultimedia(true);
     saveUser(id);
@@ -86,8 +76,6 @@ export default function RecipeReviewCard({ curso, categorias }) {
     saveUser(null);
   };
 
-  const [modalUpdate, OpenModalUpdate] = useState(false);
-  const [id_service, saveIdService] = useState(null);
   const handleClickOpen = (id) => {
     OpenModalUpdate(true);
     saveIdService(id);
@@ -97,8 +85,6 @@ export default function RecipeReviewCard({ curso, categorias }) {
     saveIdService(null);
   };
 
-  const [id_agenda, saveIdAgenda] = useState(null);
-  const [modalAgenda, openModalAgenda] = useState(false);
   const handleOpenAgenda = (id) => {
     openModalAgenda(true);
     saveIdAgenda(id);
@@ -108,6 +94,16 @@ export default function RecipeReviewCard({ curso, categorias }) {
     saveIdAgenda(null);
   };
 
+  // Badge color based on status
+  const statusColor =
+    curso.status === 1 ? "#37ff00" : curso.status === 2 ? "#ff0000" : "#808080";
+  const statusText =
+    curso.status === 1
+      ? "Activo"
+      : curso.status === 2
+      ? "Inactivo"
+      : "Desconocido";
+
   return (
     <Card
       component={motion.div}
@@ -115,22 +111,25 @@ export default function RecipeReviewCard({ curso, categorias }) {
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.02, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
       transition={{ duration: 0.3 }}
-      sx={{ maxWidth: 345 }}
+      sx={{
+        maxWidth: 345,
+        borderRadius: 2,
+        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+        overflow: "hidden",
+      }}
     >
+      {/* Header */}
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "#F05E29", color: "#FFFFFF" }}>
+          <Avatar sx={{ bgcolor: "#37FF00", color: "#000000ff" }}>
             {curso.title?.charAt(0).toUpperCase() ?? "C"}
           </Avatar>
         }
         action={
-          type_user === "3" ? (
+          type_user === "3" && (
             <IconButton
               size="small"
               onClick={() => handleToggleFavorito(curso)}
-              component={motion.div}
-              whileTap={{ scale: 0.8 }}
-              whileHover={{ scale: 1.2 }}
             >
               <Tooltip
                 title={
@@ -138,7 +137,6 @@ export default function RecipeReviewCard({ curso, categorias }) {
                     ? "Eliminar de favoritos"
                     : "Agregar a favoritos"
                 }
-                placement="top"
               >
                 {isFavorito(curso) ? (
                   <FavoriteIcon sx={{ color: "#FF0000" }} />
@@ -147,63 +145,89 @@ export default function RecipeReviewCard({ curso, categorias }) {
                 )}
               </Tooltip>
             </IconButton>
-          ) : null
+          )
         }
-        title={curso.title}
+        title={
+          <Typography variant="h6" noWrap>
+            {curso.title}
+          </Typography>
+        }
+        subheader={curso.category?.name}
       />
+
+      {/* Image */}
       <Link to={`/Cursos/${curso.id}`} style={{ textDecoration: "none" }}>
-        <motion.div whileHover={{ scale: 1.03 }}>
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          style={{ position: "relative" }}
+        >
           <CardMedia
             component="img"
             height="194"
             image={curso.image?.url || Default}
-            alt="Paella dish"
+            alt={curso.title}
           />
+          <div
+            style={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+              padding: "4px 8px",
+              borderRadius: "12px",
+              backgroundColor: statusColor,
+              color: "#fff",
+              fontSize: "0.75rem",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
+            {statusText}
+          </div>
         </motion.div>
-        <CardContent>
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            Modalidad: {curso.modality} <br />
-            Duración: {curso.duration} <br />
-            Categoría: {curso.category?.name} <br />
+
+        {/* Course info */}
+        <CardContent
+          sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            Modalidad: {curso.modality}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Duración: {curso.duration}
           </Typography>
         </CardContent>
       </Link>
 
+      {/* Actions */}
       <CardActions disableSpacing>
         {type_user === "1" && (
           <>
-            <IconButton
-              size="small"
-              onClick={() => handleOpenMultimedia(curso.id)}
-            >
-              <Tooltip title="Agregar Multimedia" placement="top">
+            <IconButton onClick={() => handleOpenMultimedia(curso.id)}>
+              <Tooltip title="Agregar multimedia">
                 <AddPhotoAlternateIcon
                   sx={{
                     color: "green",
-                    transition: "0.2s",
-                    "&:hover": { scale: "2" },
+                    "&:hover": { transform: "scale(1.2)" },
                   }}
                 />
               </Tooltip>
             </IconButton>
-            <IconButton size="small" onClick={() => handleClickOpen(curso.id)}>
-              <Tooltip title="Editar Curso" placement="top">
+            <IconButton onClick={() => handleClickOpen(curso.id)}>
+              <Tooltip title="Editar curso">
                 <EditIcon
                   sx={{
                     color: "#e7a62f",
-                    transition: "0.2s",
-                    "&:hover": { rotate: "40deg" },
+                    "&:hover": { transform: "rotate(40deg)" },
                   }}
                 />
               </Tooltip>
             </IconButton>
-            <IconButton size="small" onClick={() => DeleteCursos(curso.id)}>
-              <Tooltip title="Eliminar Curso" placement="top">
+            <IconButton onClick={() => DeleteCursos(curso.id)}>
+              <Tooltip title="Eliminar curso">
                 <DeleteIcon
                   sx={{
                     color: "#FF0000",
-                    transition: "0.2s",
-                    "&:hover": { scale: "2" },
+                    "&:hover": { transform: "scale(1.2)" },
                   }}
                 />
               </Tooltip>
@@ -214,33 +238,36 @@ export default function RecipeReviewCard({ curso, categorias }) {
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
-          aria-label="show more"
         >
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
+
+      {/* Collapse */}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography raphy sx={{ marginBottom: 2 }}>
+        <CardContent sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Typography variant="body2" sx={{ mb: 1 }}>
             Descripción: {curso.description}
           </Typography>
-          {(type_user === "1" || type_user === "3") && (
+
+          {curso.status !== 2 && (type_user === "1" || type_user === "3") && (
             <Button
               onClick={() => handleOpenAgenda(curso.id)}
               fullWidth
               variant="contained"
               sx={{
-                bgcolor: "#5D65A2",
-                "&:hover": { bgcolor: "#5D65A2", scale: "1.1", },
+                bgcolor: "#1976D2",
+                "&:hover": { bgcolor: "#1565C0", transform: "scale(1.05)" },
               }}
             >
               <MessageIcon sx={{ mr: 1 }} />
-              Me Interesa Este Curso
+              Me interesa este curso
             </Button>
           )}
         </CardContent>
       </Collapse>
 
+      {/* Modals */}
       {id_user !== null && (
         <ModalMultimedia
           open={modalMultimedia}

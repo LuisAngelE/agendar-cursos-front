@@ -54,7 +54,7 @@ export default function EditCategorias({ open, handleClose, id }) {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Nombre de la categoria"
+                  label="Nombre de la categoría"
                   defaultValue={categoria.name}
                   {...register("name", {
                     required: "El nombre es obligatorio",
@@ -68,7 +68,7 @@ export default function EditCategorias({ open, handleClose, id }) {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Descripción de la categoria"
+                  label="Descripción de la categoría"
                   defaultValue={categoria.description}
                   multiline
                   rows={4}
