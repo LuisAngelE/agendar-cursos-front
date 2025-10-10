@@ -21,7 +21,6 @@ import { motion } from "framer-motion";
 import Default from "../../components/layout/img/default.webp";
 import AgendaModal from "./AgendaModal";
 
-// Styled ExpandMore
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -71,10 +70,9 @@ export default function RecipeReviewCard({ curso }) {
         overflow: "hidden",
       }}
     >
-      {/* Header */}
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "#37FF00", color: "#000000ff" }}>
+          <Avatar sx={{ bgcolor: "#1565C0", color: "#ffffffff" }}>
             {curso.title?.charAt(0).toUpperCase() ?? "C"}
           </Avatar>
         }
@@ -86,7 +84,6 @@ export default function RecipeReviewCard({ curso }) {
         subheader={curso.category?.name}
       />
 
-      {/* Image */}
       <motion.div whileHover={{ scale: 1.03 }} style={{ position: "relative" }}>
         <CardMedia
           component="img"
@@ -112,7 +109,6 @@ export default function RecipeReviewCard({ curso }) {
         </div>
       </motion.div>
 
-      {/* Course info */}
       <CardContent sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
         <Typography variant="body2" color="text.secondary">
           Modalidad: {curso.modality}
@@ -122,7 +118,6 @@ export default function RecipeReviewCard({ curso }) {
         </Typography>
       </CardContent>
 
-      {/* Actions */}
       <CardActions disableSpacing>
         <ExpandMore
           expand={expanded}
@@ -133,7 +128,6 @@ export default function RecipeReviewCard({ curso }) {
         </ExpandMore>
       </CardActions>
 
-      {/* Collapse */}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Typography variant="body2" sx={{ mb: 1 }}>
@@ -156,7 +150,6 @@ export default function RecipeReviewCard({ curso }) {
         </CardContent>
       </Collapse>
 
-      {/* Modal */}
       {id_agenda !== null && (
         <AgendaModal
           open={modalAgenda}

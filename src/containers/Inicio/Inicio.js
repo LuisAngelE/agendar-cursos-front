@@ -46,7 +46,7 @@ const cardsData = [
     title: "Calendario",
     subtitle: "Gestión de calendario de todos los cursos",
     icon: <CalendarMonthIcon sx={{ fontSize: 50, color: "#FBC02D" }} />,
-    link: "/Usuarios",
+    link: "/Calendario",
     bgColor: "#FFFDE7",
   },
   {

@@ -25,7 +25,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
-import Logo from "../layout/img/logoNegro.png";
+import Logo from "../layout/img/FOTON.png";
 import CategoryIcon from "@mui/icons-material/Category";
 import AuthContext from "../../context/Auth/AuthContext";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -267,8 +267,8 @@ export default function Header({ children }) {
           <Box
             sx={{
               position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%)",
+              right: "100%",
+              transform: "translateX(-100%)",
             }}
           >
             <img
@@ -276,7 +276,7 @@ export default function Header({ children }) {
               alt="logo"
               style={{
                 width: 80,
-                height: 60,
+                height: 80,
               }}
             />
           </Box>

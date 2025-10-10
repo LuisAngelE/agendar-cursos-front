@@ -196,6 +196,56 @@ const CursosState = ({ children }) => {
     });
   };
 
+  const EnableCurso = (course_id) => {
+    Swal.fire({
+      title: "¿Habilitar curso?",
+      text: "El curso volverá a estar disponible para los usuarios.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#2E7D32", // verde
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, habilitar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MethodPut(`/courses/${course_id}/enable`)
+          .then(() => {
+            Swal.fire({
+              title: "Curso habilitado",
+              text: "El curso ahora está activo.",
+              icon: "success",
+            }).then(() => GetCursos());
+          })
+          .catch(handleError);
+      }
+    });
+  };
+
+  const DisabledCurso = (course_id) => {
+    Swal.fire({
+      title: "¿Deshabilitar curso?",
+      text: "El curso dejará de estar disponible para los usuarios.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, deshabilitar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MethodPut(`/courses/${course_id}/disable`)
+          .then(() => {
+            Swal.fire({
+              title: "Curso deshabilitado",
+              text: "El curso ha sido marcado como inactivo.",
+              icon: "success",
+            }).then(() => GetCursos());
+          })
+          .catch(handleError);
+      }
+    });
+  };
+
   return (
     <CursosContext.Provider
       value={{
@@ -210,6 +260,8 @@ const CursosState = ({ children }) => {
         ChangePhotoCourse,
         AddCursoFavorito,
         DeleteCursoFavorito,
+        EnableCurso,
+        DisabledCurso,
       }}
     >
       {children}

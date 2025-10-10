@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link } from "react-router-dom";
-import Logo from "../layout/img/logoNegro.png";
+import Logo from "../layout/img/FOTON.png";
 import AuthContext from "../../context/Auth/AuthContext";
 import Noresultados from "./gif/404.gif";
 
@@ -62,7 +62,7 @@ const NoResultados = () => {
               alt="logo"
               style={{
                 width: 80,
-                height: 60,
+                height: 80,
                 objectFit: "contain",
               }}
             />

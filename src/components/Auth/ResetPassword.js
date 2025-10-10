@@ -2,7 +2,7 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useForm } from "react-hook-form";
-import Logo from "../layout/img/logoNegro.png";
+import Logo from "../layout/img/FOTON.png";
 import React, { useContext, useState } from "react";
 import AuthContext from "../../context/Auth/AuthContext";
 const useStyles = makeStyles({
@@ -94,7 +94,7 @@ const ResetPassword = () => {
                   src={Logo}
                   alt="logo"
                   style={{
-                    width: 150,
+                    width: 180,
                     height: "auto",
                   }}
                 />

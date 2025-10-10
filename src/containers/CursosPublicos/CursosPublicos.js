@@ -1,7 +1,7 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Grid, AppBar as MuiAppBar, Toolbar } from "@mui/material";
-import Logo from "../../components/layout/img/logoNegro.png";
+import Logo from "../../components/layout/img/FOTON.png";
 import { useState } from "react";
 import { useContext } from "react";
 import RecipeReviewCard from "./RecipeReviewCard";
@@ -59,7 +59,7 @@ const CursosPublicos = () => {
                 alt="logo"
                 style={{
                   width: 80,
-                  height: 60,
+                  height: 80,
                   objectFit: "contain",
                 }}
               />

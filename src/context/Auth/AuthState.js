@@ -191,7 +191,7 @@ const AuthState = (props) => {
       .then((res) => {
         Swal.fire({
           title: "Contraseña",
-          text: "Modificada Correctamente",
+          text: "Modificada correctamente",
           icon: "success",
         });
         dispatch({
@@ -224,8 +224,8 @@ const AuthState = (props) => {
     MethodPost(url, data)
       .then((res) => {
         Swal.fire({
-          title: "Informacion",
-          text: "Modificada Correctamente",
+          title: "Información",
+          text: "Modificada correctamente",
           icon: "success",
         });
         dispatch({
@@ -250,10 +250,10 @@ const AuthState = (props) => {
       title: "¿Estás seguro de que quieres agregar esta imagen?",
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si",
-      cancelButtonText: "No",
+      confirmButtonColor: "#2563eb",
+      cancelButtonColor: "#ef4444",
+      confirmButtonText: "Sí, agregar",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.value) {
         const formData = new FormData();
@@ -263,7 +263,7 @@ const AuthState = (props) => {
           .then((res) => {
             Swal.fire({
               title: "Foto",
-              text: "Modificada Correctamente",
+              text: "Modificada correctamente",
               icon: "success",
             }).then(() => {
               window.location.reload();

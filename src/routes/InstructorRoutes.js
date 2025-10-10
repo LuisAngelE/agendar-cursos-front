@@ -6,6 +6,7 @@ import Agenda from "../containers/Agenda/Agenda";
 import VistaCursos from "../containers/Cursos/VistaCursos";
 import VistaAgenda from "../containers/Agenda/VistaAgenda";
 import NoResultados from "../components/layout/NoResultados";
+import Calendario from "../containers/Calendario/Calendario";
 
 const InstructorRoutes = () => (
   <Switch>
@@ -14,6 +15,7 @@ const InstructorRoutes = () => (
     <Route exact path="/Agenda" component={Agenda} />
     <Route exact path="/Agenda/:id" component={VistaAgenda} />
     <Route exact path="/Perfil" component={Perfil} />
+    <Route exact path="/Calendario" component={Calendario} />
     <Route component={NoResultados} />
   </Switch>
 );

@@ -157,7 +157,9 @@ export default function VistaCursos(props) {
                     whileTap={{ scale: 0.95 }}
                   >
                     <MessageIcon sx={{ mr: 1 }} />
-                    Me Interesa Este Curso
+                    {type_user === "1"
+                      ? "Agendar este curso"
+                      : "Me interesa este curso"}
                   </Button>
                 )}
             </Card>

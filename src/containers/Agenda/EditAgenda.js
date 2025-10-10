@@ -139,7 +139,7 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                           setValue(value.hour(hour).minute(minute));
                         }}
                       >
-                        {[8, 9, 10, 11, 12, 13, 14].map((h) => {
+                        {[8, 9, 10, 11, 12, 13, 14, 15, 16].map((h) => {
                           const hourStr = String(h).padStart(2, "0");
                           return (
                             <MenuItem key={h} value={`${hourStr}:00`}>
@@ -163,7 +163,7 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                       }
                       shouldDisableTime={(timeValue, clockType) => {
                         if (clockType === "hours")
-                          return timeValue < 8 || timeValue > 14;
+                          return timeValue < 8 || timeValue > 16;
                         return false;
                       }}
                     />
@@ -210,10 +210,10 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
             fullWidth
             sx={{
               color: "white",
-              backgroundColor: "#F05E29",
+              backgroundColor: "#1976D2",
               "&:hover": {
                 color: "white",
-                backgroundColor: "#F05E29",
+                backgroundColor: "#1976D2",
               },
             }}
           >

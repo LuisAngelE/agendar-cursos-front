@@ -26,12 +26,13 @@ import {
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Default from "../layout/img/default.webp";
+import CheckIcon from "@mui/icons-material/Check";
 import EditCursos from "../../containers/Cursos/EditCursos";
 import ModalMultimedia from "../../containers/Cursos/ModalMultimedia";
 import AgendaModal from "../../containers/Agenda/AgendaModal";
 import CursosContext from "../../context/Cursos/CursosContext";
+import CloseIcon from "@mui/icons-material/Close";
 
-// Styled ExpandMore
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -44,8 +45,13 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard({ curso, categorias }) {
-  const { DeleteCursos, AddCursoFavorito, DeleteCursoFavorito } =
-    useContext(CursosContext);
+  const {
+    DeleteCursos,
+    AddCursoFavorito,
+    DeleteCursoFavorito,
+    EnableCurso,
+    DisabledCurso,
+  } = useContext(CursosContext);
   const type_user = localStorage.getItem("type_user");
   const user_id = localStorage.getItem("user_id");
 
@@ -94,7 +100,6 @@ export default function RecipeReviewCard({ curso, categorias }) {
     saveIdAgenda(null);
   };
 
-  // Badge color based on status
   const statusColor =
     curso.status === 1 ? "#37ff00" : curso.status === 2 ? "#ff0000" : "#808080";
   const statusText =
@@ -118,10 +123,9 @@ export default function RecipeReviewCard({ curso, categorias }) {
         overflow: "hidden",
       }}
     >
-      {/* Header */}
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "#37FF00", color: "#000000ff" }}>
+          <Avatar sx={{ bgcolor: "#1565C0", color: "#ffffffff" }}>
             {curso.title?.charAt(0).toUpperCase() ?? "C"}
           </Avatar>
         }
@@ -155,7 +159,6 @@ export default function RecipeReviewCard({ curso, categorias }) {
         subheader={curso.category?.name}
       />
 
-      {/* Image */}
       <Link to={`/Cursos/${curso.id}`} style={{ textDecoration: "none" }}>
         <motion.div
           whileHover={{ scale: 1.03 }}
@@ -185,7 +188,6 @@ export default function RecipeReviewCard({ curso, categorias }) {
           </div>
         </motion.div>
 
-        {/* Course info */}
         <CardContent
           sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
         >
@@ -198,7 +200,6 @@ export default function RecipeReviewCard({ curso, categorias }) {
         </CardContent>
       </Link>
 
-      {/* Actions */}
       <CardActions disableSpacing>
         {type_user === "1" && (
           <>
@@ -212,12 +213,37 @@ export default function RecipeReviewCard({ curso, categorias }) {
                 />
               </Tooltip>
             </IconButton>
+            {curso.status === 2 && (
+              <IconButton onClick={() => EnableCurso(curso.id)}>
+                <Tooltip title="Habilitar curso">
+                  <CheckIcon
+                    sx={{
+                      color: "#2E7D32",
+                      "&:hover": { transform: "scale(1.2)", color: "#1B5E20" },
+                    }}
+                  />
+                </Tooltip>
+              </IconButton>
+            )}
+            {curso.status === 1 && (
+              <IconButton onClick={() => DisabledCurso(curso.id)}>
+                <Tooltip title="Deshabilitar curso">
+                  <CloseIcon
+                    sx={{
+                      color: "#D32F2F",
+                      "&:hover": { transform: "scale(1.2)" },
+                    }}
+                  />
+                </Tooltip>
+              </IconButton>
+            )}
+
             <IconButton onClick={() => handleClickOpen(curso.id)}>
               <Tooltip title="Editar curso">
                 <EditIcon
                   sx={{
                     color: "#e7a62f",
-                    "&:hover": { transform: "rotate(40deg)" },
+                    "&:hover": { transform: "scale(1.2)" },
                   }}
                 />
               </Tooltip>
@@ -243,14 +269,27 @@ export default function RecipeReviewCard({ curso, categorias }) {
         </ExpandMore>
       </CardActions>
 
-      {/* Collapse */}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Typography variant="body2" sx={{ mb: 1 }}>
             Descripción: {curso.description}
           </Typography>
 
-          {curso.status !== 2 && (type_user === "1" || type_user === "3") && (
+          {curso.status !== 2 && (type_user === "1") && (
+            <Button
+              onClick={() => handleOpenAgenda(curso.id)}
+              fullWidth
+              variant="contained"
+              sx={{
+                bgcolor: "#1976D2",
+                "&:hover": { bgcolor: "#1565C0", transform: "scale(1.05)" },
+              }}
+            >
+              <MessageIcon sx={{ mr: 1 }} />
+              Agendar este curso
+            </Button>
+          )}
+          {curso.status !== 2 && (type_user === "3") && (
             <Button
               onClick={() => handleOpenAgenda(curso.id)}
               fullWidth
@@ -267,7 +306,6 @@ export default function RecipeReviewCard({ curso, categorias }) {
         </CardContent>
       </Collapse>
 
-      {/* Modals */}
       {id_user !== null && (
         <ModalMultimedia
           open={modalMultimedia}
