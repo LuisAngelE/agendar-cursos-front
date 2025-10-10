@@ -27,6 +27,31 @@ const UsuariosState = ({ children }) => {
   };
   const [state, dispatch] = useReducer(UsuariosReducer, initialState);
 
+  const handleError = (error) => {
+    const data = error.response?.data;
+
+    if (data?.errors) {
+      const mensajes = Object.values(data.errors).flat().join("\n");
+      Swal.fire({
+        title: "Error de validación",
+        icon: "warning",
+        text: mensajes,
+      });
+    } else if (data?.mensaje || data?.error) {
+      Swal.fire({
+        title: data.error || "Error",
+        icon: "error",
+        text: data.mensaje || data.error,
+      });
+    } else {
+      Swal.fire({
+        title: "Error",
+        icon: "error",
+        text: "Ocurrió un error inesperado",
+      });
+    }
+  };
+
   const GetUsersFisicos = () => {
     MethodGet("/users/fisicas")
       .then((res) => {
@@ -35,9 +60,7 @@ const UsuariosState = ({ children }) => {
           payload: res.data.data,
         });
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch(handleError);
   };
 
   const GetUsersMorales = () => {
@@ -48,9 +71,7 @@ const UsuariosState = ({ children }) => {
           payload: res.data.data,
         });
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch(handleError);
   };
 
   const GetInstructores = () => {
@@ -61,9 +82,7 @@ const UsuariosState = ({ children }) => {
           payload: res.data.data,
         });
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch(handleError);
   };
 
   const AddPersonaFisicas = (data) => {
@@ -80,28 +99,7 @@ const UsuariosState = ({ children }) => {
         });
         GetUsersFisicos();
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-
-          Swal.fire({
-            title: "Error",
-            icon: "warning",
-            text: mensajes,
-          });
-        } else {
-          Swal.fire({
-            title: "Error",
-            icon: "error",
-            text: "Ocurrió un error inesperado",
-          });
-        }
-      });
+      .catch(handleError);
   };
 
   const AddPersonaMorales = (data) => {
@@ -118,28 +116,7 @@ const UsuariosState = ({ children }) => {
         });
         GetUsersMorales();
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-
-          Swal.fire({
-            title: "Error",
-            icon: "warning",
-            text: mensajes,
-          });
-        } else {
-          Swal.fire({
-            title: "Error",
-            icon: "error",
-            text: "Ocurrió un error inesperado",
-          });
-        }
-      });
+      .catch(handleError);
   };
 
   const UpdateUserFisicas = (data) => {
@@ -159,28 +136,7 @@ const UsuariosState = ({ children }) => {
         });
         GetUsersFisicos();
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-
-          Swal.fire({
-            title: "Completa los Datos",
-            icon: "warning",
-            text: mensajes,
-          });
-        } else {
-          Swal.fire({
-            title: "Error",
-            icon: "error",
-            text: "Ocurrió un error inesperado",
-          });
-        }
-      });
+      .catch(handleError);
   };
 
   const UpdateUserMorales = (data) => {
@@ -200,28 +156,7 @@ const UsuariosState = ({ children }) => {
         });
         GetUsersMorales();
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-
-          Swal.fire({
-            title: "Completa los Datos",
-            icon: "warning",
-            text: mensajes,
-          });
-        } else {
-          Swal.fire({
-            title: "Error",
-            icon: "error",
-            text: "Ocurrió un error inesperado",
-          });
-        }
-      });
+      .catch(handleError);
   };
 
   const DeleteUsersFisicos = (id) => {
@@ -249,13 +184,7 @@ const UsuariosState = ({ children }) => {
               payload: id,
             });
           })
-          .catch((error) => {
-            Swal.fire({
-              title: "Error",
-              text: error.response?.data?.message || "Ocurrió un error",
-              icon: "error",
-            });
-          });
+          .catch(handleError);
       }
     });
   };
@@ -285,13 +214,7 @@ const UsuariosState = ({ children }) => {
               payload: id,
             });
           })
-          .catch((error) => {
-            Swal.fire({
-              title: "Error",
-              text: error.response?.data?.message || "Ocurrió un error",
-              icon: "error",
-            });
-          });
+          .catch(handleError);
       }
     });
   };

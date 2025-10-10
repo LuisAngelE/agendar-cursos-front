@@ -1,29 +1,22 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
+import { Tabs, Tab, Box, Button, Grid } from "@mui/material";
 import Layout from "../../components/layout/Layout";
-import { useContext, useState, useEffect } from "react";
 import UsuariosContext from "../../context/Usuarios/UsuariosContext";
-import { Button, Grid } from "@mui/material";
 import TablePersonasFisicas from "../../components/Tables/TablePersonasFisicas";
 import TablePersonasMorales from "../../components/Tables/TablePersonasMorales";
 import AddPersonasFisicas from "./AddPersonasFisicas";
 import AddPersonasMorales from "./AddPersonasMorales";
-
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
+function CustomTabPanel({ children, value, index, ...other }) {
   return (
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
     </div>
   );
 }
@@ -36,123 +29,106 @@ CustomTabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    id: `tab-${index}`,
+    "aria-controls": `tabpanel-${index}`,
   };
 }
 
 export default function Usuarios() {
-  const { usersFisicos, GetUsersFisicos } = useContext(UsuariosContext);
-  const { usersMorales, GetUsersMorales } = useContext(UsuariosContext);
+  const { usersFisicos, GetUsersFisicos, usersMorales, GetUsersMorales } =
+    useContext(UsuariosContext);
+
+  const [tabValue, setTabValue] = useState(0);
+  const [openFisica, setOpenFisica] = useState(false);
+  const [openMoral, setOpenMoral] = useState(false);
+
+  const handleTabChange = (event, newValue) => setTabValue(newValue);
+  const handleOpenFisica = () => setOpenFisica(true);
+  const handleCloseFisica = () => setOpenFisica(false);
+  const handleOpenMoral = () => setOpenMoral(true);
+  const handleCloseMoral = () => setOpenMoral(false);
 
   useEffect(() => {
     GetUsersFisicos();
     GetUsersMorales();
   }, []);
 
-  const [value, setValue] = useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const [openModalFisica, setOpenModalFisica] = useState(false);
-  const handleClickOpenFisica = () => {
-    setOpenModalFisica(true);
-  };
-  const handleCloseFisica = () => {
-    setOpenModalFisica(false);
-  };
-
-  const [openModalMoral, setOpenModalMoral] = useState(false);
-  const handleClickOpenMoral = () => {
-    setOpenModalMoral(true);
-  };
-  const handleCloseMoral = () => {
-    setOpenModalMoral(false);
+  const renderTable = () => {
+    if (tabValue === 0) return <TablePersonasFisicas users={usersFisicos} />;
+    return <TablePersonasMorales users={usersMorales} />;
   };
 
   return (
     <Layout>
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box sx={{ width: "100%", p: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            alignItems: "center",
+            borderBottom: 1,
+            borderColor: "divider",
+            gap: 2,
+            mb: 2,
+            p: 1,
+          }}
+        >
           <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
+            value={tabValue}
+            onChange={handleTabChange}
+            aria-label="usuarios tabs"
           >
             <Tab label="Personas Físicas" {...a11yProps(0)} />
             <Tab label="Personas Morales" {...a11yProps(1)} />
           </Tabs>
-        </Box>
-        <CustomTabPanel value={value} index={0}>
-          <Grid
-            container
-            spacing={2}
-            alignItems="center"
-            justifyContent={{ xs: "center", md: "flex-end" }}
-            sx={{ mb: 2 }}
-          >
-            <Grid item>
-              <Button
-                variant="contained"
-                onClick={handleClickOpenFisica}
-                sx={{
-                  color: "white",
-                  backgroundColor: "#1976D2",
-                  "&:hover": {
-                    color: "white",
-                    backgroundColor: "#1976D2",
-                  },
-                }}
-              >
-                Agregar
-              </Button>
-            </Grid>
-          </Grid>
 
-          <Grid item xs={12}>
-            <TablePersonasFisicas users={usersFisicos} />
+          <Button
+            variant="contained"
+            onClick={tabValue === 0 ? handleOpenFisica : handleOpenMoral}
+            sx={{
+              color: "white",
+              backgroundColor: "#1976D2",
+              fontWeight: "bold",
+              borderRadius: 2,
+              px: 3,
+              py: 1,
+              boxShadow: 2,
+              transition: "0.3s",
+              "&:hover": {
+                backgroundColor: "#125EA5",
+                boxShadow: 4,
+              },
+            }}
+          >
+            Agregar
+          </Button>
+        </Box>
+
+        <CustomTabPanel value={tabValue} index={0}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              {renderTable()}
+            </Grid>
           </Grid>
         </CustomTabPanel>
 
-        <CustomTabPanel value={value} index={1}>
-          <Grid
-            container
-            spacing={2}
-            alignItems="center"
-            justifyContent={{ xs: "center", md: "flex-end" }}
-            sx={{ mb: 2 }}
-          >
-            <Grid item>
-              <Button
-                variant="contained"
-                onClick={handleClickOpenMoral}
-                sx={{
-                  color: "white",
-                  backgroundColor: "#1976D2",
-                  "&:hover": {
-                    color: "white",
-                    backgroundColor: "#1976D2",
-                  },
-                }}
-              >
-                Agregar
-              </Button>
+        <CustomTabPanel value={tabValue} index={1}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              {renderTable()}
             </Grid>
-          </Grid>
-
-          <Grid item xs={12}>
-            <TablePersonasMorales users={usersMorales} />
           </Grid>
         </CustomTabPanel>
       </Box>
+
       <AddPersonasFisicas
-        modal={openModalFisica}
+        modal={openFisica}
         handleCloseFisica={handleCloseFisica}
         users={usersFisicos}
       />
       <AddPersonasMorales
-        modal={openModalMoral}
+        modal={openMoral}
         handleCloseMoral={handleCloseMoral}
         users={usersMorales}
       />

@@ -117,7 +117,11 @@ export default function RecipeReviewCard({ curso, categorias }) {
       whileHover={{ scale: 1.02, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
       transition={{ duration: 0.3 }}
       sx={{
-        maxWidth: 345,
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
         borderRadius: 2,
         boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
         overflow: "hidden",
@@ -166,7 +170,7 @@ export default function RecipeReviewCard({ curso, categorias }) {
         >
           <CardMedia
             component="img"
-            height="194"
+            sx={{ width: "100%", height: { xs: 150, sm: 180, md: 200 } }}
             image={curso.image?.url || Default}
             alt={curso.title}
           />
@@ -275,7 +279,7 @@ export default function RecipeReviewCard({ curso, categorias }) {
             Descripción: {curso.description}
           </Typography>
 
-          {curso.status !== 2 && (type_user === "1") && (
+          {curso.status !== 2 && type_user === "1" && (
             <Button
               onClick={() => handleOpenAgenda(curso.id)}
               fullWidth
@@ -289,7 +293,7 @@ export default function RecipeReviewCard({ curso, categorias }) {
               Agendar este curso
             </Button>
           )}
-          {curso.status !== 2 && (type_user === "3") && (
+          {curso.status !== 2 && type_user === "3" && (
             <Button
               onClick={() => handleOpenAgenda(curso.id)}
               fullWidth

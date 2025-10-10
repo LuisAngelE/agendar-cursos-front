@@ -1,6 +1,7 @@
 import "./App.css";
 import AgendaState from "./context/Agenda/AgendaState";
 import AuthState from "./context/Auth/AuthState";
+import CalendarioState from "./context/Calendario/CalendarioState";
 import CategoriasState from "./context/Categorias/CategoriasState";
 import CursosState from "./context/Cursos/CursosState";
 import CursosFavoritosState from "./context/CursosFavoritos/CursosFavoritosState";
@@ -19,7 +20,9 @@ function AdminApp() {
               <CursosFavoritosState>
                 <GraficasState>
                   <CursosPublicosState>
-                    <AppRouter />
+                    <CalendarioState>
+                      <AppRouter />
+                    </CalendarioState>
                   </CursosPublicosState>
                 </GraficasState>
               </CursosFavoritosState>

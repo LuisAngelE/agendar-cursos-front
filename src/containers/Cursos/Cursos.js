@@ -1,18 +1,62 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Grid, MenuItem, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  MenuItem,
+  TextField,
+  Typography,
+  Box,
+  Skeleton,
+} from "@mui/material";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import PropTypes from "prop-types";
 import Layout from "../../components/layout/Layout";
 import RecipeReviewCard from "../../components/Cards/RecipeReviewCard";
 import CursosContext from "../../context/Cursos/CursosContext";
 import AddCursos from "./AddCursos";
 import CategoriasContext from "../../context/Categorias/CategoriasContext";
 
-const Cursos = () => {
-  const [searchNombre, setSearchNombre] = React.useState("");
-  const [searchTipoCategoria, setSearchTipoCategoria] = React.useState("");
+function CustomTabPanel({ children, value, index, ...other }) {
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
+    </div>
+  );
+}
 
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `tab-${index}`,
+    "aria-controls": `tabpanel-${index}`,
+  };
+}
+
+const Cursos = () => {
+  const [searchNombre, setSearchNombre] = useState("");
+  const [searchTipoCategoria, setSearchTipoCategoria] = useState("");
   const { categorias, GetCategories } = useContext(CategoriasContext);
   const { cursos, GetCursos } = useContext(CursosContext);
   const type_user = localStorage.getItem("type_user");
+
+  const [openModal, setOpenModal] = useState(false);
+  const handleClickOpen = () => setOpenModal(true);
+  const handleClose = () => setOpenModal(false);
+
+  const [tabValue, setTabValue] = useState(0);
+  const handleTabChange = (event, newValue) => setTabValue(newValue);
 
   useEffect(() => {
     GetCursos(searchNombre, searchTipoCategoria);
@@ -22,78 +66,134 @@ const Cursos = () => {
     GetCategories();
   }, []);
 
-  const [openModal, setOpenModal] = useState(false);
-  const handleClickOpen = () => {
-    setOpenModal(true);
+  const titles = {
+    1: "Cursos",
+    2: "Mis Cursos Instructor",
+    3: "Todos los Cursos",
   };
 
-  const handleClose = () => {
-    setOpenModal(false);
+  const cursosActivos = cursos.filter((c) => c.status === 1);
+  const cursosInactivos = cursos.filter((c) => c.status === 2);
+
+  const renderCourses = (courses) => {
+    if (!courses) {
+      return (
+        <Grid container spacing={2}>
+          {[...Array(4)].map((_, i) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
+              <Skeleton variant="rectangular" height={200} />
+            </Grid>
+          ))}
+        </Grid>
+      );
+    }
+
+    if (courses.length === 0) {
+      return (
+        <Typography variant="body1" sx={{ mt: 2 }}>
+          No hay cursos {tabValue === 0 ? "activos" : "inactivos"}.
+        </Typography>
+      );
+    }
+
+    return (
+      <Box
+        sx={{
+          display: "grid",
+          gap: 2,
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm:
+              courses.length === 1
+                ? "1fr"
+                : courses.length === 2
+                ? "repeat(2, 1fr)"
+                : "repeat(2, 1fr)",
+            md:
+              courses.length <= 3
+                ? `repeat(${courses.length}, 1fr)`
+                : "repeat(3, 1fr)",
+            lg: "repeat(4, 1fr)",
+          },
+          justifyItems: "center",
+        }}
+      >
+        {courses.map((curso) => (
+          <RecipeReviewCard
+            key={curso.id}
+            curso={curso}
+            categorias={categorias}
+          />
+        ))}
+      </Box>
+    );
   };
 
   return (
     <Layout>
-      <Grid container spacing={2} sx={{ padding: 2 }}>
-        {type_user === "3" && (
-          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
+      <Grid container spacing={2} sx={{ p: 2 }}>
+        {titles[type_user] && (
+          <Grid item xs={12}>
             <Typography
               fontWeight="bold"
               fontFamily="monospace"
               variant="h5"
-              sx={{ color: "black" }}
+              sx={{ color: "black", mb: 1 }}
             >
-              Todos los Cursos
+              {titles[type_user]}
             </Typography>
           </Grid>
         )}
 
-        {type_user === "2" && (
-          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
-            <Typography
-              fontWeight="bold"
-              fontFamily="monospace"
-              variant="h5"
-              sx={{ color: "black" }}
+        <Grid item xs={12}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderBottom: 1,
+              borderColor: "divider",
+              gap: 2,
+              mb: 2,
+            }}
+          >
+            <Tabs
+              value={tabValue}
+              onChange={handleTabChange}
+              aria-label="tabs cursos"
+              sx={{ flex: 1 }}
             >
-              Mis Cursos Instructor
-            </Typography>
-          </Grid>
-        )}
+              <Tab label="Activos" {...a11yProps(0)} />
+              <Tab label="Inactivos" {...a11yProps(1)} />
+            </Tabs>
 
-        {type_user === "1" && (
-          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
-            <Typography
-              fontWeight="bold"
-              fontFamily="monospace"
-              variant="h5"
-              sx={{ color: "black" }}
-            >
-              Cursos
-            </Typography>
-          </Grid>
-        )}
-
-        {type_user === "1" && (
-          <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
-            <Button
-              onClick={handleClickOpen}
-              variant="contained"
-              fullWidth
-              sx={{
-                color: "white",
-                backgroundColor: "#1976D2",
-                "&:hover": {
+            {type_user === "1" && (
+              <Button
+                variant="contained"
+                onClick={handleClickOpen}
+                sx={{
                   color: "white",
                   backgroundColor: "#1976D2",
-                  scale: "1.2",
-                },
-              }}
-            >
-              Agregar
-            </Button>
-          </Grid>
-        )}
-        <Grid item xs={12} md={12} lg={4}>
+                  fontWeight: "bold",
+                  borderRadius: 2,
+                  px: 3,
+                  py: 1,
+                  boxShadow: 2,
+                  transition: "0.3s",
+                  "&:hover": {
+                    backgroundColor: "#125EA5",
+                    boxShadow: 4,
+                  },
+                }}
+              >
+                Agregar
+              </Button>
+            )}
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             label="Buscar por nombre del curso"
             variant="outlined"
@@ -103,7 +203,8 @@ const Cursos = () => {
             onChange={(e) => setSearchNombre(e.target.value)}
           />
         </Grid>
-        <Grid item xs={12} md={12} lg={4}>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             select
             label="Filtrar por tipo de categoría"
@@ -120,32 +221,17 @@ const Cursos = () => {
             ))}
           </TextField>
         </Grid>
-        <Grid item xs={12} md={12} lg={4}>
-          <TextField
-            select
-            label="Filtrar por tipo de modelo"
-            value={searchTipoCategoria}
-            onChange={(e) => setSearchTipoCategoria(e.target.value)}
-            fullWidth
-            size="small"
-          >
-            <MenuItem value="">Todos</MenuItem>
-            {categorias.map((categoria) => (
-              <MenuItem key={categoria.id} value={categoria.id}>
-                {categoria.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
 
-        {cursos.length > 0
-          ? cursos.map((curso) => (
-              <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
-                <RecipeReviewCard curso={curso} categorias={categorias} />
-              </Grid>
-            ))
-          : null}
+        <Grid item xs={12}>
+          <CustomTabPanel value={tabValue} index={0}>
+            {renderCourses(cursosActivos)}
+          </CustomTabPanel>
+          <CustomTabPanel value={tabValue} index={1}>
+            {renderCourses(cursosInactivos)}
+          </CustomTabPanel>
+        </Grid>
       </Grid>
+
       <AddCursos
         modal={openModal}
         handleClose={handleClose}
