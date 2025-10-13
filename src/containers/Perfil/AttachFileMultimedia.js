@@ -24,6 +24,8 @@ export default function AttachFileMultimedia({ open, handleClose, id }) {
   const classes = useStyles();
   const [image, saveImage] = useState({
     urlPhoto: "http://127.0.0.1:8000/images/default.png",
+    //urlPhoto: "https://testapicursos.ldrhumanresources.com/images/default.png",
+    //urlPhoto: "https://apipic.ldrhumanresources.com/images/default.png",
     image: "",
   });
   const [debouncedFile] = useDebounce(image.image, 500);
