@@ -137,7 +137,7 @@ export default function AddCursos({ modal, handleClose, categorias }) {
               <TextField
                 select
                 fullWidth
-                label="Selecciona un Modelo"
+                label="Selecciona un modelo"
                 defaultValue=""
                 {...register("model_id", {
                   required: "Debes seleccionar un modelo",
@@ -146,7 +146,7 @@ export default function AddCursos({ modal, handleClose, categorias }) {
                 helperText={errors.model_id?.message}
               >
                 <MenuItem value="">
-                  <em>-- Selecciona un Modelo --</em>
+                  <em>-- Selecciona un modelo --</em>
                 </MenuItem>
                 {categorias.map((categoria) => (
                   <MenuItem key={categoria.id} value={categoria.id}>

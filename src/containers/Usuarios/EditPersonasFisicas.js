@@ -229,7 +229,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                 <TextField
                   select
                   fullWidth
-                  label="Tipo de Usuario"
+                  label="Tipo de usuario"
                   defaultValue={users.type_user}
                   {...register("type_user", { required: "Selecciona un tipo" })}
                   error={!!errors.type_user}

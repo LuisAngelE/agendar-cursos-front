@@ -282,7 +282,7 @@ export default function Header({ children }) {
           </Box>
 
           <Box sx={{ marginLeft: "auto" }}>
-            <Tooltip title="Cerrar Sesión">
+            <Tooltip title="Cerrar sesión">
               <IconButton onClick={() => cerrarSesion()}>
                 <ExitToAppIcon
                   sx={{

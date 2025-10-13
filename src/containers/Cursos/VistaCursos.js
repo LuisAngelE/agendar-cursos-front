@@ -168,7 +168,7 @@ export default function VistaCursos(props) {
           {type_user === "1" && (
             <Grid item xs={12}>
               <Typography variant="h6" fontWeight="bold" gutterBottom>
-                Fechas Reservadas
+                Fechas reservadas
               </Typography>
               {schedules.length > 0 ? (
                 <Grid container spacing={2}>

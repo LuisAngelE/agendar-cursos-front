@@ -219,7 +219,7 @@ export default function VistaAgenda(props) {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  {agenda.reservations[0]?.cancellation_reason && (
+                  {agenda.reservations[0]?.status === 3 && (
                     <Box sx={{ pl: 3, color: "error.main" }}>
                       <Typography variant="body2">
                         <CancelIcon sx={{ mr: 1 }} />

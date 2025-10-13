@@ -268,7 +268,7 @@ export default function TableAgenda({ agendas }) {
                         </IconButton>
                       )}
 
-                    {agenda.reservations?.[0]?.status === 1 &&
+                    {(agenda.reservations?.[0]?.status === 1 || agenda.reservations?.[0]?.status === 3) &&
                       type_user === "3" && (
                         <>
                           <IconButton
@@ -359,7 +359,7 @@ export default function TableAgenda({ agendas }) {
             ) : (
               <TableRow>
                 <TableCell colSpan={8} align="center">
-                  No hay Cursos Reservados
+                  No hay cursos reservados
                 </TableCell>
               </TableRow>
             )}

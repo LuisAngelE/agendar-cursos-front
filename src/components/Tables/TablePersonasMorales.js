@@ -85,7 +85,7 @@ export default function TablePersonasMorales({ users }) {
               <StyledTableCell>Correo Electronico</StyledTableCell>
               <StyledTableCell>Telefono</StyledTableCell>
               <StyledTableCell>NO. Colaborador</StyledTableCell>
-              <StyledTableCell>Tipo de Usuario</StyledTableCell>
+              <StyledTableCell>Tipo de usuario</StyledTableCell>
               <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -121,7 +121,7 @@ export default function TablePersonasMorales({ users }) {
                   <StyledTableCell data-label="NO. Colaborador">
                     {user.collaborator_number}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Tipo de Usuario">
+                  <StyledTableCell data-label="Tipo de usuario">
                     {{
                       1: "Administrador",
                       2: "Instructor",

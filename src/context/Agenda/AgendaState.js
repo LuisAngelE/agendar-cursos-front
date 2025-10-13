@@ -178,24 +178,39 @@ const AgendaState = ({ children }) => {
         GetAgendas();
       })
       .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors
-        ) {
-          const errores = error.response.data.errors;
-          const mensajes = Object.values(errores).flat().join("\n");
-
-          Swal.fire({
-            title: "Error",
-            icon: "warning",
-            text: mensajes,
-          });
+        if (error.response) {
+          const data = error.response.data;
+          if (data.errors) {
+            const mensajes = Object.values(data.errors).flat().join("\n");
+            Swal.fire({
+              title: "Error de validación",
+              icon: "warning",
+              text: mensajes,
+            });
+          } else if (data.error) {
+            Swal.fire({
+              title: "Error",
+              icon: "warning",
+              text: data.error,
+            });
+          } else if (data.mensaje) {
+            Swal.fire({
+              title: "Error",
+              icon: "warning",
+              text: data.mensaje,
+            });
+          } else {
+            Swal.fire({
+              title: "Error",
+              icon: "error",
+              text: "Ocurrió un error inesperado en la asignación.",
+            });
+          }
         } else {
           Swal.fire({
             title: "Error",
             icon: "error",
-            text: "Ocurrió un error inesperado",
+            text: "Error de conexión con el servidor.",
           });
         }
       });
@@ -238,36 +253,57 @@ const AgendaState = ({ children }) => {
   };
 
   const CanceledAgendation = async (id) => {
-    const { value: reason } = await Swal.fire({
+    const { value: formValues } = await Swal.fire({
       title: "¿Estás seguro?",
-      text: "El curso seleccionado será cancelado. Por favor, indica la razón:",
+      html: `
+        <style>
+          .swal2-html-container {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+          }
+          .swal2-textarea, .swal2-file {
+            font-family: 'Poppins', sans-serif;
+          }
+        </style>
+        <p>El curso seleccionado será cancelado. Por favor, indica la razón:</p>
+        <textarea id="cancel-reason" class="swal2-textarea" placeholder="Escribe aquí la razón de la cancelación..."></textarea>
+        <label style="margin-top:10px; display:block; font-weight:500;">Comprobante (opcional):</label>
+        <input type="file" id="cancel-proof" accept="image/*" class="swal2-file">
+      `,
       icon: "question",
-      input: "textarea",
-      inputPlaceholder: "Escribe aquí la razón de la cancelación...",
-      inputAttributes: {
-        "aria-label": "Razón de cancelación",
-      },
       showCancelButton: true,
       confirmButtonText: "Sí, cancelar",
       cancelButtonText: "No, volver",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
+      focusConfirm: false,
 
-      customClass: {
-        popup: "swal-custom-font",
-        input: "swal-custom-font",
-      },
+      preConfirm: () => {
+        const reason = document.getElementById("cancel-reason").value.trim();
+        const proofFile =
+          document.getElementById("cancel-proof").files[0] || null;
 
-      preConfirm: (value) => {
-        if (!value) {
+        if (!reason) {
           Swal.showValidationMessage("Debes ingresar una razón");
+          return false;
         }
-        return value;
+
+        return { reason, proofFile };
       },
     });
 
-    if (reason) {
-      MethodPost(`/reservations/${id}/cancel`, { motivo: reason })
+    if (formValues) {
+      const { reason, proofFile } = formValues;
+
+      const formData = new FormData();
+      formData.append("motivo", reason);
+      if (proofFile) {
+        formData.append("comprobante", proofFile);
+      }
+
+      MethodPost(`/reservations/${id}/cancel`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
         .then((res) => {
           Swal.fire({
             title: "Cancelado",

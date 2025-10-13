@@ -22,7 +22,7 @@ const CursosFavoritos = () => {
             variant="h5"
             sx={{ color: "black" }}
           >
-            Mis Cursos Favoritos
+            Mis cursos favoritos
           </Typography>
         </Grid>
         {cursos.length > 0 ? (
