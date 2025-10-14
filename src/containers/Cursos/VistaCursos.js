@@ -18,13 +18,18 @@ import MethodGet from "../../config/service";
 import MultimediaCursos from "./MultimediaCursos";
 import AgendaModal from "../Agenda/AgendaModal";
 import { motion } from "framer-motion";
+import AgendaModalAdmin from "../Agenda/AgendaModalAdmin";
 
 export default function VistaCursos(props) {
   const { id } = props.match.params;
 
   const [curso, setCurso] = useState(null);
-  const [id_agenda, saveIdAgenda] = useState(null);
-  const [modalAgenda, openModalAgenda] = useState(false);
+
+  const [modalAgendaClient, openModalAgendaClient] = useState(false);
+  const [modalAgendaAdmin, openModalAgendaAdmin] = useState(false);
+
+  const [id_agendaClient, saveIdAgendaClient] = useState(null);
+  const [id_agendaAdmin, saveIdAgendaAdmin] = useState(null);
 
   useEffect(() => {
     MethodGet(`/course/${id}`)
@@ -32,14 +37,22 @@ export default function VistaCursos(props) {
       .catch((error) => console.log(error));
   }, [id]);
 
-  const handleOpenAgenda = (id) => {
-    openModalAgenda(true);
-    saveIdAgenda(id);
+  const handleOpenAgendaAdmin = (id) => {
+    openModalAgendaAdmin(true);
+    saveIdAgendaAdmin(id);
+  };
+  const handleCloseAgendaAdmin = () => {
+    openModalAgendaAdmin(false);
+    saveIdAgendaAdmin(null);
   };
 
-  const handleCloseAgenda = () => {
-    openModalAgenda(false);
-    saveIdAgenda(null);
+  const handleOpenAgendaClient = (id) => {
+    openModalAgendaClient(true);
+    saveIdAgendaClient(id);
+  };
+  const handleCloseAgendaClient = () => {
+    openModalAgendaClient(false);
+    saveIdAgendaClient(null);
   };
 
   if (!curso) {
@@ -142,12 +155,21 @@ export default function VistaCursos(props) {
               {curso.status !== 2 &&
                 (type_user === "1" || type_user === "3") && (
                   <Button
-                    onClick={() => handleOpenAgenda(curso.id)}
+                    onClick={() => {
+                      if (type_user === "1") {
+                        handleOpenAgendaAdmin(curso.id);
+                      } else {
+                        handleOpenAgendaClient(curso.id);
+                      }
+                    }}
                     fullWidth
                     variant="contained"
                     sx={{
-                      bgcolor: "#5D65A2",
-                      "&:hover": { bgcolor: "#4a538d" },
+                      bgcolor: "#1976D2",
+                      "&:hover": {
+                        bgcolor: "#1565C0",
+                        transform: "scale(1.05)",
+                      },
                       borderRadius: 3,
                       py: 1.5,
                       fontWeight: "bold",
@@ -237,11 +259,19 @@ export default function VistaCursos(props) {
           )}
         </Grid>
 
-        {id_agenda !== null && (
+        {id_agendaClient !== null && (
           <AgendaModal
-            open={modalAgenda}
-            handleClose={handleCloseAgenda}
-            id={id_agenda}
+            open={modalAgendaClient}
+            handleClose={handleCloseAgendaClient}
+            id={id_agendaClient}
+            curso={curso}
+          />
+        )}
+        {id_agendaAdmin !== null && (
+          <AgendaModalAdmin
+            open={modalAgendaAdmin}
+            handleClose={handleCloseAgendaAdmin}
+            id={id_agendaAdmin}
             curso={curso}
           />
         )}

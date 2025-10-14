@@ -125,7 +125,7 @@ export default function TablePersonasFisicas({ users }) {
                     {{
                       1: "Administrador",
                       2: "Instructor",
-                      3: "Alumno",
+                      3: "Cliente",
                     }[user.type_user] || "Desconocido"}
                   </StyledTableCell>
                   <StyledTableCell data-label="Acciones">

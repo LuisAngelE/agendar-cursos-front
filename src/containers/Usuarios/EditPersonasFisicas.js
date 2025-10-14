@@ -240,7 +240,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                   </MenuItem>
                   <MenuItem value={1}>Administrador</MenuItem>
                   <MenuItem value={2}>Instructor</MenuItem>
-                  <MenuItem value={3}>Alumno</MenuItem>
+                  <MenuItem value={3}>Cliente</MenuItem>
                 </TextField>
               </Grid>
               {users.collaborator_number && (

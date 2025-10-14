@@ -123,6 +123,45 @@ const AgendaState = ({ children }) => {
       });
   };
 
+  const AddAgendasAdmin = (data) => {
+    MethodPost("/storeByAdmin", data)
+      .then((res) => {
+        dispatch({
+          type: ADD_AGENDAS,
+          payload: res.data,
+        });
+        Swal.fire({
+          title: "Horario y reserva creados correctamente",
+          text: "La reserva para el cliente invitado ha sido registrada.",
+          icon: "success",
+        });
+      })
+      .catch((error) => {
+        if (error.response?.data?.errors) {
+          const errores = error.response.data.errors;
+          const mensajes = Object.values(errores).flat().join("\n");
+
+          Swal.fire({
+            title: "Error",
+            icon: "warning",
+            text: mensajes,
+          });
+        } else if (error.response?.data?.error) {
+          Swal.fire({
+            title: "Error",
+            icon: "warning",
+            text: error.response.data.error,
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            icon: "error",
+            text: "Ocurrió un error inesperado",
+          });
+        }
+      });
+  };
+
   const UpdateAgendas = (data) => {
     MethodPost(`/courseSchedule/${data.id}/edit`, data)
       .then((res) => {
@@ -415,6 +454,7 @@ const AgendaState = ({ children }) => {
         ClassDone,
         Reschedule,
         GetAgendasCount,
+        AddAgendasAdmin,
       }}
     >
       {children}

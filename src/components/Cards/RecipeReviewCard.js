@@ -32,6 +32,7 @@ import ModalMultimedia from "../../containers/Cursos/ModalMultimedia";
 import AgendaModal from "../../containers/Agenda/AgendaModal";
 import CursosContext from "../../context/Cursos/CursosContext";
 import CloseIcon from "@mui/icons-material/Close";
+import AgendaModalAdmin from "../../containers/Agenda/AgendaModalAdmin";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -58,10 +59,12 @@ export default function RecipeReviewCard({ curso, categorias }) {
   const [expanded, setExpanded] = useState(true);
   const [modalMultimedia, openModalMultimedia] = useState(false);
   const [modalUpdate, OpenModalUpdate] = useState(false);
-  const [modalAgenda, openModalAgenda] = useState(false);
+  const [modalAgendaClient, openModalAgendaClient] = useState(false);
+  const [modalAgendaAdmin, openModalAgendaAdmin] = useState(false);
   const [id_user, saveUser] = useState(null);
   const [id_service, saveIdService] = useState(null);
-  const [id_agenda, saveIdAgenda] = useState(null);
+  const [id_agendaClient, saveIdAgendaClient] = useState(null);
+  const [id_agendaAdmin, saveIdAgendaAdmin] = useState(null);
 
   const isFavorito = (curso) =>
     curso.users_who_favorited?.some((user) => user.id.toString() === user_id);
@@ -91,13 +94,22 @@ export default function RecipeReviewCard({ curso, categorias }) {
     saveIdService(null);
   };
 
-  const handleOpenAgenda = (id) => {
-    openModalAgenda(true);
-    saveIdAgenda(id);
+  const handleOpenAgendaAdmin = (id) => {
+    openModalAgendaAdmin(true);
+    saveIdAgendaAdmin(id);
   };
-  const handleCloseAgenda = () => {
-    openModalAgenda(false);
-    saveIdAgenda(null);
+  const handleCloseAgendaAdmin = () => {
+    openModalAgendaAdmin(false);
+    saveIdAgendaAdmin(null);
+  };
+
+  const handleOpenAgendaClient = (id) => {
+    openModalAgendaClient(true);
+    saveIdAgendaClient(id);
+  };
+  const handleCloseAgendaClient = () => {
+    openModalAgendaClient(false);
+    saveIdAgendaClient(null);
   };
 
   const statusColor =
@@ -281,7 +293,7 @@ export default function RecipeReviewCard({ curso, categorias }) {
 
           {curso.status !== 2 && type_user === "1" && (
             <Button
-              onClick={() => handleOpenAgenda(curso.id)}
+              onClick={() => handleOpenAgendaAdmin(curso.id)}
               fullWidth
               variant="contained"
               sx={{
@@ -295,7 +307,7 @@ export default function RecipeReviewCard({ curso, categorias }) {
           )}
           {curso.status !== 2 && type_user === "3" && (
             <Button
-              onClick={() => handleOpenAgenda(curso.id)}
+              onClick={() => handleOpenAgendaClient(curso.id)}
               fullWidth
               variant="contained"
               sx={{
@@ -325,11 +337,19 @@ export default function RecipeReviewCard({ curso, categorias }) {
           categorias={categorias}
         />
       )}
-      {id_agenda !== null && (
+      {id_agendaClient !== null && (
         <AgendaModal
-          open={modalAgenda}
-          handleClose={handleCloseAgenda}
-          id={id_agenda}
+          open={modalAgendaClient}
+          handleClose={handleCloseAgendaClient}
+          id={id_agendaClient}
+          curso={curso}
+        />
+      )}
+      {id_agendaAdmin !== null && (
+        <AgendaModalAdmin
+          open={modalAgendaAdmin}
+          handleClose={handleCloseAgendaAdmin}
+          id={id_agendaAdmin}
           curso={curso}
         />
       )}

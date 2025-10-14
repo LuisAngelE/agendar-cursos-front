@@ -254,7 +254,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 </MenuItem>
                 <MenuItem value={1}>Administrador</MenuItem>
                 <MenuItem value={2}>Instructor</MenuItem>
-                <MenuItem value={3}>Alumno</MenuItem>
+                <MenuItem value={3}>Cliente</MenuItem>
               </TextField>
             </Grid>
             {[1, 2].includes(watch("type_user")) && (

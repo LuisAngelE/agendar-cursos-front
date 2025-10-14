@@ -141,7 +141,7 @@ const Perfil = () => {
                     {{
                       1: "Administrador",
                       2: "Instructor",
-                      3: "Alumno",
+                      3: "Cliente",
                     }[user_me.type_user] || "Desconocido"}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
