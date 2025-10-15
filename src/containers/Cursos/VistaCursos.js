@@ -19,8 +19,16 @@ import MultimediaCursos from "./MultimediaCursos";
 import AgendaModal from "../Agenda/AgendaModal";
 import { motion } from "framer-motion";
 import AgendaModalAdmin from "../Agenda/AgendaModalAdmin";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useHistory } from "react-router-dom";
 
 export default function VistaCursos(props) {
+  const history = useHistory();
+
+  const handleBack = () => {
+    history.goBack();
+  };
+  
   const { id } = props.match.params;
 
   const [curso, setCurso] = useState(null);
@@ -81,13 +89,7 @@ export default function VistaCursos(props) {
       >
         <Grid container spacing={4} alignItems="stretch">
           <Grid item xs={12} md={6}>
-            <Card
-              component={motion.div}
-              whileHover={{ scale: 1.02 }}
-              sx={{ borderRadius: 3, overflow: "hidden", height: "100%" }}
-            >
-              <MultimediaCursos images={images} />
-            </Card>
+            <MultimediaCursos images={images} />
           </Grid>
 
           <Grid item xs={12} md={6}>
@@ -152,38 +154,65 @@ export default function VistaCursos(props) {
                 )}
               </Box>
 
-              {curso.status !== 2 &&
-                (type_user === "1" || type_user === "3") && (
-                  <Button
-                    onClick={() => {
-                      if (type_user === "1") {
-                        handleOpenAgendaAdmin(curso.id);
-                      } else {
-                        handleOpenAgendaClient(curso.id);
-                      }
-                    }}
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                      bgcolor: "#1976D2",
-                      "&:hover": {
-                        bgcolor: "#1565C0",
-                        transform: "scale(1.05)",
-                      },
-                      borderRadius: 3,
-                      py: 1.5,
-                      fontWeight: "bold",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                    }}
-                    component={motion.button}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <MessageIcon sx={{ mr: 1 }} />
-                    {type_user === "1"
-                      ? "Agendar este curso"
-                      : "Me interesa este curso"}
-                  </Button>
-                )}
+              <Grid item xs={12} sx={{ mb: 2 }}>
+                {curso.status !== 2 &&
+                  (type_user === "1" || type_user === "3") && (
+                    <Button
+                      onClick={() => {
+                        if (type_user === "1") {
+                          handleOpenAgendaAdmin(curso.id);
+                        } else {
+                          handleOpenAgendaClient(curso.id);
+                        }
+                      }}
+                      fullWidth
+                      variant="contained"
+                      sx={{
+                        bgcolor: "#64B5F6",
+                        color: "#fff",
+                        "&:hover": {
+                          bgcolor: "#42A5F5",
+                          transform: "scale(1.05)",
+                        },
+                        borderRadius: 3,
+                        py: 1.5,
+                        fontWeight: "bold",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                      }}
+                      component={motion.button}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <MessageIcon sx={{ mr: 1 }} />
+                      {type_user === "1"
+                        ? "Agendar este curso"
+                        : "Me interesa este curso"}
+                    </Button>
+                  )}
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  onClick={handleBack}
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#A5D6A7",
+                    color: "#1B5E20",
+                    "&:hover": {
+                      bgcolor: "#81C784",
+                      transform: "scale(1.05)",
+                    },
+                    borderRadius: 3,
+                    py: 1.5,
+                    fontWeight: "bold",
+                    boxShadow: "0 4px 12px rgba(170, 122, 122, 0.1)",
+                  }}
+                  component={motion.button}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ArrowBackIcon sx={{ mr: 1 }} />
+                  Regresar
+                </Button>
+              </Grid>
             </Card>
           </Grid>
 

@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import MethodGet from "../../config/service";
-import { Grid, Box, Card, CardContent, Typography, Paper } from "@mui/material";
+import {
+  Grid,
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Paper,
+  Button,
+} from "@mui/material";  
 import {
   Event as EventIcon,
   AccessTime as AccessTimeIcon,
@@ -17,9 +25,17 @@ import {
   Title as TitleIcon,
   Description as DescriptionIcon,
 } from "@mui/icons-material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { motion } from "framer-motion";
+import { useHistory } from "react-router-dom";
 
 export default function VistaAgenda(props) {
+  const history = useHistory();
+
+  const handleBack = () => {
+    history.goBack();
+  };
+
   const { id } = props.match.params;
   const [agenda, setAgenda] = useState(null);
 
@@ -153,7 +169,7 @@ export default function VistaAgenda(props) {
                   </Box>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <Typography
                     variant="body2"
                     sx={{ mb: 1, display: "flex", alignItems: "center" }}
@@ -186,7 +202,7 @@ export default function VistaAgenda(props) {
                   </Box>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <Typography
                     variant="body2"
                     sx={{ mb: 1, display: "flex", alignItems: "center" }}
@@ -325,6 +341,32 @@ export default function VistaAgenda(props) {
                     agenda.course?.user?.last_name || ""
                   }`}
               </Box>
+              <br />
+              <Grid item xs={12}>
+                <Button
+                  onClick={handleBack}
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#F3FCF5",
+                    color: "#1B5E20",
+                    "&:hover": {
+                      bgcolor: "#F3FCF5",
+                      transform: "scale(1.05)",
+                    },
+                    borderRadius: 3,
+                    py: 1.5,
+                    fontWeight: "bold",
+                    boxShadow: "0 4px 12px rgba(170, 122, 122, 0.1)",
+                  }}
+                  component={motion.button}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ArrowBackIcon sx={{ mr: 1 }} />
+                  Regresar
+                </Button>
+              </Grid>
+              <br />
             </Paper>
           </motion.div>
         </Grid>

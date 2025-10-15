@@ -117,7 +117,7 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
 
                         const isWeekend = day === 0 || day === 6;
 
-                        const alreadyThree = countEventsByDate(date) >= 3;
+                        const alreadyThree = countEventsByDate(date) >= 6;
 
                         return isWeekend || isPastDate || alreadyThree;
                       }}
@@ -189,7 +189,7 @@ export default function EditAgenda({ open, handleClose, id, cursos }) {
                   defaultValue={agenda.location}
                   label="Ingresa la referencia del lugar donde tomarás el curso."
                   multiline
-                  rows={4}
+                  rows={2}
                   {...register("location", {
                     required: "La localidad es obligatoria",
                     minLength: { value: 3, message: "Mínimo 3 caracteres" },

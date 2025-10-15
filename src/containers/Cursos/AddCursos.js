@@ -137,37 +137,21 @@ export default function AddCursos({ modal, handleClose, categorias }) {
               <TextField
                 select
                 fullWidth
-                label="Selecciona un modelo"
-                defaultValue=""
-                {...register("model_id", {
-                  required: "Debes seleccionar un modelo",
-                })}
-                error={!!errors.model_id}
-                helperText={errors.model_id?.message}
-              >
-                <MenuItem value="">
-                  <em>-- Selecciona un modelo --</em>
-                </MenuItem>
-                {categorias.map((categoria) => (
-                  <MenuItem key={categoria.id} value={categoria.id}>
-                    {categoria.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
                 label="Modalidad del curso"
-                defaultValue="Presencial"
+                defaultValue=""
                 {...register("modality", {
-                  required: "La Modalidad es obligatoria",
-                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                  maxLength: { value: 50, message: "Máximo 50 caracteres" },
+                  required: "Selecciona una modalidad ",
                 })}
                 error={!!errors.modality}
                 helperText={errors.modality?.message}
-              />
+              >
+                <MenuItem value="">
+                  <em>-- Selecciona --</em>
+                </MenuItem>
+                <MenuItem value="Presencial">Presencial</MenuItem>
+                <MenuItem value="Online">Online</MenuItem>
+                <MenuItem value="Mixto">Mixto</MenuItem>
+              </TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField

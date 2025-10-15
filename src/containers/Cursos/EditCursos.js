@@ -107,17 +107,23 @@ export default function EditCursos({ open, handleClose, id, categorias }) {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  select
                   fullWidth
                   label="Modalidad del curso"
                   defaultValue={course.modality}
                   {...register("modality", {
-                    required: "La Modalidad es obligatoria",
-                    minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                    maxLength: { value: 50, message: "Máximo 50 caracteres" },
+                    required: "Selecciona una modalidad ",
                   })}
                   error={!!errors.modality}
                   helperText={errors.modality?.message}
-                />
+                >
+                  <MenuItem value="">
+                    <em>-- Selecciona --</em>
+                  </MenuItem>
+                  <MenuItem value="Presencial">Presencial</MenuItem>
+                  <MenuItem value="Online">Online</MenuItem>
+                  <MenuItem value="Mixto">Mixto</MenuItem>
+                </TextField>
               </Grid>
               <Grid item xs={12}>
                 <TextField

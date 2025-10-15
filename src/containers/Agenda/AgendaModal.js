@@ -114,7 +114,7 @@ export default function AgendaModal({ open, handleClose, id }) {
                       const day = date.day();
                       const isPastDate = date.isBefore(today, "day");
 
-                      const alreadyThree = countEventsByDate(date) >= 3;
+                      const alreadyThree = countEventsByDate(date) >= 6;
 
                       if (Number(type_user) === 1) {
                         return isPastDate || alreadyThree;

@@ -130,27 +130,52 @@ const CursosState = ({ children }) => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Si",
+      confirmButtonText: "Sí",
       cancelButtonText: "No",
     }).then((result) => {
-      if (result.value) {
+      if (result.isConfirmed) {
         const formData = new FormData();
         formData.append("image", data.image);
         MethodPost(`/courses/${data.id}/images`, formData, { headerConfig })
           .then(() => {
             Swal.fire({
               title: "Foto",
-              text: "Modificada Correctamente",
+              text: "Modificada correctamente",
               icon: "success",
             }).then(() => window.location.reload());
           })
-          .catch(() =>
-            Swal.fire({
-              title: "Error",
-              icon: "error",
-              text: "Esta imagen no es compatible. Por favor, selecciona otra imagen.",
-            })
-          );
+          .catch((error) => {
+            if (error.response) {
+              const status = error.response.status;
+              const data = error.response.data;
+              if (status === 422 && data.errors) {
+                const messages = Object.values(data.errors).flat().join("\n");
+                Swal.fire({
+                  title: "Error de validación",
+                  icon: "warning",
+                  text: messages,
+                });
+              } else if (status === 404) {
+                Swal.fire({
+                  title: "Curso no encontrado",
+                  icon: "error",
+                  text: data.error || "No se encontró el curso.",
+                });
+              } else {
+                Swal.fire({
+                  title: "Error",
+                  icon: "error",
+                  text: data.message || "Ocurrió un error al subir la imagen.",
+                });
+              }
+            } else {
+              Swal.fire({
+                title: "Error de conexión",
+                icon: "error",
+                text: "No se pudo conectar con el servidor.",
+              });
+            }
+          });
       }
     });
   };

@@ -5,11 +5,19 @@ import {
   GET_ALL_USERS_FISICOS,
   GET_ALL_USERS_MORALES,
   UPDATE_USERS,
+  GET_ALL_CLIENTS,
   SHOW_ERRORS_API,
 } from "../../types";
 
 const UsuariosReducer = (state, action) => {
   switch (action.type) {
+    case GET_ALL_CLIENTS:
+      return {
+        ...state,
+        clients: action.payload,
+        success: false,
+        ErrorsApi: [],
+      };
     case GET_ALL_USERS:
       return {
         ...state,

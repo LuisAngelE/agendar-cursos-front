@@ -38,7 +38,6 @@ const SelectMunicipality = ({
 
   return (
     <>
-      <label>Selecciona un municipio</label>
       <Select
         required
         styles={selectStyles}

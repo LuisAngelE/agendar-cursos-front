@@ -14,6 +14,7 @@ import {
   GET_ALL_USERS_FISICOS,
   GET_ALL_USERS_MORALES,
   UPDATE_USERS,
+  GET_ALL_CLIENTS,
   SHOW_ERRORS_API,
 } from "../../types";
 const UsuariosState = ({ children }) => {
@@ -21,6 +22,7 @@ const UsuariosState = ({ children }) => {
     users: [],
     usersFisicos: [],
     usersMorales: [],
+    clients: [],
     user: null,
     ErrorsApi: [],
     success: false,
@@ -83,6 +85,17 @@ const UsuariosState = ({ children }) => {
         });
       })
       .catch(handleError);
+  };
+
+  const GetClients = () => {
+    MethodGet("/users/clients")
+    .then((res) => {
+      dispatch({
+        type: GET_ALL_CLIENTS,
+        payload: res.data.data,
+      });
+    })
+    .catch(handleError);
   };
 
   const AddPersonaFisicas = (data) => {
@@ -225,6 +238,7 @@ const UsuariosState = ({ children }) => {
         users: state.users,
         usersFisicos: state.usersFisicos,
         usersMorales: state.usersMorales,
+        clients: state.clients,
         user: state.user,
         ErrorsApi: state.ErrorsApi,
         success: state.success,
@@ -237,6 +251,7 @@ const UsuariosState = ({ children }) => {
         UpdateUserFisicas,
         AddPersonaMorales,
         UpdateUserMorales,
+        GetClients,
       }}
     >
       {children}

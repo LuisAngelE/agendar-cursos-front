@@ -19,13 +19,13 @@ import AgendaContext from "../../context/Agenda/AgendaContext";
 import "dayjs/locale/es";
 import SelectState from "../../components/SelectOptions/SelectState";
 import SelectMunicipality from "../../components/SelectOptions/SelectMunicipality";
-import CursosContext from "../../context/Cursos/CursosContext";
 import { useEffect } from "react";
 import { useState } from "react";
 import MethodGet from "../../config/service";
+import UsuariosContext from "../../context/Usuarios/UsuariosContext";
 
 export default function AgendaModalAdmin({ open, handleClose, id }) {
-  const { cursos, GetCursos } = useContext(CursosContext);
+  const { clients, GetClients } = useContext(UsuariosContext);
   const { AddAgendasAdmin } = useContext(AgendaContext);
   let type_user = localStorage.getItem("type_user");
   const [fechas, setFechas] = useState([]);
@@ -64,7 +64,7 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
   };
 
   useEffect(() => {
-    GetCursos();
+    GetClients();
   }, []);
 
   const countEventsByDate = (date) => {
@@ -114,7 +114,7 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
                       const day = date.day();
                       const isPastDate = date.isBefore(today, "day");
 
-                      const alreadyThree = countEventsByDate(date) >= 3;
+                      const alreadyThree = countEventsByDate(date) >= 6;
 
                       if (Number(type_user) === 1) {
                         return isPastDate || alreadyThree;
@@ -174,16 +174,26 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                select
                 fullWidth
-                label="Nombre del cliente"
-                {...register("name", {
-                  required: "El nombre del ciente es obligatorio",
-                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                  maxLength: { value: 100, message: "Máximo 100 caracteres" },
+                label="Selecciona el nombre del cliente"
+                defaultValue=""
+                {...register("student_id", {
+                  required: "Debes seleccionar el nombre del cliente",
                 })}
-                error={!!errors.name}
-                helperText={errors.name?.message}
-              />
+                error={!!errors.student_id}
+                helperText={errors.student_id?.message}
+              >
+                <MenuItem value="">
+                  <em>-- Selecciona un nombre --</em>
+                </MenuItem>
+                {clients.map((client) => (
+                  <MenuItem key={client.id} value={client.id}>
+                    {client.name} {client.last_name}
+                    {client.razon_social}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item xs={12}>
               <SelectState detectarCambiosState={detectarCambiosState} />
@@ -201,7 +211,7 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
                 fullWidth
                 label="Ingresa la referencia del lugar donde tomarás el curso."
                 multiline
-                rows={4}
+                rows={2}
                 {...register("location", {
                   required: "La localidad es obligatoria",
                   minLength: { value: 3, message: "Mínimo 3 caracteres" },

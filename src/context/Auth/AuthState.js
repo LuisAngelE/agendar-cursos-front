@@ -255,26 +255,50 @@ const AuthState = (props) => {
       confirmButtonText: "Sí, agregar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
-      if (result.value) {
+      if (result.isConfirmed) {
         const formData = new FormData();
         formData.append("image", data.image);
-        let url = "/profile/image/update";
-        MethodPost(url, formData, { headerConfig })
+        MethodPost("/profile/image/update", formData, { headerConfig })
           .then((res) => {
             Swal.fire({
-              title: "Foto",
-              text: "Modificada correctamente",
+              title: "Foto actualizada",
+              text:
+                res.data?.message ||
+                "Imagen de perfil modificada correctamente",
               icon: "success",
-            }).then(() => {
-              window.location.reload();
-            });
+            }).then(() => window.location.reload());
           })
           .catch((error) => {
-            Swal.fire({
-              title: "Error",
-              icon: "error",
-              text: "Esta imagen no es compatible. Por favor, selecciona otra imagen.",
-            });
+            if (error.response) {
+              const { status, data } = error.response;
+              if (status === 422 && data.errors) {
+                const messages = Object.values(data.errors).flat().join("\n");
+                Swal.fire({
+                  title: "Error de validación",
+                  icon: "warning",
+                  text: messages,
+                });
+              } else if (status === 500) {
+                Swal.fire({
+                  title: "Error del servidor",
+                  icon: "error",
+                  text:
+                    data.message || "Error al actualizar la imagen de perfil.",
+                });
+              } else {
+                Swal.fire({
+                  title: "Error",
+                  icon: "error",
+                  text: data.message || "No se pudo subir la imagen.",
+                });
+              }
+            } else {
+              Swal.fire({
+                title: "Error de conexión",
+                icon: "error",
+                text: "No se pudo conectar con el servidor.",
+              });
+            }
           });
       }
     });
@@ -297,7 +321,7 @@ const AuthState = (props) => {
           title: "Error",
           text: error.response.data.error,
           icon: "error",
-        });        
+        });
       });
   };
 

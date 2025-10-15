@@ -29,7 +29,6 @@ const SelectState = ({ detectarCambiosState, defaultValue }) => {
 
   return (
     <>
-      <label>Selecciona un estado</label>
       <Select
         required
         styles={selectStyles}
