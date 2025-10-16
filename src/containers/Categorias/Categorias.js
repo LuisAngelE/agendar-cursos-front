@@ -4,6 +4,8 @@ import { Button, Grid, Typography } from "@mui/material";
 import TableCategorias from "../../components/Tables/TableCategorias";
 import CategoriasContext from "../../context/Categorias/CategoriasContext";
 import AddCategorias from "./AddCategorias";
+import AddIcon from "@mui/icons-material/Add";
+import { motion } from "framer-motion";
 
 const Categorias = () => {
   const { categorias, GetCategories } = useContext(CategoriasContext);
@@ -11,7 +13,7 @@ const Categorias = () => {
   useEffect(() => {
     GetCategories();
   }, []);
-  
+
   const [openModal, setOpenModal] = useState(false);
   const handleClickOpen = () => {
     setOpenModal(true);
@@ -36,18 +38,26 @@ const Categorias = () => {
         <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
           <Button
             onClick={handleClickOpen}
-            variant="contained"
             fullWidth
+            variant="contained"
             sx={{
+              bgcolor: "#1976D2",
               color: "white",
-              backgroundColor: "#1976D2",
               "&:hover": {
-                color: "white",
-                backgroundColor: "#1976D2",
-                scale: "1.2",
+                bgcolor: "#1976D2",
+                boxShadow: 3,
+                transform: "scale(1.05)",
               },
+              borderRadius: 3,
+              py: 1.5,
+              fontWeight: "bold",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+              transition: "all 0.3s ease",
             }}
+            component={motion.button}
+            whileTap={{ scale: 0.95 }}
           >
+            <AddIcon sx={{ mr: 1 }} />
             Agregar
           </Button>
         </Grid>

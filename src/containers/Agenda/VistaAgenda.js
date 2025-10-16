@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import MethodGet from "../../config/service";
-import {
-  Grid,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Paper,
-  Button,
-} from "@mui/material";  
+import { Grid, Box, Paper, Typography, Button } from "@mui/material";
 import {
   Event as EventIcon,
   AccessTime as AccessTimeIcon,
@@ -17,11 +9,7 @@ import {
   LocationOn as LocationOnIcon,
   Category as CategoryIcon,
   Person as PersonIcon,
-  Phone as PhoneIcon,
   Cancel as CancelIcon,
-  Email as EmailIcon,
-  Place as PlaceIcon,
-  AssignmentTurnedIn as AssignmentTurnedInIcon,
   Title as TitleIcon,
   Description as DescriptionIcon,
 } from "@mui/icons-material";
@@ -31,11 +19,6 @@ import { useHistory } from "react-router-dom";
 
 export default function VistaAgenda(props) {
   const history = useHistory();
-
-  const handleBack = () => {
-    history.goBack();
-  };
-
   const { id } = props.match.params;
   const [agenda, setAgenda] = useState(null);
 
@@ -44,6 +27,10 @@ export default function VistaAgenda(props) {
       .then((res) => setAgenda(res.data))
       .catch((err) => console.log(err));
   }, [id]);
+
+  const handleBack = () => {
+    history.goBack();
+  };
 
   if (!agenda) return <Layout>Cargando...</Layout>;
 
@@ -54,321 +41,232 @@ export default function VistaAgenda(props) {
     4: "Reservación Realizada",
   };
 
+  const InfoItem = ({ icon: Icon, label, value, color = "primary.main" }) => (
+    <Box sx={{ mb: 2, display: "flex", alignItems: "flex-start" }}>
+      <Icon fontSize="small" sx={{ mr: 1, mt: "3px", color }} />
+      <Box>
+        <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+          {label}
+        </Typography>
+        <Typography variant="body2" sx={{ mt: 0.5 }}>
+          {value || <span style={{ color: "#888" }}>No registrado</span>}
+        </Typography>
+      </Box>
+    </Box>
+  );
+
   return (
     <Layout>
       <Grid container spacing={3} sx={{ mt: 4, px: 2 }}>
         <Grid item xs={12} sm={12} md={6}>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Paper
               elevation={3}
               sx={{
                 p: 3,
-                borderLeft: "6px solid #66bb6a",
-                backgroundColor: "#f3fcf5",
+                borderLeft: "6px solid rgba(66,165,245,0.7)",
+                backgroundColor: "#f3f8fe",
                 borderRadius: 2,
+                transition: "all 0.3s ease",
+                "&:hover": { boxShadow: 6, transform: "translateY(-2px)" },
               }}
             >
               <Typography
                 variant="h6"
                 fontWeight="bold"
                 gutterBottom
-                sx={{ color: "#2e7d32" }}
+                sx={{
+                  color: "#1565c0",
+                  mb: 3,
+                  display: "flex",
+                  alignItems: "center",
+                }}
               >
-                <EventIcon sx={{ mr: 1, verticalAlign: "middle" }} />
-                Detalle de la reservación
+                <SchoolIcon sx={{ mr: 1 }} />
+                Información del curso
               </Typography>
 
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 1, display: "flex", alignItems: "center" }}
-                  >
-                    <EventIcon
-                      fontSize="small"
-                      sx={{ mr: 1, color: "primary.main" }}
-                    />
-                    <b>Fecha solicitada:</b>
-                  </Typography>
-                  <Box sx={{ pl: 3 }}>
-                    <Typography variant="body2">
-                      {new Date(agenda.start_date).toLocaleDateString()}
-                    </Typography>
-                    <Typography variant="body2">
-                      {new Date(agenda.start_date).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </Typography>
-                  </Box>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 1, display: "flex", alignItems: "center" }}
-                  >
-                    <LocationOnIcon
-                      fontSize="small"
-                      sx={{ mr: 1, color: "primary.main" }}
-                    />
-                    <b>Ubicación:</b>
-                  </Typography>
-                  <Box sx={{ pl: 3 }}>
-                    <Typography variant="body2">
-                      {agenda.state?.name} {agenda.municipality?.name}
-                    </Typography>
-                  </Box>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 1, display: "flex", alignItems: "center" }}
-                  >
-                    <PersonIcon
-                      fontSize="small"
-                      sx={{ mr: 1, color: "primary.main" }}
-                    />
-                    <b>Estatus:</b>
-                  </Typography>
-                  <Box sx={{ pl: 3 }}>
-                    <Typography variant="body2">
-                      {agenda.reservations?.length > 0
-                        ? statusMap[agenda.reservations[0].status]
-                        : "Sin reservación"}
-                    </Typography>
-                  </Box>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 1, display: "flex", alignItems: "center" }}
-                  >
-                    <AccessTimeIcon
-                      fontSize="small"
-                      sx={{ mr: 1, color: "primary.main" }}
-                    />
-                    <b>Registro:</b>
-                  </Typography>
-                  <Box sx={{ pl: 3 }}>
-                    <Typography variant="body2">
-                      {new Date(agenda.created_at).toLocaleDateString()}
-                    </Typography>
-                    <Typography variant="body2">
-                      {new Date(agenda.created_at).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </Typography>
-                  </Box>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 1, display: "flex", alignItems: "center" }}
-                  >
-                    <PersonIcon
-                      fontSize="small"
-                      sx={{ mr: 1, color: "primary.main" }}
-                    />
-                    <b>Solicitante:</b>
-                  </Typography>
-                  <Box sx={{ pl: 3 }}>
-                    {agenda.reservations?.length > 0 ? (
-                      <>
-                        <Typography variant="body2">
-                          {agenda.reservations[0].student?.name}{" "}
-                          {agenda.reservations[0].student?.last_name}
-                        </Typography>
-                        <Typography variant="body2">
-                          {agenda.reservations[0].student?.phone}
-                        </Typography>
-                        <Typography variant="body2">
-                          {agenda.reservations[0].student?.email}
-                        </Typography>
-                      </>
-                    ) : (
-                      <Typography variant="body2" color="text.disabled">
-                        No registrado
-                      </Typography>
-                    )}
-                  </Box>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Typography
-                    variant="body2"
-                    sx={{ mb: 1, display: "flex", alignItems: "center" }}
-                  >
-                    <SchoolIcon
-                      fontSize="small"
-                      sx={{ mr: 1, color: "primary.main" }}
-                    />
-                    <b>Instructor:</b>
-                  </Typography>
-                  <Box sx={{ pl: 3 }}>
-                    {agenda.instructor ? (
-                      <>
-                        <Typography variant="body2">
-                          {agenda.instructor.name} {agenda.instructor.last_name}
-                        </Typography>
-                        <Typography variant="body2">
-                          {agenda.instructor.phone}
-                        </Typography>
-                        <Typography variant="body2">
-                          {agenda.instructor.email}
-                        </Typography>
-                      </>
-                    ) : (
-                      <Typography variant="body2" color="text.disabled">
-                        No asignado
-                      </Typography>
-                    )}
-                  </Box>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  {agenda.reservations[0]?.status === 3 && (
-                    <Box sx={{ pl: 3, color: "error.main" }}>
-                      <Typography variant="body2">
-                        <CancelIcon sx={{ mr: 1 }} />
-                        Motivo de cancelación:
-                      </Typography>
-                      <Typography variant="body2">
-                        {agenda.reservations[0].cancellation_reason}
-                      </Typography>
-                    </Box>
-                  )}
-                </Grid>
-              </Grid>
+              <InfoItem
+                icon={TitleIcon}
+                label="Título:"
+                value={agenda.course?.title}
+              />
+              <InfoItem
+                icon={DescriptionIcon}
+                label="Descripción:"
+                value={agenda.course?.description}
+              />
+              <InfoItem
+                icon={AccessTimeIcon}
+                label="Duración:"
+                value={agenda.course?.duration}
+              />
+              <InfoItem
+                icon={CategoryIcon}
+                label="Categoría:"
+                value={agenda.course?.category?.name}
+              />
+              <InfoItem
+                icon={PersonIcon}
+                label="Propietario:"
+                value={
+                  agenda.course?.user?.razon_social ||
+                  `${agenda.course?.user?.name || ""} ${
+                    agenda.course?.user?.last_name || ""
+                  }`
+                }
+              />
             </Paper>
           </motion.div>
         </Grid>
 
         <Grid item xs={12} sm={12} md={6}>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
             <Paper
               elevation={3}
               sx={{
                 p: 3,
-                borderLeft: "6px solid #42a5f5",
-                backgroundColor: "#f3f8fe",
+                borderLeft: "6px solid rgba(102,187,106,0.7)",
+                backgroundColor: "#f3fcf5",
                 borderRadius: 2,
+                transition: "all 0.3s ease",
+                "&:hover": { boxShadow: 6, transform: "translateY(-2px)" },
               }}
             >
               <Typography
                 variant="h6"
                 fontWeight="bold"
                 gutterBottom
-                sx={{ color: "#1565c0" }}
+                sx={{
+                  color: "#2e7d32",
+                  mb: 3,
+                  display: "flex",
+                  alignItems: "center",
+                }}
               >
-                <SchoolIcon sx={{ mr: 1, verticalAlign: "middle" }} />
-                Información del curso
+                <EventIcon sx={{ mr: 1 }} />
+                Detalle de la reservación
               </Typography>
 
-              <Typography
-                variant="body1"
-                sx={{ mb: 1, display: "flex", alignItems: "center" }}
-              >
-                <TitleIcon
-                  fontSize="small"
-                  sx={{ mr: 1, color: "primary.main" }}
-                />
-                <b>Título:</b>
-              </Typography>
-              <Box sx={{ pl: 3 }}>{agenda.course?.title}</Box>
+              <InfoItem
+                icon={EventIcon}
+                label="Fecha solicitada:"
+                value={`${new Date(
+                  agenda.start_date
+                ).toLocaleDateString()} ${new Date(
+                  agenda.start_date
+                ).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}`}
+              />
 
-              <Typography
-                variant="body1"
-                sx={{ mb: 1, display: "flex", alignItems: "center" }}
-              >
-                <DescriptionIcon
-                  fontSize="small"
-                  sx={{ mr: 1, color: "primary.main" }}
-                />
-                <b>Descripción:</b>
-              </Typography>
-              <Box sx={{ pl: 3 }}>{agenda.course?.description}</Box>
+              <InfoItem
+                icon={LocationOnIcon}
+                label="Ubicación:"
+                value={`${agenda.state?.name || ""} ${
+                  agenda.municipality?.name || ""
+                }`}
+              />
 
-              <Typography
-                variant="body1"
-                sx={{ mb: 1, display: "flex", alignItems: "center" }}
-              >
-                <AccessTimeIcon
-                  fontSize="small"
-                  sx={{ mr: 1, color: "primary.main" }}
-                />
-                <b>Duración:</b>
-              </Typography>
-              <Box sx={{ pl: 3 }}>{agenda.course?.duration}</Box>
+              <InfoItem
+                icon={PersonIcon}
+                label="Estatus:"
+                value={
+                  agenda.reservations?.length > 0
+                    ? statusMap[agenda.reservations[0].status]
+                    : "Sin reservación"
+                }
+              />
 
-              <Typography
-                variant="body1"
-                sx={{ mb: 1, display: "flex", alignItems: "center" }}
-              >
-                <CategoryIcon
-                  fontSize="small"
-                  sx={{ mr: 1, color: "primary.main" }}
-                />
-                <b>Categoría:</b>
-              </Typography>
-              <Box sx={{ pl: 3 }}>{agenda.course?.category?.name}</Box>
+              <InfoItem
+                icon={AccessTimeIcon}
+                label="Registro:"
+                value={`${new Date(
+                  agenda.created_at
+                ).toLocaleDateString()} ${new Date(
+                  agenda.created_at
+                ).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}`}
+              />
 
-              <Typography
-                variant="body1"
-                sx={{ mb: 1, display: "flex", alignItems: "center" }}
-              >
-                <PersonIcon
-                  fontSize="small"
-                  sx={{ mr: 1, color: "primary.main" }}
-                />
-                <b>Propietario:</b>
-              </Typography>
-              <Box sx={{ pl: 3 }}>
-                {agenda.course?.user?.razon_social ||
-                  `${agenda.course?.user?.name || ""} ${
-                    agenda.course?.user?.last_name || ""
-                  }`}
-              </Box>
-              <br />
-              <Grid item xs={12}>
-                <Button
-                  onClick={handleBack}
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    bgcolor: "#F3FCF5",
-                    color: "#1B5E20",
-                    "&:hover": {
-                      bgcolor: "#F3FCF5",
-                      transform: "scale(1.05)",
-                    },
-                    borderRadius: 3,
-                    py: 1.5,
-                    fontWeight: "bold",
-                    boxShadow: "0 4px 12px rgba(170, 122, 122, 0.1)",
-                  }}
-                  component={motion.button}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <ArrowBackIcon sx={{ mr: 1 }} />
-                  Regresar
-                </Button>
-              </Grid>
-              <br />
+              <InfoItem
+                icon={PersonIcon}
+                label="Solicitante:"
+                value={
+                  agenda.reservations?.length > 0
+                    ? `${agenda.reservations[0].student?.name || ""} ${
+                        agenda.reservations[0].student?.last_name || ""
+                      } | ${agenda.reservations[0].student?.phone || ""} | ${
+                        agenda.reservations[0].student?.email || ""
+                      }`
+                    : "No registrado"
+                }
+              />
+
+              <InfoItem
+                icon={SchoolIcon}
+                label="Instructor:"
+                value={
+                  agenda.instructor
+                    ? `${agenda.instructor.name} ${agenda.instructor.last_name} | ${agenda.instructor.phone} | ${agenda.instructor.email}`
+                    : "No asignado"
+                }
+              />
+
+              {agenda.reservations[0]?.status === 3 && (
+                <Box sx={{ mt: 2, color: "error.main" }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <CancelIcon sx={{ mr: 1 }} />
+                    Motivo de cancelación:
+                  </Typography>
+                  <Typography variant="body2">
+                    {agenda.reservations[0].cancellation_reason}
+                  </Typography>
+                </Box>
+              )}
             </Paper>
           </motion.div>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Button
+            onClick={handleBack}
+            fullWidth
+            variant="contained"
+            sx={{
+              bgcolor: "#F3F8FE",
+              color: "black",
+              "&:hover": {
+                bgcolor: "#F3F8FE",
+                boxShadow: 3,
+                transform: "scale(1.05)",
+              },
+              borderRadius: 3,
+              py: 1.5,
+              fontWeight: "bold",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+              transition: "all 0.3s ease",
+            }}
+            component={motion.button}
+            whileTap={{ scale: 0.95 }}
+          >
+            <ArrowBackIcon sx={{ mr: 1 }} />
+            Regresar
+          </Button>
         </Grid>
       </Grid>
     </Layout>

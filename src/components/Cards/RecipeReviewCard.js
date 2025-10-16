@@ -298,8 +298,20 @@ export default function RecipeReviewCard({ curso, categorias }) {
               variant="contained"
               sx={{
                 bgcolor: "#1976D2",
-                "&:hover": { bgcolor: "#1565C0", transform: "scale(1.05)" },
+                color: "white",
+                "&:hover": {
+                  bgcolor: "#1976D2",
+                  boxShadow: 3,
+                  transform: "scale(1.05)",
+                },
+                borderRadius: 3,
+                py: 1.5,
+                fontWeight: "bold",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                transition: "all 0.3s ease",
               }}
+              component={motion.button}
+              whileTap={{ scale: 0.95 }}
             >
               <MessageIcon sx={{ mr: 1 }} />
               Agendar este curso

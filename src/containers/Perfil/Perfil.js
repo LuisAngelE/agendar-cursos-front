@@ -16,7 +16,7 @@ import LockResetIcon from "@mui/icons-material/LockReset";
 import ResetPassword from "./ResetPassword";
 import EditInfo from "./EditInfo";
 import AttachFileMultimedia from "./AttachFileMultimedia";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Perfil = () => {
   const { user_me, UserMe } = useContext(AuthContext);
@@ -117,8 +117,19 @@ const Perfil = () => {
                     mb: 2,
                     bgcolor: "#F3E5F5",
                     color: "black",
-                    "&:hover": { bgcolor: "#F3E5F5", scale: "1.1" },
+                    "&:hover": {
+                      bgcolor: "#F3E5F5",
+                      boxShadow: 3,
+                      transform: "scale(1.05)",
+                    },
+                    borderRadius: 3,
+                    py: 1.5,
+                    fontWeight: "bold",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                    transition: "all 0.3s ease",
                   }}
+                  component={motion.button}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <FlipCameraIosIcon sx={{ mr: 1 }} />
                   Cambiar foto de perfil
@@ -206,8 +217,19 @@ const Perfil = () => {
                       sx={{
                         bgcolor: "#FFF3E0",
                         color: "black",
-                        "&:hover": { bgcolor: "#FFF3E0", scale: "1.2" },
+                        "&:hover": {
+                          bgcolor: "#FFF3E0",
+                          boxShadow: 3,
+                          transform: "scale(1.05)",
+                        },
+                        borderRadius: 3,
+                        py: 1.5,
+                        fontWeight: "bold",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                        transition: "all 0.3s ease",
                       }}
+                      component={motion.button}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <EditNoteIcon sx={{ mr: 1 }} />
                       Editar mi Información
@@ -221,8 +243,19 @@ const Perfil = () => {
                       sx={{
                         bgcolor: "#E3F2FD",
                         color: "black",
-                        "&:hover": { bgcolor: "#E3F2FD", scale: "1.2" },
+                        "&:hover": {
+                          bgcolor: "#E3F2FD",
+                          boxShadow: 3,
+                          transform: "scale(1.05)",
+                        },
+                        borderRadius: 3,
+                        py: 1.5,
+                        fontWeight: "bold",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                        transition: "all 0.3s ease",
                       }}
+                      component={motion.button}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <LockResetIcon sx={{ mr: 1 }} />
                       Cambiar mi contraseña

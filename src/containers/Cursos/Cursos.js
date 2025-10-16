@@ -16,6 +16,8 @@ import RecipeReviewCard from "../../components/Cards/RecipeReviewCard";
 import CursosContext from "../../context/Cursos/CursosContext";
 import AddCursos from "./AddCursos";
 import CategoriasContext from "../../context/Categorias/CategoriasContext";
+import AddIcon from "@mui/icons-material/Add";
+import { motion } from "framer-motion";
 
 function CustomTabPanel({ children, value, index, ...other }) {
   return (
@@ -170,23 +172,26 @@ const Cursos = () => {
 
             {type_user === "1" && (
               <Button
-                variant="contained"
                 onClick={handleClickOpen}
+                variant="contained"
                 sx={{
+                  bgcolor: "#1976D2",
                   color: "white",
-                  backgroundColor: "#1976D2",
-                  fontWeight: "bold",
-                  borderRadius: 2,
-                  px: 3,
-                  py: 1,
-                  boxShadow: 2,
-                  transition: "0.3s",
                   "&:hover": {
-                    backgroundColor: "#125EA5",
-                    boxShadow: 4,
+                    bgcolor: "#1976D2",
+                    boxShadow: 3,
+                    transform: "scale(1.05)",
                   },
+                  borderRadius: 3,
+                  py: 1.5,
+                  fontWeight: "bold",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                  transition: "all 0.3s ease",
                 }}
+                component={motion.button}
+                whileTap={{ scale: 0.95 }}
               >
+                <AddIcon sx={{ mr: 1 }} />
                 Agregar
               </Button>
             )}

@@ -72,6 +72,13 @@ export default function AgendaModal({ open, handleClose, id }) {
     return fechas.filter((e) => dayjs(e.start_date).isSame(date, "day")).length;
   };
 
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+    if (!inputValue) return;
+    const [hour, minute] = inputValue.split(":").map(Number);
+    setValue((prev) => dayjs(prev).hour(hour).minute(minute));
+  };
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle> Me interesa este curso</DialogTitle>
@@ -84,7 +91,7 @@ export default function AgendaModal({ open, handleClose, id }) {
         }}
       >
         <DialogContent dividers>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               <LocalizationProvider
                 dateAdapter={AdapterDayjs}
@@ -126,47 +133,25 @@ export default function AgendaModal({ open, handleClose, id }) {
                   />
 
                   <Typography variant="subtitle1">
-                    Selecciona la hora (select)
+                    Selecciona la hora
                   </Typography>
-                  <FormControl fullWidth>
-                    <InputLabel id="hour-label">Hora</InputLabel>
-                    <Select
-                      labelId="hour-label"
-                      value={value.format("HH:mm")}
-                      label="Hora"
-                      onChange={(e) => {
-                        const [hour, minute] = e.target.value
-                          .split(":")
-                          .map(Number);
-                        setValue(value.hour(hour).minute(minute));
-                      }}
-                    >
-                      {[8, 9, 10, 11, 12, 13, 14, 15, 16].map((h) => {
-                        const hourStr = String(h).padStart(2, "0");
-                        return (
-                          <MenuItem key={h} value={`${hourStr}:00`}>
-                            {`${hourStr}:00`}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </FormControl>
-
-                  <Typography variant="subtitle1">
-                    Selecciona la hora (reloj)
-                  </Typography>
-                  <StaticTimePicker
-                    displayStaticWrapperAs="desktop"
-                    value={value}
-                    onChange={(newValue) => {
-                      setValue(
-                        value.hour(newValue.hour()).minute(newValue.minute())
-                      );
+                  <TextField
+                    type="time"
+                    fullWidth
+                    value={value.format("HH:mm")}
+                    onChange={handleChange}
+                    onKeyDown={(e) => {
+                      if (
+                        (e.key === "Backspace" || e.key === "Delete") &&
+                        e.target.value === ""
+                      ) {
+                        e.preventDefault();
+                      }
                     }}
-                    shouldDisableTime={(timeValue, clockType) => {
-                      if (clockType === "hours")
-                        return timeValue < 8 || timeValue > 16;
-                      return false;
+                    inputProps={{
+                      step: 60,
+                      min: "08:00",
+                      max: "16:00",
                     }}
                   />
                 </Box>
@@ -188,7 +173,7 @@ export default function AgendaModal({ open, handleClose, id }) {
                 fullWidth
                 label="Ingresa la referencia del lugar donde tomarás el curso."
                 multiline
-                rows={4}
+                rows={2}
                 {...register("location", {
                   required: "La localidad es obligatoria",
                   minLength: { value: 3, message: "Mínimo 3 caracteres" },

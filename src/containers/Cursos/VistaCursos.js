@@ -28,7 +28,7 @@ export default function VistaCursos(props) {
   const handleBack = () => {
     history.goBack();
   };
-  
+
   const { id } = props.match.params;
 
   const [curso, setCurso] = useState(null);
@@ -169,15 +169,17 @@ export default function VistaCursos(props) {
                       variant="contained"
                       sx={{
                         bgcolor: "#64B5F6",
-                        color: "#fff",
+                        color: "white",
                         "&:hover": {
                           bgcolor: "#42A5F5",
+                          boxShadow: 3,
                           transform: "scale(1.05)",
                         },
                         borderRadius: 3,
                         py: 1.5,
                         fontWeight: "bold",
-                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+                        transition: "all 0.3s ease",
                       }}
                       component={motion.button}
                       whileTap={{ scale: 0.95 }}
@@ -199,12 +201,14 @@ export default function VistaCursos(props) {
                     color: "#1B5E20",
                     "&:hover": {
                       bgcolor: "#81C784",
+                      boxShadow: 3,
                       transform: "scale(1.05)",
                     },
                     borderRadius: 3,
                     py: 1.5,
                     fontWeight: "bold",
-                    boxShadow: "0 4px 12px rgba(170, 122, 122, 0.1)",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+                    transition: "all 0.3s ease",
                   }}
                   component={motion.button}
                   whileTap={{ scale: 0.95 }}

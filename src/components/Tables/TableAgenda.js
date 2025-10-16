@@ -118,7 +118,7 @@ export default function TableAgenda({ agendas }) {
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Curso</StyledTableCell>
               <StyledTableCell>Fecha y hora solicitada</StyledTableCell>
-              <StyledTableCell>Locación</StyledTableCell>
+              <StyledTableCell>Localidad </StyledTableCell>
               <StyledTableCell>Solicitante</StyledTableCell>
               <StyledTableCell>Instructor</StyledTableCell>
               <StyledTableCell>Estatus</StyledTableCell>
@@ -150,7 +150,7 @@ export default function TableAgenda({ agendas }) {
                       hour12: true,
                     })}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Locación">
+                  <StyledTableCell data-label="Localidad ">
                     {agenda.state.name} {""}
                     {agenda.municipality.name}
                   </StyledTableCell>
@@ -268,7 +268,8 @@ export default function TableAgenda({ agendas }) {
                         </IconButton>
                       )}
 
-                    {(agenda.reservations?.[0]?.status === 1 || agenda.reservations?.[0]?.status === 3) &&
+                    {(agenda.reservations?.[0]?.status === 1 ||
+                      agenda.reservations?.[0]?.status === 3) &&
                       type_user === "3" && (
                         <>
                           <IconButton
