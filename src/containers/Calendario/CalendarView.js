@@ -50,6 +50,15 @@ export default function CalendarView({ fechas }) {
           <Typography variant="body2">
             <b>Horario:</b> {event.resource.start_date}
           </Typography>
+          <Typography variant="body2">
+            <b>Estatus:</b> {}
+            {{
+              1: "Pendiente de confirmación",
+              2: "Confirmada",
+              3: "Cancelada",
+              4: "Realizada",
+            }[event.resource.course_status] || "Desconocido"}
+          </Typography>
         </Box>
       }
       arrow

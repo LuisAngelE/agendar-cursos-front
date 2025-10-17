@@ -186,9 +186,9 @@ export default function TableAgenda({ agendas }) {
                   >
                     {{
                       1: "Pendiente de confirmación",
-                      2: "Confirmado",
-                      3: "Cancelado",
-                      4: "Realizado",
+                      2: "Confirmada",
+                      3: "Cancelada",
+                      4: "Realizada",
                     }[agenda.reservations?.[0]?.status] || "Desconocido"}
                   </StyledTableCell>
                   <StyledTableCell data-label="Acciones">
