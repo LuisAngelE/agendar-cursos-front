@@ -70,11 +70,12 @@ export default function VistaCursos(props) {
   const {
     images = [],
     category = {},
+    models = {},
     user = {},
     schedules = [],
     reservations = [],
   } = curso;
-
+  
   let type_user = localStorage.getItem("type_user");
 
   return (
@@ -145,9 +146,9 @@ export default function VistaCursos(props) {
                     sx={{ mr: 1, mb: 1 }}
                   />
                 )}
-                {category?.name && (
+                {models?.nombre_modelo && (
                   <Chip
-                    label={`Modelo: ${category.name}`}
+                    label={`Modelo: ${models.nombre_modelo}`}
                     color="primary"
                     sx={{ mb: 1 }}
                   />

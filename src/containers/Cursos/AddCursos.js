@@ -11,6 +11,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Grid, MenuItem, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import CursosContext from "../../context/Cursos/CursosContext";
+import ModelosContext from "../../context/Modelos/ModelosContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -52,6 +53,11 @@ BootstrapDialogTitle.propTypes = {
 
 export default function AddCursos({ modal, handleClose, categorias }) {
   const { AddCursos } = React.useContext(CursosContext);
+  const { modelos, GetModelos } = React.useContext(ModelosContext);
+
+  React.useEffect(() => {
+    GetModelos();
+  }, []);
 
   const {
     register,
@@ -129,6 +135,28 @@ export default function AddCursos({ modal, handleClose, categorias }) {
                 {categorias.map((categoria) => (
                   <MenuItem key={categoria.id} value={categoria.id}>
                     {categoria.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                select
+                fullWidth
+                label="Selecciona un modelo"
+                defaultValue=""
+                {...register("model_id", {
+                  required: "Debes seleccionar un modelo",
+                })}
+                error={!!errors.model_id}
+                helperText={errors.model_id?.message}
+              >
+                <MenuItem value="">
+                  <em>-- Selecciona un modelo --</em>
+                </MenuItem>
+                {modelos.map((modelo) => (
+                  <MenuItem key={modelo.id} value={modelo.id}>
+                    {modelo.nombre_modelo}
                   </MenuItem>
                 ))}
               </TextField>

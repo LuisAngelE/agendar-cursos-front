@@ -32,6 +32,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import HomeIcon from "@mui/icons-material/Home";
 import Badge from "@mui/material/Badge";
 import SchoolIcon from "@mui/icons-material/School";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 import CursosFavoritosContext from "../../context/CursosFavoritos/CursosFavoritosContext";
 
@@ -131,6 +132,11 @@ export default function Header({ children }) {
       name: "Categorías",
       value: "/Categorias",
       icon: <CategoryIcon />,
+    },
+    {
+      name: "Modelos",
+      value: "/Modelos",
+      icon: <LocalShippingIcon />,
     },
     {
       name: "Cursos",

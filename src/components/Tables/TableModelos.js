@@ -9,10 +9,10 @@ import Paper from "@mui/material/Paper";
 import { IconButton, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import EditCategorias from "../../containers/Categorias/EditCategorias";
 import { useContext, useEffect, useState } from "react";
-import CategoriasContext from "../../context/Categorias/CategoriasContext";
 import { motion, AnimatePresence } from "framer-motion";
+import ModelosContext from "../../context/Modelos/ModelosContext";
+import EditModelos from "../../containers/Modelos/EditModelos";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -59,8 +59,8 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-export default function TableCategorias({ categorias }) {  
-  const { DeleteCategorias } = useContext(CategoriasContext);
+export default function TableModelos({ modelos }) {
+  const { DeleteModelos } = useContext(ModelosContext);
   const [modalUpdate, OpenModalUpdate] = useState(false);
   const [id_service, saveIdService] = useState(null);
   const handleClickOpen = (id) => {
@@ -78,17 +78,18 @@ export default function TableCategorias({ categorias }) {
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell>Nombre</StyledTableCell>
-              <StyledTableCell>Descripción</StyledTableCell>
+              <StyledTableCell>Nombre tipo unidad</StyledTableCell>
+              <StyledTableCell>Nombre modelo</StyledTableCell>
+              <StyledTableCell>Nombre producto</StyledTableCell>
               <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <AnimatePresence>
-              {categorias.length > 0 ? (
-                categorias.map((categoria) => (
+              {modelos.length > 0 ? (
+                modelos.map((modelo) => (
                   <StyledTableRow
-                    key={categoria.id}
+                    key={modelo.id}
                     component={motion.tr}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -97,20 +98,23 @@ export default function TableCategorias({ categorias }) {
                     whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                   >
                     <StyledTableCell data-label="ID">
-                      {categoria.id}
+                      {modelo.id}
                     </StyledTableCell>
-                    <StyledTableCell data-label="Nombre">
-                      {categoria.name}
+                    <StyledTableCell data-label="Nombre tipo unidad">
+                      {modelo.nombre_tipo_unidad}
                     </StyledTableCell>
-                    <StyledTableCell data-label="Descripción">
-                      {categoria.description}
+                    <StyledTableCell data-label="Nombre modelo">
+                      {modelo.nombre_modelo}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Nombre producto">
+                      {modelo.nombre_producto}
                     </StyledTableCell>
                     <StyledTableCell data-label="Acciones">
                       <IconButton
                         size="small"
-                        onClick={() => handleClickOpen(categoria.id)}
+                        onClick={() => handleClickOpen(modelo.id)}
                       >
-                        <Tooltip title="Editar categoria" placement="top">
+                        <Tooltip title="Editar modelo" placement="top">
                           <EditIcon
                             sx={{
                               color: "#e7a62f",
@@ -122,9 +126,9 @@ export default function TableCategorias({ categorias }) {
                       </IconButton>
                       <IconButton
                         size="small"
-                        onClick={() => DeleteCategorias(categoria.id)}
+                        onClick={() => DeleteModelos(modelo.id)}
                       >
-                        <Tooltip title="Eliminar categoria" placement="top">
+                        <Tooltip title="Eliminar modelo" placement="top">
                           <DeleteIcon
                             sx={{
                               color: "#FF0000",
@@ -140,7 +144,7 @@ export default function TableCategorias({ categorias }) {
               ) : (
                 <TableRow>
                   <TableCell colSpan={4} align="center">
-                    No hay categorías disponibles
+                    No hay modelos disponibles
                   </TableCell>
                 </TableRow>
               )}
@@ -148,7 +152,7 @@ export default function TableCategorias({ categorias }) {
           </TableBody>
         </Table>
         {id_service !== null && (
-          <EditCategorias
+          <EditModelos
             open={modalUpdate}
             handleClose={handleClickClose}
             id={id_service}

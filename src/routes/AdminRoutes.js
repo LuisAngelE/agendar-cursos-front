@@ -10,6 +10,7 @@ import VistaCursos from "../containers/Cursos/VistaCursos";
 import VistaAgenda from "../containers/Agenda/VistaAgenda";
 import Usuarios from "../containers/Usuarios/Usuarios";
 import Calendario from "../containers/Calendario/Calendario";
+import Modelos from "../containers/Modelos/Modelos";
 
 const AdminRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AdminRoutes = () => {
       <Route exact path="/Agenda/:id" component={VistaAgenda} />
       <Route exact path="/Perfil" component={Perfil} />
       <Route exact path="/Categorias" component={Categorias} />
+      <Route exact path="/Modelos" component={Modelos} />
       <Route exact path="/Calendario" component={Calendario} />
 
       <Route exact path="/no-resultados" component={NoResultados} />

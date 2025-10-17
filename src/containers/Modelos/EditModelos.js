@@ -9,16 +9,16 @@ import { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import MethodGet from "../../config/service";
 import { Grid, MenuItem } from "@mui/material";
-import CategoriasContext from "../../context/Categorias/CategoriasContext";
+import ModelosContext from "../../context/Modelos/ModelosContext";
 
-export default function EditCategorias({ open, handleClose, id }) {
-  const { UpdateCategorias } = useContext(CategoriasContext);
-  const [categoria, saveCategoria] = useState(null);
+export default function EditModelos({ open, handleClose, id }) {
+  const { UpdateModelos } = useContext(ModelosContext);
+  const [modelo, saveModelo] = useState(null);
   useEffect(() => {
-    let url = `/categories/${id}`;
+    let url = `/modelos/${id}`;
     MethodGet(url)
       .then((res) => {
-        saveCategoria(res.data);
+        saveModelo(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -32,13 +32,13 @@ export default function EditCategorias({ open, handleClose, id }) {
 
   const onSubmit = (data, e) => {
     data.id = id;
-    UpdateCategorias(data);
+    UpdateModelos(data);
     handleClose();
   };
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Editar categoria</DialogTitle>
+      <DialogTitle>Editar modelo</DialogTitle>
       <form
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="off"
@@ -49,35 +49,48 @@ export default function EditCategorias({ open, handleClose, id }) {
         }}
       >
         <DialogContent>
-          {categoria && (
+          {modelo && (
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Nombre de la categoría"
-                  defaultValue={categoria.name}
-                  {...register("name", {
-                    required: "El nombre es obligatorio",
+                  label="Nombre de unidad"
+                  defaultValue={modelo.nombre_tipo_unidad}
+                  {...register("nombre_tipo_unidad", {
+                    required: "El nombre de unidad es obligatorio",
                     minLength: { value: 1, message: "Mínimo 1 caracteres" },
                     maxLength: { value: 200, message: "Máximo 200 caracteres" },
                   })}
-                  error={!!errors.name}
-                  helperText={errors.name?.message}
+                  error={!!errors.nombre_tipo_unidad}
+                  helperText={errors.nombre_tipo_unidad?.message}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  label="Descripción de la categoría"
-                  defaultValue={categoria.description}
-                  multiline
-                  rows={4}
-                  {...register("description", {
+                  label="Nombre de modelo"
+                  defaultValue={modelo.nombre_modelo}
+                  {...register("nombre_modelo", {
+                    required: "El nombre de modelo es obligatorio",
                     minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                    maxLength: { value: 500, message: "Máximo 500 caracteres" },
+                    maxLength: { value: 200, message: "Máximo 200 caracteres" },
                   })}
-                  error={!!errors.description}
-                  helperText={errors.description?.message}
+                  error={!!errors.nombre_modelo}
+                  helperText={errors.nombre_modelo?.message}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Nombre de producto"
+                  defaultValue={modelo.nombre_producto}
+                  {...register("nombre_producto", {
+                    required: "El nombre de producto es obligatorio",
+                    minLength: { value: 1, message: "Mínimo 1 caracteres" },
+                    maxLength: { value: 200, message: "Máximo 200 caracteres" },
+                  })}
+                  error={!!errors.nombre_producto}
+                  helperText={errors.nombre_producto?.message}
                 />
               </Grid>
             </Grid>

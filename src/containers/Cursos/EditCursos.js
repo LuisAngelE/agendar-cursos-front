@@ -10,10 +10,16 @@ import { useForm } from "react-hook-form";
 import MethodGet from "../../config/service";
 import { Grid, MenuItem } from "@mui/material";
 import CursosContext from "../../context/Cursos/CursosContext";
+import ModelosContext from "../../context/Modelos/ModelosContext";
 
 export default function EditCursos({ open, handleClose, id, categorias }) {
+  const { modelos, GetModelos } = React.useContext(ModelosContext);
   const { UpdateCursos } = useContext(CursosContext);
   const [course, saveCourse] = useState(null);
+
+  React.useEffect(() => {
+    GetModelos();
+  }, []);
 
   useEffect(() => {
     let url = `/course/${id}`;
@@ -101,6 +107,28 @@ export default function EditCursos({ open, handleClose, id, categorias }) {
                   {categorias.map((categoria) => (
                     <MenuItem key={categoria.id} value={categoria.id}>
                       {categoria.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  select
+                  fullWidth
+                  label="Selecciona un modelo"
+                  defaultValue={course.model_id}
+                  {...register("model_id", {
+                    required: "Debes seleccionar un modelo",
+                  })}
+                  error={!!errors.model_id}
+                  helperText={errors.model_id?.message}
+                >
+                  <MenuItem value="">
+                    <em>-- Selecciona un modelo --</em>
+                  </MenuItem>
+                  {modelos.map((modelo) => (
+                    <MenuItem key={modelo.id} value={modelo.id}>
+                      {modelo.nombre_modelo}
                     </MenuItem>
                   ))}
                 </TextField>
