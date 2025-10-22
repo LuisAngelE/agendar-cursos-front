@@ -113,7 +113,7 @@ export default function VistaAgenda(props) {
               <InfoItem
                 icon={CategoryIcon}
                 label="Modelo:"
-                value={agenda.course?.models?.nombre_modelo}
+                value={`${agenda.course?.models?.nombre_segmento}, ${agenda.course?.models?.nombre_tipo_unidad}`}
               />
               <InfoItem
                 icon={PersonIcon}

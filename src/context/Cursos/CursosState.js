@@ -15,6 +15,7 @@ import {
   DELETE_CURSOS,
   ADD_CURSO_FAVORITO,
   DELETE_CURSO_FAVORITO,
+  DELETE_CURSOS_IMG,
 } from "../../types";
 
 const CursosState = ({ children }) => {
@@ -52,7 +53,7 @@ const CursosState = ({ children }) => {
     }
   };
 
-  const GetCursos = (nombre = "", category_id = "") => {
+  const GetCursos = (nombre = "", category_id = "", model_id = "") => {
     let type_user = localStorage.getItem("type_user");
     let user_id = localStorage.getItem("user_id");
     let url = type_user === "2" ? `/indexTypeUserCourse/${user_id}` : "/course";
@@ -60,6 +61,7 @@ const CursosState = ({ children }) => {
     const params = new URLSearchParams();
     if (nombre.trim() !== "") params.append("nombre", nombre);
     if (category_id !== "") params.append("category_id", category_id);
+    if (model_id !== "") params.append("model_id", model_id);
     const queryString = params.toString();
     if (queryString) url += `?${queryString}`;
 
@@ -119,6 +121,48 @@ const CursosState = ({ children }) => {
             GetCursos();
           })
           .catch(handleError);
+      }
+    });
+  };
+
+  const DeleteImg = (courseId, imageId) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "La imagen seleccionada será eliminada",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "No, volver",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MethodDelete(`/courses/${courseId}/images/${imageId}`)
+          .then((res) => {
+            dispatch({ type: DELETE_CURSOS_IMG, payload: imageId });
+            Swal.fire({
+              title: "Eliminado",
+              text: res.data.message,
+              icon: "success",
+            }).then(() => {
+              window.location.reload();
+            });
+            GetCursos();
+          })
+          .catch((error) => {
+            console.error("Error al eliminar la imagen:", error);
+
+            const msg =
+              error.response?.data?.message ||
+              error.response?.data?.error ||
+              "Ocurrió un error al eliminar la imagen.";
+
+            Swal.fire({
+              title: "Error",
+              text: msg,
+              icon: "error",
+            });
+          });
       }
     });
   };
@@ -287,6 +331,7 @@ const CursosState = ({ children }) => {
         DeleteCursoFavorito,
         EnableCurso,
         DisabledCurso,
+        DeleteImg,
       }}
     >
       {children}

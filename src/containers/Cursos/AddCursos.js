@@ -51,13 +51,8 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function AddCursos({ modal, handleClose, categorias }) {
+export default function AddCursos({ modal, handleClose, categorias, modelos }) {
   const { AddCursos } = React.useContext(CursosContext);
-  const { modelos, GetModelos } = React.useContext(ModelosContext);
-
-  React.useEffect(() => {
-    GetModelos();
-  }, []);
 
   const {
     register,
@@ -156,7 +151,8 @@ export default function AddCursos({ modal, handleClose, categorias }) {
                 </MenuItem>
                 {modelos.map((modelo) => (
                   <MenuItem key={modelo.id} value={modelo.id}>
-                    {modelo.nombre_modelo}
+                    {modelo.nombre_segmento} {""}
+                    {modelo.nombre_tipo_unidad}
                   </MenuItem>
                 ))}
               </TextField>
@@ -168,7 +164,7 @@ export default function AddCursos({ modal, handleClose, categorias }) {
                 label="Modalidad del curso"
                 defaultValue=""
                 {...register("modality", {
-                  required: "Selecciona una modalidad ",
+                  required: "Selecciona una modalidad ", 
                 })}
                 error={!!errors.modality}
                 helperText={errors.modality?.message}

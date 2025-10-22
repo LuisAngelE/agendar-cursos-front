@@ -58,4 +58,6 @@ export const GET_COUNT_USER = "GET_COUNT_USER";
 
 export const GET_ALL_CALENDARIO = "GET_ALL_CALENDARIO";
 
+export const DELETE_CURSOS_IMG = "DELETE_CURSOS_IMG";
+
 

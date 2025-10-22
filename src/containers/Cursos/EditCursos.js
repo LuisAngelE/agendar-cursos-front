@@ -128,7 +128,8 @@ export default function EditCursos({ open, handleClose, id, categorias }) {
                   </MenuItem>
                   {modelos.map((modelo) => (
                     <MenuItem key={modelo.id} value={modelo.id}>
-                      {modelo.nombre_modelo}
+                      {modelo.nombre_segmento} {""}
+                      {modelo.nombre_tipo_unidad}
                     </MenuItem>
                   ))}
                 </TextField>

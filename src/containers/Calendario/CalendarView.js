@@ -9,7 +9,6 @@ moment.locale("es");
 const localizer = momentLocalizer(moment);
 
 export default function CalendarView({ fechas }) {
-  console.log(fechas, "las fechas");
   const eventos = fechas.map((e) => ({
     id: e.id,
     title: e.event_type.toUpperCase(),
@@ -20,6 +19,20 @@ export default function CalendarView({ fechas }) {
     allDay: false,
     resource: e,
   }));
+
+  const statusText = {
+    1: "Pendiente de confirmación",
+    2: "Confirmada",
+    3: "Cancelada",
+    4: "Realizada",
+  };
+
+  const statusColor = {
+    1: "#ffb74d",
+    2: "#66bb6a",
+    3: "#e57373",
+    4: "#42a5f5",
+  };
 
   const ComponenteEvento = ({ event }) => (
     <Tooltip
@@ -32,32 +45,37 @@ export default function CalendarView({ fechas }) {
             <b>Curso:</b> {event.resource.course_title}
           </Typography>
           <Typography variant="body2" sx={{ mb: 0.5 }}>
-            <b>Cliente:</b> {event.resource.client_name}{" "}
-            {event.resource.client_last_name}{" "}
-            {event.resource.client_razon_social}
+            <b>
+              {event.resource.client_razon_social ? "Empresa:" : "Cliente:"}
+            </b>{" "}
+            {event.resource.client_razon_social
+              ? event.resource.client_razon_social
+              : `${event.resource.client_name} ${event.resource.client_last_name}`}
           </Typography>
           <Typography variant="body2" sx={{ mb: 0.5 }}>
-            <b>Teléfono del cliente:</b> {event.resource.client_phone}
+            <b>Contacto:</b> {event.resource.client_phone}
           </Typography>
           <Typography variant="body2" sx={{ mb: 0.5 }}>
             <b>Localidad:</b> {event.resource.state_name}{" "}
             {event.resource.municipality_name}
           </Typography>
           <Typography variant="body2" sx={{ mb: 0.5 }}>
-            <b>Instructor:</b> {event.resource.instructor_name},{" "}
-            {event.resource.instructor_last_name}
+            <b>Instructor:</b>{" "}
+            {event.resource.instructor_name ? (
+              `${event.resource.instructor_name} ${event.resource.instructor_last_name}`
+            ) : (
+              <span style={{ color: "red" }}>No asignado</span>
+            )}
           </Typography>
           <Typography variant="body2">
-            <b>Horario:</b> {event.resource.start_date}
-          </Typography>
-          <Typography variant="body2">
-            <b>Estatus:</b> {}
-            {{
-              1: "Pendiente de confirmación",
-              2: "Confirmada",
-              3: "Cancelada",
-              4: "Realizada",
-            }[event.resource.course_status] || "Desconocido"}
+            <b>Estatus:</b>{" "}
+            <span
+              style={{
+                color: statusColor[event.resource.course_status] || "black",
+              }}
+            >
+              {statusText[event.resource.course_status] || "Desconocido"}
+            </span>
           </Typography>
         </Box>
       }
@@ -82,13 +100,21 @@ export default function CalendarView({ fechas }) {
   );
 
   const obtenerEstiloEvento = (event) => {
-    const gradientes = {
-      curso: "linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%)",
-      demo: "linear-gradient(135deg, #ef5350 0%, #d32f2f 100%)",
+    const cursoGradientes = {
+      1: "linear-gradient(135deg, orange 0%, #ffb74d 100%)",
+      2: "linear-gradient(135deg, green 0%, #66bb6a 100%)",
+      3: "linear-gradient(135deg, red 0%, #e57373 100%)",
+      4: "linear-gradient(135deg, blue 0%, #42a5f5 100%)",
     };
+
+    const demoGradiente =
+      "linear-gradient(135deg, #cc00ffff 0%, #cc00ffff 100%)";
+
     const fondo =
-      gradientes[event.resource.event_type] ||
-      "linear-gradient(135deg, #66bb6a 0%, #388e3c 100%)";
+      event.resource.event_type === "demo"
+        ? demoGradiente
+        : cursoGradientes[event.resource.course_status] ||
+          "linear-gradient(135deg, #ccc 0%, #999 100%)";
 
     return {
       style: {

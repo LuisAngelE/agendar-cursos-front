@@ -4,8 +4,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Zoom, Navigation, Pagination } from "swiper/modules";
+import CursosContext from "../../context/Cursos/CursosContext";
+import { useContext } from "react";
 
-const MultimediaCursos = ({ images = [] }) => {
+const MultimediaCursos = ({ curso, images = [] }) => {
+  const type_user = localStorage.getItem("type_user");
+  const { DeleteImg } = useContext(CursosContext);
   return (
     <div style={{ width: "100%", maxWidth: "900px", margin: "0 auto" }}>
       <Swiper
@@ -22,10 +26,10 @@ const MultimediaCursos = ({ images = [] }) => {
         modules={[Zoom, Navigation, Pagination]}
         className="mySwiper"
         breakpoints={{
-          320: { slidesPerView: 1 }, // móviles
-          640: { slidesPerView: 1 }, // tablets vertical
-          768: { slidesPerView: 1 }, // tablets horizontal
-          1024: { slidesPerView: 1 }, // desktop normal
+          320: { slidesPerView: 1 },
+          640: { slidesPerView: 1 },
+          768: { slidesPerView: 1 },
+          1024: { slidesPerView: 1 },
         }}
       >
         {images.length > 0 ? (
@@ -36,6 +40,11 @@ const MultimediaCursos = ({ images = [] }) => {
                   src={img.url}
                   alt={img.title ? img.title : `Imagen del curso ${img.id}`}
                   loading="lazy"
+                  onClick={
+                    type_user === "1"
+                      ? () => DeleteImg(curso.id, img.id)
+                      : undefined
+                  }
                   onError={(e) => (e.target.src = "/fallback.jpg")}
                   style={{
                     width: "100%",

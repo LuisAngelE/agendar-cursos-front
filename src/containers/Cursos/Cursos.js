@@ -18,6 +18,7 @@ import AddCursos from "./AddCursos";
 import CategoriasContext from "../../context/Categorias/CategoriasContext";
 import AddIcon from "@mui/icons-material/Add";
 import { motion } from "framer-motion";
+import ModelosContext from "../../context/Modelos/ModelosContext";
 
 function CustomTabPanel({ children, value, index, ...other }) {
   return (
@@ -49,7 +50,9 @@ function a11yProps(index) {
 const Cursos = () => {
   const [searchNombre, setSearchNombre] = useState("");
   const [searchTipoCategoria, setSearchTipoCategoria] = useState("");
+  const [searchTipoModelo, setSearchTipoModelo] = useState("");
   const { categorias, GetCategories } = useContext(CategoriasContext);
+  const { modelos, GetModelos } = useContext(ModelosContext);
   const { cursos, GetCursos } = useContext(CursosContext);
   const type_user = localStorage.getItem("type_user");
 
@@ -61,11 +64,12 @@ const Cursos = () => {
   const handleTabChange = (event, newValue) => setTabValue(newValue);
 
   useEffect(() => {
-    GetCursos(searchNombre, searchTipoCategoria);
-  }, [searchNombre, searchTipoCategoria]);
+    GetCursos(searchNombre, searchTipoCategoria, searchTipoModelo);
+  }, [searchNombre, searchTipoCategoria, searchTipoModelo]);
 
   useEffect(() => {
     GetCategories();
+    GetModelos();
   }, []);
 
   const titles = {
@@ -198,7 +202,7 @@ const Cursos = () => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <TextField
             label="Buscar por nombre del curso"
             variant="outlined"
@@ -209,7 +213,7 @@ const Cursos = () => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <TextField
             select
             label="Filtrar por tipo de categoría"
@@ -222,6 +226,25 @@ const Cursos = () => {
             {categorias.map((categoria) => (
               <MenuItem key={categoria.id} value={categoria.id}>
                 {categoria.name}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+
+        <Grid item xs={12} sm={4}>
+          <TextField
+            select
+            label="Filtrar por tipo de modelo"
+            value={searchTipoModelo}
+            onChange={(e) => setSearchTipoModelo(e.target.value)}
+            fullWidth
+            size="small"
+          >
+            <MenuItem value="">Todos</MenuItem>
+            {modelos.map((modelo) => (
+              <MenuItem key={modelo.id} value={modelo.id}>
+                {modelo.nombre_segmento} {""}
+                {modelo.nombre_tipo_unidad}
               </MenuItem>
             ))}
           </TextField>
@@ -241,6 +264,7 @@ const Cursos = () => {
         modal={openModal}
         handleClose={handleClose}
         categorias={categorias}
+        modelos={modelos}
       />
     </Layout>
   );

@@ -87,6 +87,19 @@ export default function AddModelos({ modal, handleClose }) {
             <Grid item xs={12}>
               <TextField
                 fullWidth
+                label="Nombre de segmento"
+                {...register("nombre_segmento", {
+                  required: "El nombre de segmento es obligatorio",
+                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
+                  maxLength: { value: 200, message: "Máximo 200 caracteres" },
+                })}
+                error={!!errors.nombre_segmento}
+                helperText={errors.nombre_segmento?.message}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
                 label="Nombre de unidad"
                 {...register("nombre_tipo_unidad", {
                   required: "El nombre de unidad es obligatorio",
@@ -95,32 +108,6 @@ export default function AddModelos({ modal, handleClose }) {
                 })}
                 error={!!errors.nombre_tipo_unidad}
                 helperText={errors.nombre_tipo_unidad?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Nombre de modelo"
-                {...register("nombre_modelo", {
-                  required: "El nombre de modelo es obligatorio",
-                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                  maxLength: { value: 200, message: "Máximo 200 caracteres" },
-                })}
-                error={!!errors.nombre_modelo}
-                helperText={errors.nombre_modelo?.message}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Nombre de producto"
-                {...register("nombre_producto", {
-                  required: "El nombre de producto es obligatorio",
-                  minLength: { value: 1, message: "Mínimo 1 caracteres" },
-                  maxLength: { value: 200, message: "Máximo 200 caracteres" },
-                })}
-                error={!!errors.nombre_producto}
-                helperText={errors.nombre_producto?.message}
               />
             </Grid>
           </Grid>

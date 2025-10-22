@@ -75,7 +75,7 @@ export default function VistaCursos(props) {
     schedules = [],
     reservations = [],
   } = curso;
-  
+
   let type_user = localStorage.getItem("type_user");
 
   return (
@@ -90,7 +90,7 @@ export default function VistaCursos(props) {
       >
         <Grid container spacing={4} alignItems="stretch">
           <Grid item xs={12} md={6}>
-            <MultimediaCursos images={images} />
+            <MultimediaCursos images={images} curso={curso} />
           </Grid>
 
           <Grid item xs={12} md={6}>
@@ -146,9 +146,9 @@ export default function VistaCursos(props) {
                     sx={{ mr: 1, mb: 1 }}
                   />
                 )}
-                {models?.nombre_modelo && (
+                {models?.nombre_segmento && (
                   <Chip
-                    label={`Modelo: ${models.nombre_modelo}`}
+                    label={`Modelo: ${models.nombre_segmento} ${models.nombre_tipo_unidad}`}
                     color="primary"
                     sx={{ mb: 1 }}
                   />
