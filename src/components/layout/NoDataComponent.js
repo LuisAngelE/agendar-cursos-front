@@ -42,7 +42,7 @@ export default function NoDataComponent() {
       <Box className={classes.container}>
         <InfoOutlinedIcon className={classes.icon} />
         <Typography className={classes.text}>
-          No hay Cursos Favoritos disponibles
+          No hay cursos favoritos disponibles
         </Typography>
       </Box>
     </Grid>

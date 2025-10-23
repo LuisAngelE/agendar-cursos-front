@@ -12,6 +12,7 @@ import ResetPassword from "../components/Auth/ResetPassword";
 import AdminRoutes from "./AdminRoutes";
 import InstructorRoutes from "./InstructorRoutes";
 import AlumnoRoutes from "./AlumnoRoutes";
+import SubAdminRouter from "./SubAdminRouter";
 import CursosPublicos from "../containers/CursosPublicos/CursosPublicos";
 
 const AppRouter = () => {
@@ -35,6 +36,7 @@ const AppRouter = () => {
   if (type_user === "1") PrivateComponent = AdminRoutes;
   if (type_user === "2") PrivateComponent = InstructorRoutes;
   if (type_user === "3") PrivateComponent = AlumnoRoutes;
+  if (type_user === "6") PrivateComponent = SubAdminRouter;
 
   return (
     <Router>

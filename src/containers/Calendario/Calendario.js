@@ -15,16 +15,18 @@ const Calendario = () => {
   return (
     <Layout>
       <Grid container spacing={2} sx={{ padding: 2 }}>
-        <Grid item xs={12}>
-          <Typography
-            fontWeight="bold"
-            fontFamily="monospace"
-            variant="h5"
-            sx={{ color: "black" }}
-          >
-            Mi calendario
-          </Typography>
-        </Grid>
+        {(type_user === "1" || type_user === "2" || type_user === "3") && (
+          <Grid item xs={12}>
+            <Typography
+              fontWeight="bold"
+              fontFamily="monospace"
+              variant="h5"
+              sx={{ color: "black" }}
+            >
+              Mi calendario
+            </Typography>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <CalendarView type_user={type_user} fechas={fechas} />
         </Grid>

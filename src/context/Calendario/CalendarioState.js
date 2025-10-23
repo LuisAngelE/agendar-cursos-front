@@ -15,7 +15,7 @@ const CalendarioState = ({ children }) => {
   const GetFechas = () => {
     let type_user = localStorage.getItem("type_user");
     let user_id = localStorage.getItem("user_id");
-    if (type_user === "1") {
+    if (type_user === "1" || type_user == "6") {
       let url = `/course-schedules/dates`;
       MethodGet(url)
         .then((res) => {

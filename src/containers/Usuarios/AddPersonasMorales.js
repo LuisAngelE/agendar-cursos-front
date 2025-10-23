@@ -114,7 +114,7 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Razon social"
+                label="Razón social"
                 {...register("razon_social", {
                   required: "La razon social es obligatoria",
                   maxLength: { value: 50, message: "Máximo 50 caracteres" },
@@ -210,9 +210,10 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                 <MenuItem value={1}>Administrador</MenuItem>
                 <MenuItem value={2}>Instructor</MenuItem>
                 <MenuItem value={3}>Cliente</MenuItem>
+                <MenuItem value={6}>Subadministrador</MenuItem>
               </TextField>
             </Grid>
-            {[1, 2].includes(watch("type_user")) && (
+            {[1, 2, 6].includes(watch("type_user")) && (
               <Grid item xs={12}>
                 <TextField
                   type="number"
@@ -244,7 +245,7 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                       >
                         {passwordValues.showPassword ? (
                           <VisibilityOff />
-                        ) : (
+                        ) : ( 
                           <Visibility />
                         )}
                       </IconButton>

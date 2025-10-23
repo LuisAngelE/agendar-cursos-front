@@ -180,7 +180,7 @@ export default function EditInfo({ modal, handleClose, User }) {
                     <TextField
                       fullWidth
                       defaultValue={User.razon_social}
-                      label="Razon social"
+                      label="Razón social"
                       {...register("razon_social", {
                         required: "La razon social es obligatoria",
                         maxLength: {
@@ -284,7 +284,9 @@ export default function EditInfo({ modal, handleClose, User }) {
                   helperText={errors.phone?.message}
                 />
               </Grid>
-              {(type_user === "1" || type_user === "2") && (
+              {(type_user === "1" ||
+                type_user === "2" ||
+                type_user === "6") && (
                 <Grid item xs={12}>
                   <TextField
                     type="number"

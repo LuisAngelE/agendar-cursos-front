@@ -232,10 +232,29 @@ export default function Header({ children }) {
     },
   ];
 
+  const SubAdmin = [
+    {
+      name: "Cursos",
+      value: "/Cursos",
+      icon: <MenuBookIcon />,
+    },
+    {
+      name: "Calendario",
+      value: "/Calendario",
+      icon: <CalendarMonthIcon />,
+    },
+    {
+      name: "Mi perfil",
+      value: "/Perfil",
+      icon: <PersonIcon />,
+    },
+  ];
+
   let menuItems = [];
   if (type_user === "1") menuItems = Admin;
   if (type_user === "2") menuItems = Instructor;
   if (type_user === "3") menuItems = Alumnos;
+  if (type_user === "6") menuItems = SubAdmin;
 
   return (
     <Box sx={{ display: "flex" }}>

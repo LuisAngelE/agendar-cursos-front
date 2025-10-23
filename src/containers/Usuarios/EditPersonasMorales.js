@@ -80,7 +80,7 @@ export default function EditPersonasMorales({ open, handleClose, id }) {
                 <TextField
                   fullWidth
                   defaultValue={users.razon_social}
-                  label="Razon social"
+                  label="Razón social"
                   {...register("razon_social", {
                     required: "La razon social es obligatoria",
                     maxLength: { value: 50, message: "Máximo 50 caracteres" },
@@ -185,6 +185,7 @@ export default function EditPersonasMorales({ open, handleClose, id }) {
                   <MenuItem value={1}>Administrador</MenuItem>
                   <MenuItem value={2}>Instructor</MenuItem>
                   <MenuItem value={3}>Cliente</MenuItem>
+                  <MenuItem value={6}>Subadministrador</MenuItem>
                 </TextField>
               </Grid>
               {users.collaborator_number && (

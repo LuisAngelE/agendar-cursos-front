@@ -78,13 +78,13 @@ export default function TablePersonasMorales({ users }) {
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell>Razon Social</StyledTableCell>
+              <StyledTableCell>Razón social</StyledTableCell>
               <StyledTableCell>RFC</StyledTableCell>
-              <StyledTableCell>Representante Legal</StyledTableCell>
-              <StyledTableCell>Domicilio Fiscal</StyledTableCell>
-              <StyledTableCell>Correo Electronico</StyledTableCell>
-              <StyledTableCell>Telefono</StyledTableCell>
-              <StyledTableCell>NO. Colaborador</StyledTableCell>
+              <StyledTableCell>Representante legal</StyledTableCell>
+              <StyledTableCell>Domicilio fiscal</StyledTableCell>
+              <StyledTableCell>Correo electrónico</StyledTableCell>
+              <StyledTableCell>Teléfono </StyledTableCell>
+              <StyledTableCell>NO. colaborador</StyledTableCell>
               <StyledTableCell>Tipo de usuario</StyledTableCell>
               <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
@@ -102,23 +102,23 @@ export default function TablePersonasMorales({ users }) {
                   whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                 >
                   <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
-                  <StyledTableCell data-label="Razon Social">
+                  <StyledTableCell data-label="Razon social">
                     {user.razon_social}
                   </StyledTableCell>
                   <StyledTableCell data-label="RFC">{user.rfc}</StyledTableCell>
-                  <StyledTableCell data-label="Representante Legal">
+                  <StyledTableCell data-label="Representante legal">
                     {user.representante_legal}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Domicilio Fiscal">
+                  <StyledTableCell data-label="Domicilio fiscal">
                     {user.domicilio_fiscal}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Correo Electrónico">
+                  <StyledTableCell data-label="Correo electrónico">
                     {user.email}
                   </StyledTableCell>
                   <StyledTableCell data-label="Teléfono">
                     {user.phone}
                   </StyledTableCell>
-                  <StyledTableCell data-label="NO. Colaborador">
+                  <StyledTableCell data-label="NO. colaborador">
                     {user.collaborator_number}
                   </StyledTableCell>
                   <StyledTableCell data-label="Tipo de usuario">
@@ -134,7 +134,7 @@ export default function TablePersonasMorales({ users }) {
                       size="small"
                       onClick={() => handleClickOpen(user.id)}
                     >
-                      <Tooltip title="Editar Usuario" placement="top">
+                      <Tooltip title="Editar usuario" placement="top">
                         <EditIcon
                           sx={{
                             color: "#e7a62f",
@@ -148,7 +148,7 @@ export default function TablePersonasMorales({ users }) {
                       size="small"
                       onClick={() => DeleteUsersMorales(user.id)}
                     >
-                      <Tooltip title="Eliminar Usuario" placement="top">
+                      <Tooltip title="Eliminar usuario" placement="top">
                         <DeleteIcon
                           sx={{
                             color: "#FF0000",

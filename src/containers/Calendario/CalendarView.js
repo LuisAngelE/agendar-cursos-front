@@ -41,42 +41,56 @@ export default function CalendarView({ fechas }) {
           <Typography align="center" variant="subtitle2" sx={{ mb: 0.5 }}>
             {event.resource.event_type.toUpperCase()}
           </Typography>
-          <Typography variant="body2" sx={{ mb: 0.5 }}>
-            <b>Curso:</b> {event.resource.course_title}
-          </Typography>
-          <Typography variant="body2" sx={{ mb: 0.5 }}>
-            <b>
-              {event.resource.client_razon_social ? "Empresa:" : "Cliente:"}
-            </b>{" "}
-            {event.resource.client_razon_social
-              ? event.resource.client_razon_social
-              : `${event.resource.client_name} ${event.resource.client_last_name}`}
-          </Typography>
-          <Typography variant="body2" sx={{ mb: 0.5 }}>
-            <b>Contacto:</b> {event.resource.client_phone}
-          </Typography>
-          <Typography variant="body2" sx={{ mb: 0.5 }}>
-            <b>Localidad:</b> {event.resource.state_name}{" "}
-            {event.resource.municipality_name}
-          </Typography>
-          <Typography variant="body2" sx={{ mb: 0.5 }}>
-            <b>Instructor:</b>{" "}
-            {event.resource.instructor_name ? (
-              `${event.resource.instructor_name} ${event.resource.instructor_last_name}`
-            ) : (
-              <span style={{ color: "red" }}>No asignado</span>
-            )}
-          </Typography>
-          <Typography variant="body2">
-            <b>Estatus:</b>{" "}
-            <span
-              style={{
-                color: statusColor[event.resource.course_status] || "black",
-              }}
-            >
-              {statusText[event.resource.course_status] || "Desconocido"}
-            </span>
-          </Typography>
+
+          {event.resource.event_type === "demo" ? (
+            <Typography variant="body2" sx={{ mb: 0.5 }}>
+              <b>Instructor:</b>{" "}
+              {event.resource.instructor_name ? (
+                `${event.resource.instructor_name} ${event.resource.instructor_last_name}`
+              ) : (
+                <span style={{ color: "red" }}>No asignado</span>
+              )}
+            </Typography>
+          ) : (
+            <>
+              <Typography variant="body2" sx={{ mb: 0.5 }}>
+                <b>Curso:</b> {event.resource.course_title}
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 0.5 }}>
+                <b>
+                  {event.resource.client_razon_social ? "Empresa:" : "Cliente:"}
+                </b>{" "}
+                {event.resource.client_razon_social
+                  ? event.resource.client_razon_social
+                  : `${event.resource.client_name} ${event.resource.client_last_name}`}
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 0.5 }}>
+                <b>Contacto:</b> {event.resource.client_phone}
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 0.5 }}>
+                <b>Localidad:</b> {event.resource.state_name}{" "}
+                {event.resource.municipality_name}
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 0.5 }}>
+                <b>Instructor:</b>{" "}
+                {event.resource.instructor_name ? (
+                  `${event.resource.instructor_name} ${event.resource.instructor_last_name}`
+                ) : (
+                  <span style={{ color: "red" }}>No asignado</span>
+                )}
+              </Typography>
+              <Typography variant="body2">
+                <b>Estatus:</b>{" "}
+                <span
+                  style={{
+                    color: statusColor[event.resource.course_status] || "black",
+                  }}
+                >
+                  {statusText[event.resource.course_status] || "Desconocido"}
+                </span>
+              </Typography>
+            </>
+          )}
         </Box>
       }
       arrow

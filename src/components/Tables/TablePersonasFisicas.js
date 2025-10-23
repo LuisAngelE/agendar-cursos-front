@@ -69,7 +69,7 @@ export default function TablePersonasFisicas({ users }) {
   };
   const handleClickClose = () => {
     OpenModalUpdate(false);
-    saveIdService(null);
+    saveIdService(null);  
   };
   return (
     <>
@@ -82,9 +82,9 @@ export default function TablePersonasFisicas({ users }) {
               <StyledTableCell>Fecha de nacimiento</StyledTableCell>
               <StyledTableCell>CURP</StyledTableCell>
               <StyledTableCell>RFC</StyledTableCell>
-              <StyledTableCell>Correo electronico</StyledTableCell>
-              <StyledTableCell>Telefono</StyledTableCell>
-              <StyledTableCell>NO. Colaborador</StyledTableCell>
+              <StyledTableCell>Correo electrónico</StyledTableCell>
+              <StyledTableCell>Teléfono </StyledTableCell>
+              <StyledTableCell>NO. colaborador</StyledTableCell>
               <StyledTableCell>Tipo de usuario</StyledTableCell>
               <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
@@ -118,7 +118,7 @@ export default function TablePersonasFisicas({ users }) {
                   <StyledTableCell data-label="Teléfono">
                     {user.phone}
                   </StyledTableCell>
-                  <StyledTableCell data-label="NO. Colaborador">
+                  <StyledTableCell data-label="NO. colaborador">
                     {user.collaborator_number || "Sin número de colaborador"}
                   </StyledTableCell>
                   <StyledTableCell data-label="Tipo de usuario">
@@ -126,6 +126,7 @@ export default function TablePersonasFisicas({ users }) {
                       1: "Administrador",
                       2: "Instructor",
                       3: "Cliente",
+                      6: "Subadministrador",
                     }[user.type_user] || "Desconocido"}
                   </StyledTableCell>
                   <StyledTableCell data-label="Acciones">

@@ -255,9 +255,10 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                 <MenuItem value={1}>Administrador</MenuItem>
                 <MenuItem value={2}>Instructor</MenuItem>
                 <MenuItem value={3}>Cliente</MenuItem>
+                <MenuItem value={6}>Subadministrador</MenuItem>
               </TextField>
             </Grid>
-            {[1, 2].includes(watch("type_user")) && (
+            {[1, 2, 6].includes(watch("type_user")) && (
               <Grid item xs={12}>
                 <TextField
                   type="number"

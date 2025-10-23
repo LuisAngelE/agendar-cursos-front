@@ -221,7 +221,7 @@ export default function VistaCursos(props) {
             </Card>
           </Grid>
 
-          {type_user === "1" && (
+          {type_user !== "3" && (
             <Grid item xs={12}>
               <Typography variant="h6" fontWeight="bold" gutterBottom>
                 Fechas reservadas

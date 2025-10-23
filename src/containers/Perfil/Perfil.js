@@ -153,6 +153,7 @@ const Perfil = () => {
                       1: "Administrador",
                       2: "Instructor",
                       3: "Cliente",
+                      6: "Subadministrador",
                     }[user_me.type_user] || "Desconocido"}
                   </Typography>
                   <Typography variant="body1" gutterBottom>
@@ -199,7 +200,9 @@ const Perfil = () => {
                   <Typography variant="body1" gutterBottom>
                     Teléfono: {user_me.phone}
                   </Typography>
-                  {(type_user === "1" || type_user === "2") && (
+                  {(type_user === "1" ||
+                    type_user === "2" ||
+                    type_user === "6") && (
                     <Typography variant="body1" gutterBottom>
                       Número de colaborador: {user_me.collaborator_number}
                     </Typography>

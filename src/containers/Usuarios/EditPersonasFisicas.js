@@ -241,6 +241,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                   <MenuItem value={1}>Administrador</MenuItem>
                   <MenuItem value={2}>Instructor</MenuItem>
                   <MenuItem value={3}>Cliente</MenuItem>
+                  <MenuItem value={6}>Subadministrador</MenuItem>
                 </TextField>
               </Grid>
               {users.collaborator_number && (
