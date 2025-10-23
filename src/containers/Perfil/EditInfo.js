@@ -90,7 +90,7 @@ export default function EditInfo({ modal, handleClose, User }) {
             <Grid container spacing={2}>
               {User.type_person === 4 && (
                 <>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12}>
                     <TextField
                       type="text"
                       fullWidth
@@ -114,11 +114,11 @@ export default function EditInfo({ modal, handleClose, User }) {
                     <TextField
                       type="text"
                       fullWidth
-                      name="last_name"
+                      name="first_last_name"
                       variant="outlined"
-                      defaultValue={User.last_name}
-                      label="Apellido:"
-                      {...register("last_name", {
+                      defaultValue={User.first_last_name}
+                      label="Apellido paterno:"
+                      {...register("first_last_name", {
                         required: "El apellido es obligatorio",
                         minLength: { value: 1, message: "Mínimo 1 caracteres" },
                         maxLength: {
@@ -126,8 +126,28 @@ export default function EditInfo({ modal, handleClose, User }) {
                           message: "Máximo 255 caracteres",
                         },
                       })}
-                      error={!!errors.last_name}
-                      helperText={errors.last_name?.message}
+                      error={!!errors.first_last_name}
+                      helperText={errors.first_last_name?.message}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      type="text"
+                      fullWidth
+                      name="second_last_name"
+                      variant="outlined"
+                      defaultValue={User.second_last_name}
+                      label="Apellido materno:"
+                      {...register("second_last_name", {
+                        required: "El apellido es obligatorio",
+                        minLength: { value: 1, message: "Mínimo 1 caracteres" },
+                        maxLength: {
+                          value: 255,
+                          message: "Máximo 255 caracteres",
+                        },
+                      })}
+                      error={!!errors.second_last_name}
+                      helperText={errors.second_last_name?.message}
                     />
                   </Grid>
                   <Grid item xs={12}>

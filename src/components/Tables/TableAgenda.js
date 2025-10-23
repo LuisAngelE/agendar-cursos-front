@@ -158,7 +158,8 @@ export default function TableAgenda({ agendas }) {
                     {agenda.reservations?.[0]?.student ? (
                       <>
                         {agenda.reservations[0].student.name || ""}{" "}
-                        {agenda.reservations[0].student.last_name || ""}{" "}
+                        {agenda.reservations[0].student.first_last_name || ""}{" "}
+                        {agenda.reservations[0].student.second_last_name || ""}{" "}
                         {agenda.reservations[0].student.razon_social || ""}
                       </>
                     ) : (
@@ -169,8 +170,8 @@ export default function TableAgenda({ agendas }) {
                   <StyledTableCell data-label="Instructor">
                     {agenda.instructor ? (
                       `${agenda.instructor.name || ""} ${
-                        agenda.instructor.last_name || ""
-                      }`.trim()
+                        agenda.instructor.first_last_name || ""
+                      } ${agenda.instructor.second_last_name || ""}`.trim()
                     ) : (
                       <span style={{ color: "red" }}>Sin Instructor</span>
                     )}

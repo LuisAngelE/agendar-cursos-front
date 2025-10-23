@@ -90,8 +90,8 @@ const Perfil = () => {
                   variant="h5"
                   sx={{ color: "black" }}
                 >
-                  Hola {saludo}, {user_me.name} {user_me.last_name}{" "}
-                  {user_me.razon_social}
+                  Hola {saludo}, {user_me.name} {user_me.first_last_name}{" "}
+                  {user_me.second_last_name} {user_me.razon_social}
                 </Typography>
 
                 <Box display="flex" justifyContent="center" mb={2}>

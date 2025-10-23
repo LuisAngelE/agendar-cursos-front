@@ -98,34 +98,34 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                 <TextField
                   type="text"
                   fullWidth
-                  name="last_name"
+                  name="first_last_name"
                   variant="outlined"
-                  defaultValue={users.last_name}
+                  defaultValue={users.first_last_name}
                   label="Apellido paterno"
-                  {...register("last_name", {
+                  {...register("first_last_name", {
                     required: "El apellido paterno es obligatorio",
                     minLength: { value: 1, message: "Mínimo 1 caracteres" },
                     maxLength: { value: 100, message: "Máximo 255 caracteres" },
                   })}
-                  error={!!errors.last_name}
-                  helperText={errors.last_name?.message}
+                  error={!!errors.first_last_name}
+                  helperText={errors.first_last_name?.message}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   type="text"
                   fullWidth
-                  name="last_name"
+                  name="second_last_name"
                   variant="outlined"
-                  defaultValue={users.last_name}
+                  defaultValue={users.second_last_name}
                   label="Apellido materno"
-                  {...register("last_name", {
+                  {...register("second_last_name", {
                     required: "El apellido materno es obligatorio",
                     minLength: { value: 1, message: "Mínimo 1 caracteres" },
                     maxLength: { value: 100, message: "Máximo 255 caracteres" },
                   })}
-                  error={!!errors.last_name}
-                  helperText={errors.last_name?.message}
+                  error={!!errors.second_last_name}
+                  helperText={errors.second_last_name?.message}
                 />
               </Grid>
               <Grid item xs={12}>

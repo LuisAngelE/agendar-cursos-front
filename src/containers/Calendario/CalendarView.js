@@ -46,7 +46,9 @@ export default function CalendarView({ fechas }) {
             <Typography variant="body2" sx={{ mb: 0.5 }}>
               <b>Instructor:</b>{" "}
               {event.resource.instructor_name ? (
-                `${event.resource.instructor_name} ${event.resource.instructor_last_name}`
+                `${event.resource.instructor_name || ""} ${
+                  event.resource.instructor_first_last_name || ""
+                } ${event.resource.instructor_second_last_name || ""}`.trim()
               ) : (
                 <span style={{ color: "red" }}>No asignado</span>
               )}
@@ -62,8 +64,11 @@ export default function CalendarView({ fechas }) {
                 </b>{" "}
                 {event.resource.client_razon_social
                   ? event.resource.client_razon_social
-                  : `${event.resource.client_name} ${event.resource.client_last_name}`}
+                  : `${event.resource.client_name ?? ""} ${
+                      event.resource.client_first_last_name ?? ""
+                    } ${event.resource.client_second_last_name ?? ""}`}
               </Typography>
+
               <Typography variant="body2" sx={{ mb: 0.5 }}>
                 <b>Contacto:</b> {event.resource.client_phone}
               </Typography>
@@ -74,7 +79,7 @@ export default function CalendarView({ fechas }) {
               <Typography variant="body2" sx={{ mb: 0.5 }}>
                 <b>Instructor:</b>{" "}
                 {event.resource.instructor_name ? (
-                  `${event.resource.instructor_name} ${event.resource.instructor_last_name}`
+                  `${event.resource.instructor_name} ${event.resource.instructor_first_last_name}  ${event.resource.instructor_second_last_name}`
                 ) : (
                   <span style={{ color: "red" }}>No asignado</span>
                 )}

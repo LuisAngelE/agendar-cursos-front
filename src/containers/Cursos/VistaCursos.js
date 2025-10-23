@@ -258,7 +258,7 @@ export default function VistaCursos(props) {
                           🧑‍💼{" "}
                           <strong>
                             {s.instructor
-                              ? `${s.instructor.name} ${s.instructor.last_name}`
+                              ? `${s.instructor.name} ${s.instructor.first_last_name} ${s.instructor.second_last_name}`
                               : "Instructor no asignado"}
                           </strong>
                         </Typography>

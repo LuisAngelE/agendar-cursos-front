@@ -69,7 +69,7 @@ export default function TablePersonasFisicas({ users }) {
   };
   const handleClickClose = () => {
     OpenModalUpdate(false);
-    saveIdService(null);  
+    saveIdService(null);
   };
   return (
     <>
@@ -103,7 +103,8 @@ export default function TablePersonasFisicas({ users }) {
                 >
                   <StyledTableCell data-label="ID">{user.id}</StyledTableCell>
                   <StyledTableCell data-label="Nombre">
-                    {user.name} {""} {user.last_name}
+                    {user.name} {""} {user.first_last_name} {""}
+                    {user.second_last_name}
                   </StyledTableCell>
                   <StyledTableCell data-label="Fecha de nacimiento">
                     {new Date(user.birth_date).toISOString().split("T")[0]}

@@ -134,26 +134,26 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
               <TextField
                 fullWidth
                 label="Apellido paterno"
-                {...register("last_name", {
+                {...register("first_last_name", {
                   required: "El apellido paterno es obligatorio",
                   minLength: { value: 1, message: "Mínimo 1 caracteres" },
                   maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
-                error={!!errors.last_name}
-                helperText={errors.last_name?.message}
+                error={!!errors.first_last_name}
+                helperText={errors.first_last_name?.message}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Apellido materno"
-                {...register("last_name", {
+                {...register("second_last_name", {
                   required: "El apellido materno es obligatorio",
                   minLength: { value: 1, message: "Mínimo 1 caracteres" },
                   maxLength: { value: 100, message: "Máximo 100 caracteres" },
                 })}
-                error={!!errors.last_name}
-                helperText={errors.last_name?.message}
+                error={!!errors.second_last_name}
+                helperText={errors.second_last_name?.message}
               />
             </Grid>
             <Grid item xs={12}>

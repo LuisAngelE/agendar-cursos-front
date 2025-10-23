@@ -66,7 +66,7 @@ export default function AddInstructor({ modal, handleClose, id }) {
                 </MenuItem>
                 {users.map((user) => (
                   <MenuItem key={user.id} value={user.id}>
-                    {user.name} {user.last_name}
+                    {user.name} {user.first_last_name} {user.second_last_name}
                     {user.razon_social}
                   </MenuItem>
                 ))}

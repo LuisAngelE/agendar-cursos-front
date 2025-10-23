@@ -121,8 +121,8 @@ export default function VistaAgenda(props) {
                 value={
                   agenda.course?.user?.razon_social ||
                   `${agenda.course?.user?.name || ""} ${
-                    agenda.course?.user?.last_name || ""
-                  }`
+                    agenda.course?.user?.first_last_name || ""
+                  } ${agenda.course?.user?.second_last_name || ""}`.trim()
                 }
               />
             </Paper>
@@ -211,8 +211,11 @@ export default function VistaAgenda(props) {
                 value={
                   agenda.reservations?.length > 0
                     ? `${agenda.reservations[0].student?.name || ""} ${
-                        agenda.reservations[0].student?.last_name || ""
-                      } | ${agenda.reservations[0].student?.phone || ""} | ${
+                        agenda.reservations[0].student?.first_last_name || ""
+                      } ${
+                        agenda.reservations[0].student?.second_last_name || ""
+                      }`.trim() +
+                      ` | ${agenda.reservations[0].student?.phone || ""} | ${
                         agenda.reservations[0].student?.email || ""
                       }`
                     : "No registrado"
@@ -224,7 +227,7 @@ export default function VistaAgenda(props) {
                 label="Instructor:"
                 value={
                   agenda.instructor
-                    ? `${agenda.instructor.name} ${agenda.instructor.last_name} | ${agenda.instructor.phone} | ${agenda.instructor.email}`
+                    ? `${agenda.instructor.name} ${agenda.instructor.first_last_name} ${agenda.instructor.second_last_name} | ${agenda.instructor.phone} | ${agenda.instructor.email}`
                     : "No asignado"
                 }
               />

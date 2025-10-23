@@ -173,7 +173,8 @@ export default function AgendaModalAdmin({ open, handleClose, id }) {
                 </MenuItem>
                 {clients.map((client) => (
                   <MenuItem key={client.id} value={client.id}>
-                    {client.name} {client.last_name}
+                    {client.name} {client.first_last_name}{" "}
+                    {client.second_last_name}
                     {client.razon_social}
                   </MenuItem>
                 ))}
