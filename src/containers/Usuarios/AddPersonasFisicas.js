@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import InputAdornment from "@mui/material/InputAdornment";
 import UsuariosContext from "../../context/Usuarios/UsuariosContext";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { motion } from "framer-motion";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -185,7 +186,7 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                   },
                 })}
                 inputProps={{
-                  style: { textTransform: "uppercase" }, 
+                  style: { textTransform: "uppercase" },
                 }}
                 error={!!errors.curp}
                 helperText={errors.curp?.message}
@@ -201,12 +202,12 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
                     value: /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/,
                     message: "RFC inválido",
                   },
-                   onChange: (e) => {
+                  onChange: (e) => {
                     e.target.value = e.target.value.toUpperCase();
                   },
                 })}
                 inputProps={{
-                  style: { textTransform: "uppercase" }, 
+                  style: { textTransform: "uppercase" },
                 }}
                 error={!!errors.rfc}
                 helperText={errors.rfc?.message}
@@ -364,18 +365,24 @@ export default function AddPersonasFisicas({ modal, handleCloseFisica }) {
         </DialogContent>
         <DialogActions>
           <Button
-            autoFocus
-            variant="contained"
-            type="submit"
             fullWidth
+            variant="contained"
             sx={{
+              bgcolor: "#1976D2",
               color: "white",
-              backgroundColor: "#1976D2",
               "&:hover": {
-                color: "white",
-                backgroundColor: "#1976D2",
+                bgcolor: "#1976D2",
+                boxShadow: 3,
+                transform: "scale(1.05)",
               },
+              borderRadius: 3,
+              py: 1.5,
+              fontWeight: "bold",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+              transition: "all 0.3s ease",
             }}
+            component={motion.button}
+            whileTap={{ scale: 0.95 }}
           >
             Agregar
           </Button>

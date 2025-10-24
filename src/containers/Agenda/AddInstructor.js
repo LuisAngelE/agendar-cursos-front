@@ -6,6 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { Grid, MenuItem, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
 import UsuariosContext from "../../context/Usuarios/UsuariosContext";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 
@@ -76,18 +77,24 @@ export default function AddInstructor({ modal, handleClose, id }) {
         </DialogContent>
         <DialogActions>
           <Button
-            autoFocus
-            variant="contained"
-            type="submit"
             fullWidth
+            variant="contained"
             sx={{
+              bgcolor: "#1976D2",
               color: "white",
-              backgroundColor: "#1976D2",
               "&:hover": {
-                color: "white",
-                backgroundColor: "#1976D2",
+                bgcolor: "#1976D2",
+                boxShadow: 3,
+                transform: "scale(1.05)",
               },
+              borderRadius: 3,
+              py: 1.5,
+              fontWeight: "bold",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+              transition: "all 0.3s ease",
             }}
+            component={motion.button}
+            whileTap={{ scale: 0.95 }}
           >
             Agregar instructor
           </Button>

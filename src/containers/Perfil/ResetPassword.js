@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { Grid, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
 import AuthContext from "../../context/Auth/AuthContext";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -250,18 +251,24 @@ export default function ResetPassword({ modal, handleClose }) {
           </DialogContent>
           <DialogActions>
             <Button
-              autoFocus
-              variant="contained"
-              type="submit"
               fullWidth
+              variant="contained"
               sx={{
+                bgcolor: "#1976D2",
                 color: "white",
-                backgroundColor: "#1976D2",
                 "&:hover": {
-                  color: "white",
-                  backgroundColor: "#1976D2",
+                  bgcolor: "#1976D2",
+                  boxShadow: 3,
+                  transform: "scale(1.05)",
                 },
+                borderRadius: 3,
+                py: 1.5,
+                fontWeight: "bold",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                transition: "all 0.3s ease",
               }}
+              component={motion.button}
+              whileTap={{ scale: 0.95 }}
             >
               Cambiar
             </Button>
