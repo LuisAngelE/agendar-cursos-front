@@ -292,8 +292,8 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                   helperText={errors?.password?.message}
                   {...register("password", {
                     minLength: {
-                      value: 8,
-                      message: "Minimo 8 caracteres",
+                      value: 4,
+                      message: "Minimo 4 caracteres",
                     },
                     maxLength: {
                       value: 50,
@@ -334,8 +334,8 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
                   helperText={errors?.password_confirmation?.message}
                   {...register("password_confirmation", {
                     minLength: {
-                      value: 8,
-                      message: "Minimo 8 caracteres",
+                      value: 4,
+                      message: "Minimo 4 caracteres",
                     },
                     maxLength: {
                       value: 50,

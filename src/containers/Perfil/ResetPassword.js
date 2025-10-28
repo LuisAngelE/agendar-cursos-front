@@ -149,8 +149,8 @@ export default function ResetPassword({ modal, handleClose }) {
                       message: "La contraseña actual es requerida",
                     },
                     minLength: {
-                      value: 8,
-                      message: "Minimo 8 caracteres",
+                      value: 4,
+                      message: "Minimo 4 caracteres",
                     },
                     maxLength: {
                       value: 50,
@@ -191,8 +191,8 @@ export default function ResetPassword({ modal, handleClose }) {
                       message: "La nueva contraseña es requerida",
                     },
                     minLength: {
-                      value: 8,
-                      message: "Minimo 8 caracteres",
+                      value: 4,
+                      message: "Minimo 4 caracteres",
                     },
                     maxLength: {
                       value: 16,
@@ -237,8 +237,8 @@ export default function ResetPassword({ modal, handleClose }) {
                       message: "Es requerido confirmar la contraseña nueva",
                     },
                     minLength: {
-                      value: 8,
-                      message: "Minimo 8 caracteres",
+                      value: 4,
+                      message: "Minimo 4 caracteres",
                     },
                     maxLength: {
                       value: 50,

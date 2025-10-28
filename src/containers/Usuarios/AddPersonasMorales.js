@@ -262,8 +262,8 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                     message: "La contraseña es requerida",
                   },
                   minLength: {
-                    value: 8,
-                    message: "Minimo 8 caracteres",
+                    value: 4,
+                    message: "Minimo 4 caracteres",
                   },
                   maxLength: {
                     value: 50,
@@ -306,8 +306,8 @@ export default function AddPersonasMorales({ modal, handleCloseMoral }) {
                     message: "Es requerido confirmar la contraseña",
                   },
                   minLength: {
-                    value: 8,
-                    message: "Minimo 8 caracteres",
+                    value: 4,
+                    message: "Minimo 4 caracteres",
                   },
                   maxLength: {
                     value: 50,

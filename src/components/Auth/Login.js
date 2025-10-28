@@ -255,6 +255,6 @@ function initialValues() {
 function validationSchema() {
   return {
     email: Yup.string().email(true).required("Correo requerido"),
-    password: Yup.string().min(8).required("Contraseña requerida"),
+    password: Yup.string().min(4).required("Contraseña requerida"),
   };
 }

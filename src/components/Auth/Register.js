@@ -393,8 +393,8 @@ const Register = () => {
                         message: "La contraseña es requerida",
                       },
                       minLength: {
-                        value: 8,
-                        message: "Mínimo 8 caracteres",
+                        value: 4,
+                        message: "Mínimo 4 caracteres",
                       },
                       maxLength: {
                         value: 50,
@@ -439,8 +439,8 @@ const Register = () => {
                         message: "Es requerido confirmar la contraseña",
                       },
                       minLength: {
-                        value: 8,
-                        message: "Mínimo 8 caracteres",
+                        value: 4,
+                        message: "Mínimo 4 caracteres",
                       },
                       maxLength: {
                         value: 50,

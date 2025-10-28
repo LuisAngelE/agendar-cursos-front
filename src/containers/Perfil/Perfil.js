@@ -15,6 +15,7 @@ import FlipCameraIosIcon from "@mui/icons-material/FlipCameraIos";
 import LockResetIcon from "@mui/icons-material/LockReset";
 import ResetPassword from "./ResetPassword";
 import EditInfo from "./EditInfo";
+import DescriptionIcon from "@mui/icons-material/Description";
 import AttachFileMultimedia from "./AttachFileMultimedia";
 import { motion } from "framer-motion";
 
@@ -93,6 +94,17 @@ const Perfil = () => {
                   Hola {saludo}, {user_me.name} {user_me.first_last_name}{" "}
                   {user_me.second_last_name} {user_me.razon_social}
                 </Typography>
+                <br />
+                <Typography
+                  align="center"
+                  fontWeight="bold"
+                  fontFamily="monospace"
+                  variant="h6"
+                  sx={{ color: "black" }}
+                >
+                  Bienvenido a la Plataforma Integral de Capacitación.
+                </Typography>
+                <br />
 
                 <Box display="flex" justifyContent="center" mb={2}>
                   <img
@@ -263,6 +275,37 @@ const Perfil = () => {
                       <LockResetIcon sx={{ mr: 1 }} />
                       Cambiar mi contraseña
                     </Button>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <a
+                      href="/Plataforma_Integral_de_Capacitación_Manual_de_Usuario.pdf"
+                      download
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        sx={{
+                          bgcolor: "#C8E6C9",
+                          color: "black",
+                          "&:hover": {
+                            bgcolor: "#C8E6C9",
+                            boxShadow: 3,
+                            transform: "scale(1.05)",
+                          },
+                          borderRadius: 3,
+                          py: 1.5,
+                          fontWeight: "bold",
+                          boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                          transition: "all 0.3s ease",
+                        }}
+                        component={motion.button}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <DescriptionIcon sx={{ mr: 1 }} />
+                        Descargar manual de usuario
+                      </Button>
+                    </a>
                   </Grid>
                 </Grid>
               </CardContent>
