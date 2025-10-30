@@ -28,7 +28,7 @@ const AgendaState = ({ children }) => {
     let type_user = localStorage.getItem("type_user");
     let user_id = localStorage.getItem("user_id");
     if (type_user === "1") {
-      let url = `/courseSchedule`;
+      let url = `/courseSchedule/TypeUser/${user_id}`;
       MethodGet(url)
         .then((res) => {
           dispatch({
@@ -58,7 +58,7 @@ const AgendaState = ({ children }) => {
     let type_user = localStorage.getItem("type_user");
     let user_id = localStorage.getItem("user_id");
     if (type_user === "1") {
-      let url = `/indexCount`;
+      let url = `/indexCount/${user_id}`;
       MethodGet(url)
         .then((res) => {
           dispatch({

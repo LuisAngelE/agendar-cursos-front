@@ -56,7 +56,15 @@ const CursosState = ({ children }) => {
   const GetCursos = (nombre = "", category_id = "", model_id = "") => {
     let type_user = localStorage.getItem("type_user");
     let user_id = localStorage.getItem("user_id");
-    let url = type_user === "2" ? `/indexTypeUserCourse/${user_id}` : "/course";
+
+    let url = "";
+    if (type_user === "1") {
+      url = `/courses/user/${user_id}`;
+    } else if (type_user === "2") {
+      url = `/indexTypeUserCourse/${user_id}`;
+    } else if (type_user === "3" || type_user === "6") {
+      url = `/course`;
+    }
 
     const params = new URLSearchParams();
     if (nombre.trim() !== "") params.append("nombre", nombre);
@@ -271,7 +279,7 @@ const CursosState = ({ children }) => {
       text: "El curso volverá a estar disponible para los usuarios.",
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#2E7D32", // verde
+      confirmButtonColor: "#2E7D32", 
       cancelButtonColor: "#d33",
       confirmButtonText: "Sí, habilitar",
       cancelButtonText: "Cancelar",

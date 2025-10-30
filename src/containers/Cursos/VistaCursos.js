@@ -131,9 +131,10 @@ export default function VistaCursos(props) {
                 <Typography variant="body2" sx={{ mb: 0.5 }}>
                   <strong>Duración:</strong> {curso.duration}
                 </Typography>
-                {user?.razon_social && (
+                {user && (
                   <Typography variant="body2" sx={{ mb: 0.5 }}>
-                    <strong>Propietario:</strong> {user.razon_social}
+                    <strong>Propietario:</strong> {user.razon_social}{" "}
+                    {user.name} {user.first_last_name} {user.second_last_name}
                   </Typography>
                 )}
               </Box>

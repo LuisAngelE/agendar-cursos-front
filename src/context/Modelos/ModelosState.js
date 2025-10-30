@@ -50,7 +50,8 @@ const ModelosState = ({ children }) => {
   };
 
   const GetModelos = () => {
-    MethodGet("/modelos")
+    let user_id = localStorage.getItem("user_id");
+    MethodGet(`/models/user/${user_id}`)
       .then((res) => {
         dispatch({ type: GET_ALL_MODELOS, payload: res.data });
       })

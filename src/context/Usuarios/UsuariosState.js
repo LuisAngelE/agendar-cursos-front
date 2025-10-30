@@ -55,7 +55,8 @@ const UsuariosState = ({ children }) => {
   };
 
   const GetUsersFisicos = () => {
-    MethodGet("/users/fisicas")
+    let user_id = localStorage.getItem("user_id");
+    MethodGet(`/users/fisicas/${user_id}`)
       .then((res) => {
         dispatch({
           type: GET_ALL_USERS_FISICOS,
@@ -66,7 +67,8 @@ const UsuariosState = ({ children }) => {
   };
 
   const GetUsersMorales = () => {
-    MethodGet("/users/morales")
+    let user_id = localStorage.getItem("user_id");
+    MethodGet(`/users/morales/${user_id}`)
       .then((res) => {
         dispatch({
           type: GET_ALL_USERS_MORALES,
@@ -77,7 +79,8 @@ const UsuariosState = ({ children }) => {
   };
 
   const GetInstructores = () => {
-    MethodGet("/instructores")
+    let user_id = localStorage.getItem("user_id");
+    MethodGet(`/instructores/${user_id}`)
       .then((res) => {
         dispatch({
           type: GET_ALL_USERS,
@@ -88,14 +91,15 @@ const UsuariosState = ({ children }) => {
   };
 
   const GetClients = () => {
-    MethodGet("/users/clients")
-    .then((res) => {
-      dispatch({
-        type: GET_ALL_CLIENTS,
-        payload: res.data.data,
-      });
-    })
-    .catch(handleError);
+    let user_id = localStorage.getItem("user_id");
+    MethodGet(`/users/clients/${user_id}`)
+      .then((res) => {
+        dispatch({
+          type: GET_ALL_CLIENTS,
+          payload: res.data.data,
+        });
+      })
+      .catch(handleError);
   };
 
   const AddPersonaFisicas = (data) => {

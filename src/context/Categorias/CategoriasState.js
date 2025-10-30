@@ -50,7 +50,8 @@ const CategoriasState = ({ children }) => {
   };
 
   const GetCategories = () => {
-    MethodGet("/categories")
+    let user_id = localStorage.getItem("user_id");
+    MethodGet(`/categories/user/${user_id}`)
       .then((res) => {
         dispatch({ type: GET_ALL_CATEGORIAS, payload: res.data });
       })
