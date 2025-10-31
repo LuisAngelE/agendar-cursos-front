@@ -19,13 +19,11 @@ import AgendaContext from "../../context/Agenda/AgendaContext";
 import "dayjs/locale/es";
 import SelectState from "../../components/SelectOptions/SelectState";
 import SelectMunicipality from "../../components/SelectOptions/SelectMunicipality";
-import CursosContext from "../../context/Cursos/CursosContext";
 import { useEffect } from "react";
 import { useState } from "react";
 import MethodGet from "../../config/service";
 
-export default function AgendaModal({ open, handleClose, id }) {
-  const { cursos, GetCursos } = useContext(CursosContext);
+export default function AgendaModal({ open, handleClose, courseId, adminId, curso }) {
   const { AddAgendas } = useContext(AgendaContext);
   let type_user = localStorage.getItem("type_user");
   const [fechas, setFechas] = useState([]);
@@ -55,17 +53,14 @@ export default function AgendaModal({ open, handleClose, id }) {
   const [value, setValue] = useState(dayjs());
 
   const onSubmit = (data) => {
-    data.course_id = id;
+    data.course_id = courseId;
+    data.user_id = adminId;
     data.start_date = value.format("YYYY-MM-DD HH:mm:ss");
     data.state_id = state;
     data.municipality_id = municipality;
     AddAgendas(data);
     handleClose();
   };
-
-  useEffect(() => {
-    GetCursos();
-  }, []);
 
   const countEventsByDate = (date) => {
     if (!Array.isArray(fechas)) return 0;

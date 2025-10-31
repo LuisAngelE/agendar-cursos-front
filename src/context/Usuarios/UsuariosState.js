@@ -91,8 +91,7 @@ const UsuariosState = ({ children }) => {
   };
 
   const GetClients = () => {
-    let user_id = localStorage.getItem("user_id");
-    MethodGet(`/users/clients/${user_id}`)
+    MethodGet(`/users/students`)
       .then((res) => {
         dispatch({
           type: GET_ALL_CLIENTS,

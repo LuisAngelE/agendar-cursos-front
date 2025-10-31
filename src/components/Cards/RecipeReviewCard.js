@@ -103,9 +103,9 @@ export default function RecipeReviewCard({ curso, categorias }) {
     saveIdAgendaAdmin(null);
   };
 
-  const handleOpenAgendaClient = (id) => {
+  const handleOpenAgendaClient = (courseId, adminId) => {
     openModalAgendaClient(true);
-    saveIdAgendaClient(id);
+    saveIdAgendaClient({ courseId, adminId });
   };
   const handleCloseAgendaClient = () => {
     openModalAgendaClient(false);
@@ -319,7 +319,7 @@ export default function RecipeReviewCard({ curso, categorias }) {
           )}
           {curso.status !== 2 && type_user === "3" && (
             <Button
-              onClick={() => handleOpenAgendaClient(curso.id)}
+              onClick={() => handleOpenAgendaClient(curso.id, curso.user_id)}
               fullWidth
               variant="contained"
               sx={{
@@ -353,7 +353,8 @@ export default function RecipeReviewCard({ curso, categorias }) {
         <AgendaModal
           open={modalAgendaClient}
           handleClose={handleCloseAgendaClient}
-          id={id_agendaClient}
+          courseId={id_agendaClient.courseId}
+          adminId={id_agendaClient.adminId}
           curso={curso}
         />
       )}

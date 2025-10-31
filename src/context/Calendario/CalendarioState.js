@@ -12,33 +12,26 @@ const CalendarioState = ({ children }) => {
   };
   const [state, dispatch] = useReducer(CalendarioReducer, initialState);
 
-  const GetFechas = () => {
-    let type_user = localStorage.getItem("type_user");
-    let user_id = localStorage.getItem("user_id");
-    if (type_user === "1" || type_user == "6") {
-      let url = `/course-schedules/dates`;
-      MethodGet(url)
-        .then((res) => {
-          dispatch({
-            type: GET_ALL_CALENDARIO,
-            payload: res.data,
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else if (type_user === "2" || type_user === "3") {
-      let url = `/course-schedules/dates/${user_id}`;
-      MethodGet(url)
-        .then((res) => {
-          dispatch({
-            type: GET_ALL_CALENDARIO,
-            payload: res.data,
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  const GetFechas = async () => {
+    try {
+      const type_user = localStorage.getItem("type_user");
+      const user_id = localStorage.getItem("user_id");
+
+      let url = "/course-schedules/dates";
+
+      if (type_user === "1") {
+        url = `course-schedules/dates/admin/${user_id}`;
+      } else if (type_user === "2" || type_user === "3") {
+        url = `/course-schedules/dates/${user_id}`;
+      }
+
+      const res = await MethodGet(url);
+      dispatch({
+        type: GET_ALL_CALENDARIO,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
 

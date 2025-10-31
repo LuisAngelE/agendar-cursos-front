@@ -24,63 +24,37 @@ const AgendaState = ({ children }) => {
   };
   const [state, dispatch] = useReducer(AgendaReducer, initialState);
 
-  const GetAgendas = () => {
-    let type_user = localStorage.getItem("type_user");
-    let user_id = localStorage.getItem("user_id");
-    if (type_user === "1") {
-      let url = `/courseSchedule/TypeUser/${user_id}`;
-      MethodGet(url)
-        .then((res) => {
-          dispatch({
-            type: GET_ALL_AGENDAS,
-            payload: res.data,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else if (type_user === "2" || type_user === "3") {
+  const GetAgendas = async () => {
+    try {
+      const type_user = localStorage.getItem("type_user");
+      const user_id = localStorage.getItem("user_id");
+
       let url = `/indexTypeUserAgenda/${user_id}`;
-      MethodGet(url)
-        .then((res) => {
-          dispatch({
-            type: GET_ALL_AGENDAS,
-            payload: res.data,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (type_user === "1") {
+        url = `/courseSchedule/TypeUser/${user_id}`;
+      }
+
+      const res = await MethodGet(url);
+      dispatch({ type: GET_ALL_AGENDAS, payload: res.data });
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const GetAgendasCount = () => {
-    let type_user = localStorage.getItem("type_user");
-    let user_id = localStorage.getItem("user_id");
-    if (type_user === "1") {
-      let url = `/indexCount/${user_id}`;
-      MethodGet(url)
-        .then((res) => {
-          dispatch({
-            type: GET_ALL_AGENDAS_COUNT,
-            payload: res.data,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else if (type_user === "2" || type_user === "3") {
+  const GetAgendasCount = async () => {
+    try {
+      const type_user = localStorage.getItem("type_user");
+      const user_id = localStorage.getItem("user_id");
+
       let url = `/indexTypeUserAgendaCount/${user_id}`;
-      MethodGet(url)
-        .then((res) => {
-          dispatch({
-            type: GET_ALL_AGENDAS_COUNT,
-            payload: res.data,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (type_user === "1") {
+        url = `/indexCount/${user_id}`;
+      }
+
+      const res = await MethodGet(url);
+      dispatch({ type: GET_ALL_AGENDAS_COUNT, payload: res.data });
+    } catch (error) {
+      console.log(error);
     }
   };
 
