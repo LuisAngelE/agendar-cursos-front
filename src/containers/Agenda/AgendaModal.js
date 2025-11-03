@@ -54,7 +54,7 @@ export default function AgendaModal({ open, handleClose, courseId, adminId, curs
 
   const onSubmit = (data) => {
     data.course_id = courseId;
-    data.user_id = adminId;
+    data.user_ids  = [adminId];
     data.start_date = value.format("YYYY-MM-DD HH:mm:ss");
     data.state_id = state;
     data.municipality_id = municipality;

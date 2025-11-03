@@ -6,11 +6,13 @@ import Perfil from "../containers/Perfil/Perfil";
 import NoResultados from "../components/layout/NoResultados";
 import VistaCursos from "../containers/Cursos/VistaCursos";
 import Calendario from "../containers/Calendario/Calendario";
+import CursosTabla from "../containers/CursosTabla/CursosTabla";
 
 const SubAdminRouter = () => {
   return (
     <Switch>
       <Route exact path="/Cursos" component={Cursos} />
+      <Route exact path="/CursosTabla" component={CursosTabla} />
       <Route exact path="/Cursos/:id" component={VistaCursos} />
       <Route exact path="/Perfil" component={Perfil} />
       <Route exact path="/Calendario" component={Calendario} />

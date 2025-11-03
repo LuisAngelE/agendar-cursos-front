@@ -33,6 +33,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import Badge from "@mui/material/Badge";
 import SchoolIcon from "@mui/icons-material/School";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import TableRowsIcon from "@mui/icons-material/TableRows";
 import AgendaContext from "../../context/Agenda/AgendaContext";
 import CursosFavoritosContext from "../../context/CursosFavoritos/CursosFavoritosContext";
 
@@ -237,6 +238,11 @@ export default function Header({ children }) {
       name: "Cursos",
       value: "/Cursos",
       icon: <MenuBookIcon />,
+    },
+    {
+      name: "Tabla de cursos",
+      value: "/CursosTabla",
+      icon: <TableRowsIcon />,
     },
     {
       name: "Calendario",
