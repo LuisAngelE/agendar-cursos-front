@@ -53,7 +53,23 @@ const TableContainerResponsive = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-export default function TableCursos({ cursos }) {
+const getStatusColor = (status) => {
+  switch (status) {
+    case 1:
+      return "#ff0000ff";
+    case 2:
+      return "#008000";
+    case 3:
+      return "#ff0000ff";
+    case 4:
+      return "#0000CD";
+
+    default:
+      return "#808080";
+  }
+};
+
+export default function TableCursos({ agendas }) {
   return (
     <>
       <TableContainerResponsive component={Paper} sx={{ overflowX: "auto" }}>
@@ -61,22 +77,22 @@ export default function TableCursos({ cursos }) {
           <TableHead>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell>Nombre</StyledTableCell>
-              <StyledTableCell>Descripción</StyledTableCell>
-              <StyledTableCell>Categoría</StyledTableCell>
+              <StyledTableCell>Curso</StyledTableCell>
               <StyledTableCell>Modelo</StyledTableCell>
-              <StyledTableCell>Modalidad</StyledTableCell>
-              <StyledTableCell>Duración</StyledTableCell>
+              <StyledTableCell>Fecha y hora solicitada</StyledTableCell>
+              <StyledTableCell>Localidad</StyledTableCell>
+              <StyledTableCell>Solicitante</StyledTableCell>
+              <StyledTableCell>Instructor</StyledTableCell>
               <StyledTableCell>Propietario</StyledTableCell>
               <StyledTableCell>Estatus</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <AnimatePresence>
-              {cursos.length > 0 ? (
-                cursos.map((curso) => (
+              {agendas.length > 0 ? (
+                agendas.map((agenda) => (
                   <StyledTableRow
-                    key={curso.id}
+                    key={agenda.id}
                     component={motion.tr}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -85,34 +101,75 @@ export default function TableCursos({ cursos }) {
                     whileHover={{ scale: 1.02, backgroundColor: "#E3F2FD" }}
                   >
                     <StyledTableCell data-label="ID">
-                      {curso.id}
+                      {agenda.id}
                     </StyledTableCell>
-                    <StyledTableCell data-label="Nombre">
-                      {curso.title}
-                    </StyledTableCell>
-                    <StyledTableCell data-label="Descripción">
-                      {curso.description}
-                    </StyledTableCell>
-                    <StyledTableCell data-label="Categoría">
-                      {curso.category.name}
+                    <StyledTableCell data-label="Curso">
+                      {agenda.course.title} {agenda.course.description}{" "}
+                      {agenda.course.modality}
                     </StyledTableCell>
                     <StyledTableCell data-label="Modelo">
-                      {curso.models.nombre_segmento} {""}{" "}
-                      {curso.models.nombre_tipo_unidad}
+                      {agenda.course.models
+                        ? `${agenda.course.models.nombre_segmento || ""} ${
+                            agenda.course.models.nombre_tipo_unidad || ""
+                          }`.trim()
+                        : "Sin modelo"}
                     </StyledTableCell>
-                    <StyledTableCell data-label="Modalidad">
-                      {curso.modality}
+                    <StyledTableCell data-label="Fecha  hora solicitada">
+                      {new Date(agenda.start_date).toLocaleString("es-ES", {
+                        dateStyle: "long",
+                        timeStyle: "short",
+                        hour12: true,
+                      })}
                     </StyledTableCell>
-                    <StyledTableCell data-label="Duración">
-                      {curso.duration}
+                    <StyledTableCell data-label="Localidad ">
+                      {agenda.state.name} {""}
+                      {agenda.municipality.name}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Solicitante">
+                      {agenda.reservations?.[0]?.student ? (
+                        <>
+                          {agenda.reservations[0].student.name || ""}{" "}
+                          {agenda.reservations[0].student.first_last_name || ""}{" "}
+                          {agenda.reservations[0].student.second_last_name ||
+                            ""}{" "}
+                          {agenda.reservations[0].student.razon_social || ""}
+                        </>
+                      ) : (
+                        "Sin Cliente"
+                      )}
+                    </StyledTableCell>
+                    <StyledTableCell data-label="Instructor">
+                      {agenda.instructor ? (
+                        `${agenda.instructor.name || ""} ${
+                          agenda.instructor.first_last_name || ""
+                        } ${agenda.instructor.second_last_name || ""}`.trim()
+                      ) : (
+                        <span style={{ color: "red" }}>Sin Instructor</span>
+                      )}
                     </StyledTableCell>
                     <StyledTableCell data-label="Propietario">
-                      {curso.user.name} {curso.user.first_last_name}{" "}
-                      {curso.user.second_last_name}
-                      {curso.user.razon_social}
+                      {agenda.admins && agenda.admins.length > 0 ? (
+                        `${agenda.admins[0].name || ""} ${
+                          agenda.admins[0].first_last_name || ""
+                        } ${agenda.admins[0].second_last_name || ""}`.trim()
+                      ) : (
+                        <span style={{ color: "red" }}>Sin Propietario</span>
+                      )}
                     </StyledTableCell>
-                    <StyledTableCell data-label="Estatus">
-                      {curso.status ? "Activo" : "Inactivo"}
+                    <StyledTableCell
+                      data-label="Estatus"
+                      style={{
+                        color: getStatusColor(
+                          agenda.reservations?.[0]?.status || 0
+                        ),
+                      }}
+                    >
+                      {{
+                        1: "Pendiente de confirmación",
+                        2: "Confirmada",
+                        3: "Cancelada",
+                        4: "Realizada",
+                      }[agenda.reservations?.[0]?.status] || "Desconocido"}
                     </StyledTableCell>
                   </StyledTableRow>
                 ))

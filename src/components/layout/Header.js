@@ -240,7 +240,7 @@ export default function Header({ children }) {
       icon: <MenuBookIcon />,
     },
     {
-      name: "Tabla de cursos",
+      name: "Todos los cursos reservados",
       value: "/CursosTabla",
       icon: <TableRowsIcon />,
     },

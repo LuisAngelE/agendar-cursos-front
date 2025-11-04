@@ -2,20 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import { Grid, MenuItem, TextField, Typography } from "@mui/material";
 import TableCursos from "../../components/Tables/TableCursos";
-import CursosContext from "../../context/Cursos/CursosContext";
 import CategoriasContext from "../../context/Categorias/CategoriasContext";
 import ModelosContext from "../../context/Modelos/ModelosContext";
+import AgendaContext from "../../context/Agenda/AgendaContext";
 
 const CursosTabla = () => {
   const { categorias, GetCategories } = useContext(CategoriasContext);
   const { modelos, GetModelos } = useContext(ModelosContext);
-  const { cursos, GetCursos } = useContext(CursosContext);
+  const { agendas, GetAgendasAll } = useContext(AgendaContext);
   const [searchNombre, setSearchNombre] = useState("");
   const [searchTipoCategoria, setSearchTipoCategoria] = useState("");
   const [searchTipoModelo, setSearchTipoModelo] = useState("");
 
   useEffect(() => {
-    GetCursos(searchNombre, searchTipoCategoria, searchTipoModelo);
+    GetAgendasAll(searchNombre, searchTipoCategoria, searchTipoModelo);
   }, [searchNombre, searchTipoCategoria, searchTipoModelo]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const CursosTabla = () => {
             variant="h5"
             sx={{ color: "black" }}
           >
-            Todos los cursos
+            Todos los cursos reservados
           </Typography>
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -84,7 +84,7 @@ const CursosTabla = () => {
           </TextField>
         </Grid>
         <Grid item xs={12}>
-          <TableCursos cursos={cursos} />
+          <TableCursos agendas={agendas} />
         </Grid>
       </Grid>
     </Layout>

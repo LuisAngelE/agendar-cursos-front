@@ -41,6 +41,32 @@ const AgendaState = ({ children }) => {
     }
   };
 
+  const GetAgendasAll = async (
+    nombre = "",
+    category_id = "",
+    model_id = ""
+  ) => {
+    try {
+      let url = "/courseSchedule/Allindex";
+
+      const params = new URLSearchParams({
+        ...(nombre.trim() && { nombre }),
+        ...(category_id && { category_id }),
+        ...(model_id && { model_id }),
+      });
+
+      if (params.toString()) url += `?${params.toString()}`;
+
+      const res = await MethodGet(url);
+      dispatch({
+        type: GET_ALL_AGENDAS,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const GetAgendasCount = async () => {
     try {
       const type_user = localStorage.getItem("type_user");
@@ -428,6 +454,7 @@ const AgendaState = ({ children }) => {
         ClassDone,
         Reschedule,
         GetAgendasCount,
+        GetAgendasAll,
         AddAgendasAdmin,
       }}
     >

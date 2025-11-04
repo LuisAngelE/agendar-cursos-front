@@ -154,7 +154,7 @@ export default function TableAgenda({ agendas }) {
                     {agenda.state.name} {""}
                     {agenda.municipality.name}
                   </StyledTableCell>
-                  <StyledTableCell data-label="Cliente">
+                  <StyledTableCell data-label="Solicitante">
                     {agenda.reservations?.[0]?.student ? (
                       <>
                         {agenda.reservations[0].student.name || ""}{" "}
