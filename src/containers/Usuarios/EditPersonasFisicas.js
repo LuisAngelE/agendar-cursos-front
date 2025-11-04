@@ -18,7 +18,7 @@ export default function EditPersonasFisicas({ open, handleClose, id }) {
   const { UpdateUserFisicas } = useContext(UsuariosContext);
   const [users, saveUsers] = useState(null);
   useEffect(() => {
-    let url = `/users/${id}`;
+    let url = `/usersShow/${id}`;
     MethodGet(url)
       .then((res) => {
         saveUsers(res.data);

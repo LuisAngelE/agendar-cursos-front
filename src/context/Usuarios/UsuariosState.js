@@ -55,8 +55,7 @@ const UsuariosState = ({ children }) => {
   };
 
   const GetUsersFisicos = () => {
-    let user_id = localStorage.getItem("user_id");
-    MethodGet(`/users/fisicas/${user_id}`)
+    MethodGet(`/users/fisicas`)
       .then((res) => {
         dispatch({
           type: GET_ALL_USERS_FISICOS,
@@ -67,8 +66,7 @@ const UsuariosState = ({ children }) => {
   };
 
   const GetUsersMorales = () => {
-    let user_id = localStorage.getItem("user_id");
-    MethodGet(`/users/morales/${user_id}`)
+    MethodGet(`/users/morales`)
       .then((res) => {
         dispatch({
           type: GET_ALL_USERS_MORALES,

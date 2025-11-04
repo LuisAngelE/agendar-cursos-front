@@ -18,7 +18,7 @@ export default function EditPersonasMorales({ open, handleClose, id }) {
   const { UpdateUserMorales } = useContext(UsuariosContext);
   const [users, saveUsers] = useState(null);
   useEffect(() => {
-    let url = `/users/${id}`;
+    let url = `/usersShow/${id}`;
     MethodGet(url)
       .then((res) => {
         saveUsers(res.data);
