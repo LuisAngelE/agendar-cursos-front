@@ -77,8 +77,7 @@ const UsuariosState = ({ children }) => {
   };
 
   const GetInstructores = () => {
-    let user_id = localStorage.getItem("user_id");
-    MethodGet(`/instructores/${user_id}`)
+    MethodGet(`/instructores`)
       .then((res) => {
         dispatch({
           type: GET_ALL_USERS,

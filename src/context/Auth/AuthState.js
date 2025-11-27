@@ -98,6 +98,26 @@ const AuthState = (props) => {
       });
   };
 
+  const loginExterno = async (collaborator_number) => {
+    try {
+      const { data } = await MethodPost(`/login/${collaborator_number}`);
+
+      dispatch({
+        type: LOGIN_EXITOSO,
+        payload: data,
+      });
+
+      localStorage.setItem("token", data.token);
+
+      await usuarioAutenticado();
+    } catch (error) {
+      console.error("Error al autenticar externamente:", error);
+      dispatch({
+        type: LOGIN_ERROR,
+      });
+    }
+  };
+
   const Register = (datos) => {
     let url = "/register";
     MethodPost(url, datos)
@@ -336,6 +356,7 @@ const AuthState = (props) => {
         cargando: state.cargando,
         Register,
         iniciarSesion,
+        loginExterno,
         usuarioAutenticado,
         cerrarSesion,
         UserMe,

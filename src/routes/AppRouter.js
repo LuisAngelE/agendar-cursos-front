@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import { PublicRouter } from "./PublicRouter";
 import Login from "../components/Auth/Login";
 import Register from "../components/Auth/Register";
@@ -16,10 +16,19 @@ import SubAdminRouter from "./SubAdminRouter";
 import CursosPublicos from "../containers/CursosPublicos/CursosPublicos";
 
 const AppRouter = () => {
-  const { autenticado, usuarioAutenticado, cargando } = useContext(AuthContext);
+  const { autenticado, usuarioAutenticado, cargando, loginExterno, errorAuth } =
+    useContext(AuthContext);
+
+  const location = window.location;
+  const params = new URLSearchParams(location.search);
+  const collaborator_number = params.get("collaborator_number");
 
   useEffect(() => {
-    usuarioAutenticado();
+    if (collaborator_number) {
+      loginExterno(collaborator_number);
+    } else {
+      usuarioAutenticado();
+    }
   }, []);
 
   if (cargando) {
@@ -28,6 +37,10 @@ const AppRouter = () => {
         <LoadingComponent />
       </Grid>
     );
+  }
+
+  if (!autenticado && errorAuth && collaborator_number) {
+    return <Redirect to="/" />;
   }
 
   const type_user = localStorage.getItem("type_user");
@@ -64,6 +77,9 @@ const AppRouter = () => {
           path="/cursos-publicos"
           component={CursosPublicos}
         />
+        {autenticado && PrivateComponent && (
+          <Redirect exact from="/" to="/Perfil" />
+        )}
         {PrivateComponent && (
           <PrivateRouter
             path="/"
