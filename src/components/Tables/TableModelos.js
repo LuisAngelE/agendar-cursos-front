@@ -79,7 +79,7 @@ export default function TableModelos({ modelos }) {
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Marca</StyledTableCell>
-              <StyledTableCell>Nombre de segmento</StyledTableCell>
+              {/* <StyledTableCell>Nombre de segmento</StyledTableCell> */}
               <StyledTableCell>Nombre de unidad</StyledTableCell>
               <StyledTableCell>Acciones</StyledTableCell>
             </TableRow>
@@ -101,9 +101,9 @@ export default function TableModelos({ modelos }) {
                       {modelo.id}
                     </StyledTableCell>
                     <StyledTableCell data-label="Marca">Foton</StyledTableCell>
-                    <StyledTableCell data-label="Nombre de segmento">
+                    {/* <StyledTableCell data-label="Nombre de segmento">
                       {modelo.nombre_segmento}
-                    </StyledTableCell>
+                    </StyledTableCell> */}
                     <StyledTableCell data-label="Nombre de unidad">
                       {modelo.nombre_tipo_unidad}
                     </StyledTableCell>

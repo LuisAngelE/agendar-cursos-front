@@ -13,6 +13,7 @@ import AdminRoutes from "./AdminRoutes";
 import InstructorRoutes from "./InstructorRoutes";
 import AlumnoRoutes from "./AlumnoRoutes";
 import SubAdminRouter from "./SubAdminRouter";
+import CorporativoRoutes from "./CorporativoRoutes";
 import CursosPublicos from "../containers/CursosPublicos/CursosPublicos";
 
 const AppRouter = () => {
@@ -50,6 +51,7 @@ const AppRouter = () => {
   if (type_user === "2") PrivateComponent = InstructorRoutes;
   if (type_user === "3") PrivateComponent = AlumnoRoutes;
   if (type_user === "6") PrivateComponent = SubAdminRouter;
+  if (type_user === "7") PrivateComponent = CorporativoRoutes;
 
   return (
     <Router>

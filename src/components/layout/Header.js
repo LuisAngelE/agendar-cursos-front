@@ -113,7 +113,7 @@ export default function Header({ children }) {
   const type_user = localStorage.getItem("type_user");
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL.replace(/\/api$/, "");
-  const manualUrl = `${baseUrl}/storage/fichas/ManualesDeUsuario/FichasTécnicasManualdeUsuarioAdministrador.pdf`;
+  const manualUrl = `${baseUrl}/storage/Manuales/Plataforma_Integral_de_Capacitación_Manual_de_Usuario.pdf`;
 
   React.useEffect(() => {
     GetAgendasCount();
@@ -193,6 +193,33 @@ export default function Header({ children }) {
       },
       { name: "Calendario", value: "/Calendario", icon: <CalendarMonthIcon /> },
       { name: "Mi perfil", value: "/Perfil", icon: <PersonIcon /> },
+    ],
+    7: [
+      { name: "Todos los cursos", value: "/Cursos", icon: <MenuBookIcon /> },
+      {
+        name: "Mis favoritos",
+        value: "/CursosFavoritos",
+        icon: (
+          <Badge badgeContent={cursos.length} color="error">
+            <FavoriteIcon />
+          </Badge>
+        ),
+      },
+      {
+        name: "Mis reservados",
+        value: "/Agenda",
+        icon: (
+          <Badge badgeContent={agendasCount.length} color="error">
+            <EventIcon />
+          </Badge>
+        ),
+      },
+      {
+        name: "Mi calendario",
+        value: "/Calendario",
+        icon: <CalendarMonthIcon />,
+      },
+      { name: "Perfil", value: "/Perfil", icon: <PersonIcon /> },
     ],
   };
 

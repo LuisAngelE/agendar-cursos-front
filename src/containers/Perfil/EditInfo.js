@@ -305,24 +305,6 @@ export default function EditInfo({ modal, handleClose, User }) {
                   helperText={errors.phone?.message}
                 />
               </Grid>
-              {(type_user === "1" ||
-                type_user === "2" ||
-                type_user === "6") && (
-                <Grid item xs={12}>
-                  <TextField
-                    type="number"
-                    fullWidth
-                    label="Número de colaborador"
-                    defaultValue={User.collaborator_number}
-                    {...register("collaborator_number", {
-                      required: "El número de colaborador es obligatorio",
-                      maxLength: { value: 6, message: "Máximo 6 caracteres" },
-                    })}
-                    error={!!errors.collaborator_number}
-                    helperText={errors.collaborator_number?.message}
-                  />
-                </Grid>
-              )}
             </Grid>
           </DialogContent>
           <DialogActions>

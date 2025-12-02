@@ -109,7 +109,9 @@ const Perfil = () => {
                 <Box display="flex" justifyContent="center" mb={2}>
                   <img
                     src={
-                      user_me.image_profile?.url || user_me.imageProfile?.url
+                      user_me.image_profile?.url ||
+                      `https://ldrhsys.ldrhumanresources.com/Cliente/img/avatars/${user_me.url}.png` ||
+                      user_me.imageProfile?.url
                     }
                     alt="Foto de perfil"
                     style={{
@@ -250,46 +252,17 @@ const Perfil = () => {
                       Editar mi Información
                     </Button>
                   </Grid>
-                  <Grid item xs={12}>
-                    <Button
-                      onClick={handleClickOpen}
-                      fullWidth
-                      variant="contained"
-                      sx={{
-                        bgcolor: "#E3F2FD",
-                        color: "black",
-                        "&:hover": {
-                          bgcolor: "#E3F2FD",
-                          boxShadow: 3,
-                          transform: "scale(1.05)",
-                        },
-                        borderRadius: 3,
-                        py: 1.5,
-                        fontWeight: "bold",
-                        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-                        transition: "all 0.3s ease",
-                      }}
-                      component={motion.button}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <LockResetIcon sx={{ mr: 1 }} />
-                      Cambiar mi contraseña
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <a
-                      href="/Plataforma_Integral_de_Capacitación_Manual_de_Usuario.pdf"
-                      download
-                      style={{ textDecoration: "none" }}
-                    >
+                  {type_user === "3" && (
+                    <Grid item xs={12}>
                       <Button
+                        onClick={handleClickOpen}
                         fullWidth
                         variant="contained"
                         sx={{
-                          bgcolor: "#C8E6C9",
+                          bgcolor: "#E3F2FD",
                           color: "black",
                           "&:hover": {
-                            bgcolor: "#C8E6C9",
+                            bgcolor: "#E3F2FD",
                             boxShadow: 3,
                             transform: "scale(1.05)",
                           },
@@ -302,11 +275,11 @@ const Perfil = () => {
                         component={motion.button}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <DescriptionIcon sx={{ mr: 1 }} />
-                        Descargar manual de usuario
+                        <LockResetIcon sx={{ mr: 1 }} />
+                        Cambiar mi contraseña
                       </Button>
-                    </a>
-                  </Grid>
+                    </Grid>
+                  )}
                 </Grid>
               </CardContent>
             </Card>
