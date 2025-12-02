@@ -113,7 +113,15 @@ export default function Header({ children }) {
   const type_user = localStorage.getItem("type_user");
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL.replace(/\/api$/, "");
-  const manualUrl = `${baseUrl}/storage/Manuales/Plataforma_Integral_de_Capacitación_Manual_de_Usuario.pdf`;
+
+  const manualUrl =
+    type_user === "1"
+      ? `${baseUrl}/storage/Manuales/PicAdmin.pdf`
+      : type_user === "2"
+      ? `${baseUrl}/storage/Manuales/PicInstructor.pdf`
+      : type_user === "6"
+      ? `${baseUrl}/storage/Manuales/PicSubAdmin.pdf`
+      : `${baseUrl}/storage/Manuales/PicCliente.pdf`;
 
   React.useEffect(() => {
     GetAgendasCount();
